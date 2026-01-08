@@ -1,0 +1,159 @@
+﻿@model ITIRR.Core.Interfaces.DashboardStats
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!-- Dashboard Header -->
+<div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p>Welcome back! Here's what's happening with your platform today.</p>
+</div>
+
+<!-- Stats Grid -->
+<div class="stats-grid">
+    <!-- Total Vehicles -->
+    <div class="stat-card">
+        <div class="stat-icon">
+            <i class="bi bi-car-front"></i>
+        </div>
+        <div class="stat-value">@Model.TotalVehicles</div>
+        <div class="stat-label">Total Vehicles</div>
+    </div>
+
+    <!-- Active Vehicles -->
+    <div class="stat-card success">
+        <div class="stat-icon">
+            <i class="bi bi-check-circle"></i>
+        </div>
+        <div class="stat-value">@Model.ActiveVehicles</div>
+        <div class="stat-label">Active Vehicles</div>
+    </div>
+
+    <!-- Pending Verification -->
+    <div class="stat-card warning">
+        <div class="stat-icon">
+            <i class="bi bi-exclamation-circle"></i>
+        </div>
+        <div class="stat-value">@Model.UnverifiedVehicles</div>
+        <div class="stat-label">Pending Verification</div>
+    </div>
+
+    <!-- Total Users -->
+    <div class="stat-card info">
+        <div class="stat-icon">
+            <i class="bi bi-people"></i>
+        </div>
+        <div class="stat-value">@Model.TotalUsers</div>
+        <div class="stat-label">Total Users</div>
+    </div>
+</div>
+
+<!-- Second Row Stats -->
+<div class="stats-grid">
+    <!-- Total Hosts -->
+    <div class="card">
+        <div class="card-body text-center">
+            <i class="bi bi-person-badge" style="font-size: 2rem; color: var(--itirr-primary);"></i>
+            <h3 class="mt-3 mb-1">@Model.TotalHosts</h3>
+            <p class="text-muted mb-0">Total Hosts</p>
+        </div>
+    </div>
+
+    <!-- Total Renters -->
+    <div class="card">
+        <div class="card-body text-center">
+            <i class="bi bi-person" style="font-size: 2rem; color: var(--success);"></i>
+            <h3 class="mt-3 mb-1">@Model.TotalRenters</h3>
+            <p class="text-muted mb-0">Total Renters</p>
+        </div>
+    </div>
+
+    <!-- Countries -->
+    <div class="card">
+        <div class="card-body text-center">
+            <i class="bi bi-globe" style="font-size: 2rem; color: var(--info);"></i>
+            <h3 class="mt-3 mb-1">@Model.TotalCountries</h3>
+            <p class="text-muted mb-0">Countries</p>
+        </div>
+    </div>
+
+    <!-- Cities -->
+    <div class="card">
+        <div class="card-body text-center">
+            <i class="bi bi-building" style="font-size: 2rem; color: var(--warning);"></i>
+            <h3 class="mt-3 mb-1">@Model.TotalCities</h3>
+            <p class="text-muted mb-0">Cities</p>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-3">
+                    <a href="@Url.Action("Unverified", "Vehicles")" class="btn btn-outline-purple">
+                        <i class="bi bi-exclamation-circle"></i> Review Pending Vehicles (@Model.UnverifiedVehicles)
+                    </a>
+                    <a href="@Url.Action("Pending", "Documents")" class="btn btn-outline-purple">
+                        <i class="bi bi-file-earmark-check"></i> Verify Documents
+                    </a>
+                    <a href="@Url.Action("Index", "Vehicles")" class="btn btn-outline-purple">
+                        <i class="bi bi-car-front"></i> View All Vehicles
+                    </a>
+                    <a href="@Url.Action("Index", "Users")" class="btn btn-outline-purple">
+                        <i class="bi bi-people"></i> Manage Users
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Platform Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Vehicle Brands</span>
+                        <strong>@Model.TotalBrands</strong>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar" style="width: 75%; background: var(--itirr-primary);"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Vehicle Categories</span>
+                        <strong>@Model.TotalCategories</strong>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar" style="width: 85%; background: var(--success);"></div>
+                    </div>
+                </div>
+                <div class="mb-0">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Active Vehicles</span>
+                        <strong>@Model.ActiveVehicles / @Model.TotalVehicles</strong>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar" style="width: @((Model.TotalVehicles > 0 ? (Model.ActiveVehicles * 100 / Model.TotalVehicles) : 0))%; background: var(--info);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Additional dashboard scripts can go here
+        console.log('Dashboard loaded');
+    </script>
+}

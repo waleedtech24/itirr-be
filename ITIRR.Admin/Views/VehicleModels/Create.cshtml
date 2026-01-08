@@ -1,0 +1,63 @@
+﻿@model ITIRR.Core.Entities.VehicleModel
+@{
+    ViewData["Title"] = "Create Model";
+}
+
+<div class="page-header">
+    <h1><i class="bi bi-plus-circle"></i> Create Vehicle Model</h1>
+    <div class="page-actions">
+        <a asp-action="Index" class="btn btn-outline-purple">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div class="form-container">
+    <form asp-action="Create" method="post" data-validate="true">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" placeholder="Phantom" required />
+                <span asp-validation-for="Name" class="invalid-feedback"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="VehicleBrandId" class="form-label">Brand</label>
+                <select asp-for="VehicleBrandId" class="form-control" asp-items="@ViewBag.Brands" required>
+                    <option value="">Select Brand</option>
+                </select>
+                <span asp-validation-for="VehicleBrandId" class="invalid-feedback"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label asp-for="Year" class="form-label">Year</label>
+                <input asp-for="Year" class="form-control" type="number" min="1900" max="2099" placeholder="2024" />
+                <span asp-validation-for="Year" class="invalid-feedback"></span>
+                <small class="text-muted">Optional - Model year</small>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <div class="form-check">
+                <input asp-for="IsActive" class="form-check-input" type="checkbox" checked />
+                <label asp-for="IsActive" class="form-check-label">Active</label>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-purple">
+                <i class="bi bi-check-circle"></i> Create Model
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ITIRR.Core.Entities.VehicleType>
+@{
+    ViewData["Title"] = "Vehicle Types";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="bi bi-tag"></i> Vehicle Types Management
+    </h1>
+    <div class="page-actions">
+        <a asp-action="Create" class="btn btn-purple">
+            <i class="bi bi-plus-circle"></i> Add Vehicle Type
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var type in Model)
+    {
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card" style="border-left: 4px solid var(--itirr-primary);">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h5 class="card-title mb-1">@type.Name</h5>
+                            <span class="badge badge-purple">@type.Code</span>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Edit" asp-route-id="@type.Id"><i class="bi bi-pencil"></i> Edit</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="#" onclick="deleteType('@type.Id', '@type.Name')"><i class="bi bi-trash"></i> Delete</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="text-muted small mb-3">@type.Description</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge @(type.BookingType == "Direct" ? "badge-success" : "badge-warning")">
+                            @type.BookingType
+                        </span>
+                        <span class="badge @(type.IsActive ? "badge-success" : "badge-danger")">
+                            @(type.IsActive ? "Active" : "Inactive")
+                        </span>
+                    </div>
+                    <div class="mt-3">
+                        <small class="text-muted">Display Order: @type.DisplayOrder</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function deleteType(id, name) {
+            ITIRRAdmin.confirm(
+                `Delete "${name}"?`,
+                'Delete Vehicle Type',
+                function() {
+                    fetch('@Url.Action("Delete")', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        body: JSON.stringify({ id: id })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            ITIRRAdmin.showSuccess(data.message);
+                            setTimeout(() => location.reload(), 1500);
+                        } else {
+                            ITIRRAdmin.showError(data.message);
+                        }
+                    });
+                }
+            );
+        }
+    </script>
+}

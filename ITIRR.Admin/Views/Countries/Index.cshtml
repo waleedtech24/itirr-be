@@ -1,0 +1,106 @@
+﻿@model IEnumerable<ITIRR.Core.Entities.Country>
+@{
+    ViewData["Title"] = "Countries";
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <h1>
+        <i class="bi bi-globe"></i> Countries Management
+    </h1>
+    <div class="page-actions">
+        <a asp-action="Create" class="btn btn-purple">
+            <i class="bi bi-plus-circle"></i> Add New Country
+        </a>
+    </div>
+</div>
+
+<!-- Search Bar -->
+<div class="search-bar">
+    <input type="text" id="searchInput" class="form-control" placeholder="Search countries..." />
+    <button class="btn btn-outline-purple">
+        <i class="bi bi-search"></i> Search
+    </button>
+</div>
+
+<!-- Data Table -->
+<div class="data-table-wrapper">
+    <table class="table" id="countriesTable">
+        <thead>
+            <tr>
+                <th data-sortable>Name</th>
+                <th data-sortable>Code</th>
+                <th data-sortable>Phone Code</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var country in Model)
+            {
+                <tr>
+                    <td>
+                        <strong>@country.Name</strong>
+                    </td>
+                    <td>
+                        <span class="badge badge-purple">@country.Code</span>
+                    </td>
+                    <td>@country.PhoneCode</td>
+                    <td>
+                        @if (country.IsActive)
+                        {
+                            <span class="badge badge-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">Inactive</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="table-actions">
+                            <a asp-action="Edit" asp-route-id="@country.Id" class="action-btn edit" title="Edit">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button onclick="deleteCountry('@country.Id', '@country.Name')" class="action-btn delete" title="Delete">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="bi bi-globe"></i>
+        </div>
+        <h3 class="empty-state-title">No Countries Found</h3>
+        <p class="empty-state-text">Start by adding your first country to the system.</p>
+        <a asp-action="Create" class="btn btn-purple">
+            <i class="bi bi-plus-circle"></i> Add First Country
+        </a>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        DataTableHelper.init('countriesTable', { searchable: true, sortable: true });
+
+        document.getElementById('searchInput').addEventListener('input', ITIRRAdmin.debounce(function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#countriesTable tbody tr');
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(searchTerm) ? '' : 'none';
+            });
+        }, 300));
+
+        // Simplified delete function
+        function deleteCountry(id, name) {
+            ITIRRAdmin.deleteRow(id, `Country: ${name}`, '@Url.Action("Delete", "Countries")');
+        }
+    </script>
+}

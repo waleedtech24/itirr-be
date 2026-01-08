@@ -1,0 +1,506 @@
+﻿// ==========================================
+// ITIRR Admin Panel - Global JavaScript
+// Version: 1.0
+// ==========================================
+
+// Create global namespace
+window.ITIRRAdmin = window.ITIRRAdmin || {};
+
+(function () {
+    'use strict';
+
+    // ==========================================
+    // SIDEBAR FUNCTIONALITY
+    // ==========================================
+
+    // Toggle sidebar collapse
+    ITIRRAdmin.toggleSidebar = function () {
+        const sidebar = document.querySelector('.sidebar');
+        const pageContent = document.querySelector('.page-content');
+
+        if (sidebar && pageContent) {
+            sidebar.classList.toggle('collapsed');
+            pageContent.classList.toggle('sidebar-collapsed');
+
+            // Save state to localStorage
+            const isCollapsed = sidebar.classList.contains('collapsed');
+            localStorage.setItem('sidebarCollapsed', isCollapsed);
+        }
+    };
+
+    // Initialize sidebar state from localStorage
+    ITIRRAdmin.initSidebar = function () {
+        const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+        if (isCollapsed) {
+            const sidebar = document.querySelector('.sidebar');
+            const pageContent = document.querySelector('.page-content');
+            if (sidebar) sidebar.classList.add('collapsed');
+            if (pageContent) pageContent.classList.add('sidebar-collapsed');
+        }
+
+        // Toggle button click handler
+        const toggleBtn = document.getElementById('sidebarToggle');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', ITIRRAdmin.toggleSidebar);
+        }
+
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileMenuToggle');
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', function () {
+                const sidebar = document.querySelector('.sidebar');
+                if (sidebar) {
+                    sidebar.classList.toggle('mobile-show');
+                }
+            });
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function (e) {
+            const sidebar = document.querySelector('.sidebar');
+            const mobileToggle = document.getElementById('mobileMenuToggle');
+
+            if (window.innerWidth <= 768 && sidebar && sidebar.classList.contains('mobile-show')) {
+                if (!sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
+                    sidebar.classList.remove('mobile-show');
+                }
+            }
+        });
+    };
+
+    // Handle submenu toggles
+   // Handle submenu toggles
+ITIRRAdmin.initSubmenuToggles = function () {
+    const submenuToggles = document.querySelectorAll('.menu-item.has-submenu');
+
+    submenuToggles.forEach(toggle => {
+        toggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            // Find the submenu (next sibling)
+            const submenu = this.nextElementSibling;
+            
+            if (submenu && submenu.classList.contains('submenu')) {
+                // Toggle active class on parent
+                this.classList.toggle('active');
+                
+                // Toggle submenu visibility
+                submenu.classList.toggle('show');
+                
+                // Close other submenus (optional - for accordion behavior)
+                const allSubmenus = document.querySelectorAll('.menu-item.has-submenu');
+                allSubmenus.forEach(item => {
+                    if (item !== this) {
+                        item.classList.remove('active');
+                        const otherSubmenu = item.nextElementSibling;
+                        if (otherSubmenu && otherSubmenu.classList.contains('submenu')) {
+                            otherSubmenu.classList.remove('show');
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    // Auto-open submenu if child is active
+    const activeSubmenuItems = document.querySelectorAll('.submenu .menu-item.active');
+    activeSubmenuItems.forEach(item => {
+        const submenu = item.closest('.submenu');
+        if (submenu) {
+            submenu.classList.add('show');
+            const toggle = submenu.previousElementSibling;
+            if (toggle && toggle.classList.contains('has-submenu')) {
+                toggle.classList.add('active');
+            }
+        }
+    });
+};
+
+    // Set active menu item based on current URL
+    ITIRRAdmin.setActiveMenu = function () {
+        const currentPath = window.location.pathname.toLowerCase();
+        const menuLinks = document.querySelectorAll('.sidebar-menu a');
+
+        menuLinks.forEach(link => {
+            const linkPath = link.getAttribute('href')?.toLowerCase() || '';
+
+            // Remove active class from all
+            link.classList.remove('active');
+
+            // Check if current path matches
+            if (currentPath === linkPath ||
+                (linkPath !== '/' && linkPath.length > 1 && currentPath.startsWith(linkPath))) {
+                link.classList.add('active');
+
+                // Expand parent submenu if inside submenu
+                const parentSubmenu = link.closest('.submenu');
+                if (parentSubmenu) {
+                    parentSubmenu.classList.add('show');
+                    const parentLink = parentSubmenu.previousElementSibling;
+                    if (parentLink) {
+                        const parentLi = parentLink.closest('.has-submenu');
+                        if (parentLi) parentLi.classList.add('active');
+                    }
+                }
+            }
+        });
+    };
+
+    // ==========================================
+    // HEADER FUNCTIONALITY
+    // ==========================================
+
+    ITIRRAdmin.initHeader = function () {
+        // User dropdown toggle
+        const userDropdown = document.querySelector('.user-dropdown');
+        if (userDropdown) {
+            userDropdown.addEventListener('click', function (e) {
+                e.stopPropagation();
+                this.classList.toggle('active');
+            });
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function () {
+            const userDropdown = document.querySelector('.user-dropdown');
+            if (userDropdown) {
+                userDropdown.classList.remove('active');
+            }
+        });
+    };
+
+    // ==========================================
+    // NOTIFICATIONS (SweetAlert2)
+    // ==========================================
+
+    ITIRRAdmin.showSuccess = function (message, title) {
+        Swal.fire({
+            icon: 'success',
+            title: title || 'Success!',
+            text: message,
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false
+        });
+    };
+
+    ITIRRAdmin.showError = function (message, title) {
+        Swal.fire({
+            icon: 'error',
+            title: title || 'Error!',
+            text: message,
+            confirmButtonColor: '#dc3545'
+        });
+    };
+
+    ITIRRAdmin.showWarning = function (message, title) {
+        Swal.fire({
+            icon: 'warning',
+            title: title || 'Warning!',
+            text: message,
+            confirmButtonColor: '#ffc107'
+        });
+    };
+
+    ITIRRAdmin.showInfo = function (message, title) {
+        Swal.fire({
+            icon: 'info',
+            title: title || 'Information',
+            text: message,
+            confirmButtonColor: '#17a2b8'
+        });
+    };
+
+    ITIRRAdmin.confirm = function (message, title, callback) {
+        Swal.fire({
+            title: title || 'Are you sure?',
+            text: message,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#4A2C5B',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, proceed',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed && callback) {
+                callback();
+            }
+        });
+    };
+
+    ITIRRAdmin.showToast = function (message, type) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+
+        Toast.fire({
+            icon: type || 'success',
+            title: message
+        });
+    };
+
+    // ==========================================
+    // LOADING OVERLAY
+    // ==========================================
+
+    ITIRRAdmin.showLoading = function (message) {
+        const overlay = document.getElementById('loadingOverlay');
+        if (overlay) {
+            const text = overlay.querySelector('.loading-text');
+            if (text) text.textContent = message || 'Please wait...';
+            overlay.style.display = 'flex';
+        }
+    };
+
+    ITIRRAdmin.hideLoading = function () {
+        const overlay = document.getElementById('loadingOverlay');
+        if (overlay) {
+            overlay.style.display = 'none';
+        }
+    };
+
+    // ==========================================
+    // AJAX HELPER
+    // ==========================================
+
+    ITIRRAdmin.ajax = function (url, method, data, successCallback, errorCallback) {
+        const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+            || document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+
+        fetch(url, {
+            method: method || 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': token
+            },
+            body: data ? JSON.stringify(data) : null
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (successCallback) successCallback(data);
+            })
+            .catch(error => {
+                if (errorCallback) errorCallback(error);
+                else console.error('AJAX Error:', error);
+            });
+    };
+
+    // Generic delete row function
+    ITIRRAdmin.deleteRow = function (id, entityName, deleteUrl, callback) {
+        ITIRRAdmin.confirm(
+            `Are you sure you want to delete this ${entityName}?`,
+            `Delete ${entityName}`,
+            function () {
+                ITIRRAdmin.showLoading('Deleting...');
+
+                ITIRRAdmin.ajax(deleteUrl, 'POST', { id: id },
+                    function (data) {
+                        ITIRRAdmin.hideLoading();
+                        if (data.success) {
+                            ITIRRAdmin.showSuccess(data.message);
+                            if (callback) callback(data);
+                            else setTimeout(() => location.reload(), 1500);
+                        } else {
+                            ITIRRAdmin.showError(data.message);
+                        }
+                    },
+                    function (error) {
+                        ITIRRAdmin.hideLoading();
+                        ITIRRAdmin.showError('An error occurred while deleting');
+                    }
+                );
+            }
+        );
+    };
+
+    // ==========================================
+    // UTILITY FUNCTIONS
+    // ==========================================
+
+    ITIRRAdmin.formatDate = function (dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+    };
+
+    ITIRRAdmin.formatDateTime = function (dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+
+    ITIRRAdmin.formatCurrency = function (amount, currency) {
+        currency = currency || 'GBP';
+        return new Intl.NumberFormat('en-GB', {
+            style: 'currency',
+            currency: currency
+        }).format(amount);
+    };
+
+    ITIRRAdmin.debounce = function (func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    };
+
+    ITIRRAdmin.throttle = function (func, limit) {
+        let inThrottle;
+        return function () {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    };
+
+    // Highlight search term in text
+    ITIRRAdmin.highlightSearch = function (text, searchTerm) {
+        if (!searchTerm || searchTerm.length < 2) return text;
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+    };
+
+    // ==========================================
+    // FORM HELPERS
+    // ==========================================
+
+    ITIRRAdmin.clearForm = function (formId) {
+        const form = document.getElementById(formId);
+        if (form) {
+            form.reset();
+            // Clear validation errors
+            const errors = form.querySelectorAll('.is-invalid');
+            errors.forEach(el => el.classList.remove('is-invalid'));
+        }
+    };
+
+    ITIRRAdmin.populateForm = function (formId, data) {
+        const form = document.getElementById(formId);
+        if (!form) return;
+
+        Object.keys(data).forEach(key => {
+            const input = form.querySelector(`[name="${key}"]`);
+            if (input) {
+                if (input.type === 'checkbox') {
+                    input.checked = data[key];
+                } else {
+                    input.value = data[key] || '';
+                }
+            }
+        });
+    };
+
+    ITIRRAdmin.serializeForm = function (formId) {
+        const form = document.getElementById(formId);
+        if (!form) return {};
+
+        const formData = new FormData(form);
+        const data = {};
+
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        return data;
+    };
+
+    // ==========================================
+    // KEYBOARD SHORTCUTS
+    // ==========================================
+
+    ITIRRAdmin.initKeyboardShortcuts = function () {
+        document.addEventListener('keydown', function (e) {
+            // Ctrl/Cmd + K: Focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) searchInput.focus();
+            }
+
+            // Ctrl/Cmd + N: New/Create (if on index page)
+            if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                const createBtn = document.querySelector('a[href*="/Create"]');
+                if (createBtn) {
+                    e.preventDefault();
+                    window.location.href = createBtn.href;
+                }
+            }
+
+            // ESC: Close modals/dropdowns
+            if (e.key === 'Escape') {
+                ITIRRAdmin.hideLoading();
+                const modals = document.querySelectorAll('.modal.show');
+                modals.forEach(modal => {
+                    const bsModal = bootstrap.Modal.getInstance(modal);
+                    if (bsModal) bsModal.hide();
+                });
+            }
+        });
+    };
+
+    // ==========================================
+    // INITIALIZATION
+    // ==========================================
+
+    ITIRRAdmin.init = function () {
+        // Initialize sidebar
+        ITIRRAdmin.initSidebar();
+        ITIRRAdmin.initSubmenuToggles();
+        ITIRRAdmin.setActiveMenu();
+
+        // Initialize header
+        ITIRRAdmin.initHeader();
+
+        // Initialize keyboard shortcuts
+        ITIRRAdmin.initKeyboardShortcuts();
+
+        // Add mark styles for search highlighting
+        if (!document.getElementById('markStyle')) {
+            const style = document.createElement('style');
+            style.id = 'markStyle';
+            style.textContent = `
+                mark {
+                    background-color: #ffeb3b;
+                    color: #000;
+                    padding: 0 2px;
+                    border-radius: 2px;
+                    font-weight: 500;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        console.log('✅ ITIRR Admin initialized successfully');
+    };
+
+    // Auto-initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', ITIRRAdmin.init);
+    } else {
+        ITIRRAdmin.init();
+    }
+
+})();

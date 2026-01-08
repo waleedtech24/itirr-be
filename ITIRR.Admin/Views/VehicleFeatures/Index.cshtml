@@ -1,0 +1,277 @@
+﻿@model IEnumerable<ITIRR.Core.Entities.VehicleFeature>
+
+@{
+    ViewData["Title"] = "Vehicle Features";
+    var vehicleTypeId = ViewBag.SelectedVehicleTypeId as Guid?;
+    var searchTerm = ViewBag.SearchTerm as string;
+}
+
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">
+                <i class="bi bi-star"></i> Vehicle Features
+            </h2>
+            <p class="text-muted mb-0">Manage features for all vehicle types</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Add New Feature
+        </a>
+    </div>
+
+    <!-- Filters -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" asp-action="Index" class="row g-3">
+                <div class="col-md-5">
+                    <label class="form-label">Filter by Vehicle Type</label>
+                    <select name="vehicleTypeId" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Vehicle Types</option>
+                        @foreach (var item in (SelectList)ViewBag.VehicleTypes)
+                        {
+                            <option value="@item.Value" selected="@(item.Selected)">@item.Text</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label">Search</label>
+                    <input type="text" name="searchTerm" value="@searchTerm" class="form-control" placeholder="Search by name or description...">
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-search"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Results Count -->
+    <div class="mb-3">
+        <span class="text-muted">
+            Showing <strong>@Model.Count()</strong> feature(s)
+            @if (vehicleTypeId.HasValue || !string.IsNullOrEmpty(searchTerm))
+            {
+                <text> - </text>
+                <a asp-action="Index" class="text-decoration-none">Clear Filters</a>
+            }
+        </span>
+    </div>
+
+    <!-- Features Table -->
+    <div class="card">
+        <div class="card-body">
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-inbox display-1 text-muted"></i>
+                    <p class="text-muted mt-3">No vehicle features found.</p>
+                    <a asp-action="Create" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Add First Feature
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 5%">#</th>
+                                <th style="width: 25%">Name</th>
+                                <th style="width: 30%">Description</th>
+                                <th style="width: 10%">Icon</th>
+                                <th style="width: 15%">Vehicle Type</th>
+                                <th style="width: 10%" class="text-center">Status</th>
+                                <th style="width: 5%" class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int count = 1;
+                                string? currentVehicleType = null;
+                            }
+                            @foreach (var feature in Model)
+                            {
+                                @if (currentVehicleType != feature.VehicleType?.Name)
+                                {
+                                    currentVehicleType = feature.VehicleType?.Name;
+                                    <tr class="table-secondary">
+                                        <td colspan="7" class="fw-bold">
+                                            <i class="bi bi-tag"></i> @currentVehicleType Features
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td>@count</td>
+                                    <td>
+                                        <strong>@feature.Name</strong>
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(feature.Description))
+                                        {
+                                            <span class="text-muted">
+                                                @(feature.Description.Length > 80 ? feature.Description.Substring(0, 80) + "..." : feature.Description)
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted fst-italic">No description</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(feature.IconUrl))
+                                        {
+                                            <i class="@feature.IconUrl fs-4"></i>
+                                            <small class="text-muted d-block">@feature.IconUrl</small>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted fst-italic">No icon</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info">
+                                            @feature.VehicleType?.Name
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="form-check form-switch d-inline-block">
+                                            <input class="form-check-input toggle-active"
+                                                   type="checkbox"
+                                                   id="toggle_@feature.Id"
+                                                   data-id="@feature.Id"
+                                                   @(feature.IsActive ? "checked" : "")>
+                                            <label class="form-check-label" for="toggle_@feature.Id">
+                                                @if (feature.IsActive)
+                                                {
+                                                    <span class="badge bg-success">Active</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">Inactive</span>
+                                                }
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <a asp-action="Edit" asp-route-id="@feature.Id"
+                                               class="btn btn-outline-primary"
+                                               title="Edit">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <button type="button"
+                                                    class="btn btn-outline-danger btn-delete"
+                                                    data-id="@feature.Id"
+                                                    data-name="@feature.Name"
+                                                    title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                count++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Summary -->
+                <div class="mt-3 p-3 bg-light rounded">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <h5 class="mb-0">@Model.Count()</h5>
+                            <small class="text-muted">Total Features</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="mb-0">@Model.Count(f => f.IsActive)</h5>
+                            <small class="text-muted">Active</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="mb-0">@Model.Count(f => !f.IsActive)</h5>
+                            <small class="text-muted">Inactive</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="mb-0">@Model.GroupBy(f => f.VehicleTypeId).Count()</h5>
+                            <small class="text-muted">Vehicle Types</small>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Toggle Active Status
+            $('.toggle-active').change(function () {
+                var featureId = $(this).data('id');
+                var checkbox = $(this);
+                var label = checkbox.next('label').find('.badge');
+
+                $.ajax({
+                    url: '@Url.Action("ToggleActive")',
+                    type: 'POST',
+                    data: {
+                        id: featureId,
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            showToast('success', response.message);
+
+                            // Update badge
+                            if (response.isActive) {
+                                label.removeClass('bg-secondary').addClass('bg-success').text('Active');
+                            } else {
+                                label.removeClass('bg-success').addClass('bg-secondary').text('Inactive');
+                            }
+                        } else {
+                            showToast('error', response.message);
+                            checkbox.prop('checked', !checkbox.prop('checked'));
+                        }
+                    },
+                    error: function () {
+                        showToast('error', 'An error occurred. Please try again.');
+                        checkbox.prop('checked', !checkbox.prop('checked'));
+                    }
+                });
+            });
+
+            // Delete Feature
+            $('.btn-delete').click(function () {
+                var featureId = $(this).data('id');
+                var featureName = $(this).data('name');
+                var row = $(this).closest('tr');
+
+                if (confirm('Are you sure you want to delete "' + featureName + '"?')) {
+                    $.ajax({
+                        url: '@Url.Action("Delete")',
+                        type: 'POST',
+                        data: {
+                            id: featureId,
+                            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                showToast('success', response.message);
+                                row.fadeOut(300, function () {
+                                    $(this).remove();
+                                });
+                            } else {
+                                showToast('error', response.message);
+                            }
+                        },
+                        error: function () {
+                            showToast('error', 'An error occurred.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

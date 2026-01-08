@@ -1,0 +1,205 @@
+﻿@model ITIRR.Core.Entities.VehicleFeature
+
+@{
+    ViewData["Title"] = "Edit Feature";
+}
+
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">
+                <i class="bi bi-pencil"></i> Edit Feature
+            </h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a asp-action="Index">Vehicle Features</a></li>
+                    <li class="breadcrumb-item active">Edit: @Model.Name</li>
+                </ol>
+            </nav>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to List
+        </a>
+    </div>
+
+    <!-- Form Card -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="CreatedAt" />
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <!-- Vehicle Type -->
+                        <div class="mb-3">
+                            <label asp-for="VehicleTypeId" class="form-label">
+                                Vehicle Type <span class="text-danger">*</span>
+                            </label>
+                            <select asp-for="VehicleTypeId"
+                                    class="form-select"
+                                    asp-items="ViewBag.VehicleTypes">
+                                <option value="">-- Select Vehicle Type --</option>
+                            </select>
+                            <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
+                            <div class="form-text">
+                                <i class="bi bi-info-circle"></i> Select which type of vehicle this feature applies to
+                            </div>
+                        </div>
+
+                        <!-- Feature Name -->
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">
+                                Feature Name <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Name"
+                                   class="form-control"
+                                   placeholder="e.g., Adaptive Cruise Control, WiFi, Jacuzzi">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <!-- Code -->
+                        <div class="mb-3">
+                            <label asp-for="Code" class="form-label">
+                                Feature Code
+                            </label>
+                            <input asp-for="Code"
+                                   class="form-control"
+                                   placeholder="e.g., ACC, WIFI, JACUZZI">
+                            <span asp-validation-for="Code" class="text-danger"></span>
+                            <div class="form-text">
+                                <i class="bi bi-info-circle"></i> Unique code for API/system identification
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Description</label>
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Brief description of this feature..."></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <div class="form-text">
+                                <i class="bi bi-info-circle"></i> Optional: Provide a brief description (max 500 characters)
+                            </div>
+                        </div>
+
+                        <!-- Icon URL -->
+                        <div class="mb-3">
+                            <label asp-for="IconUrl" class="form-label">Icon Class</label>
+                            <input asp-for="IconUrl"
+                                   class="form-control"
+                                   placeholder="e.g., bi bi-wifi, bi bi-speedometer2">
+                            <span asp-validation-for="IconUrl" class="text-danger"></span>
+                            <div class="form-text">
+                                <i class="bi bi-info-circle"></i> Optional: Bootstrap Icon class name.
+                                Browse icons at <a href="https://icons.getbootstrap.com/" target="_blank">Bootstrap Icons</a>
+                            </div>
+                            <div id="iconPreview" class="mt-2" style="display: none;">
+                                <strong>Preview:</strong>
+                                <i id="iconPreviewElement" class="fs-2 ms-2"></i>
+                            </div>
+                        </div>
+
+                        <!-- Is Active -->
+                        <div class="mb-4">
+                            <div class="form-check form-switch">
+                                <input asp-for="IsActive"
+                                       class="form-check-input"
+                                       type="checkbox">
+                                <label asp-for="IsActive" class="form-check-label">
+                                    Active (available for selection)
+                                </label>
+                            </div>
+                            <div class="form-text ms-4">
+                                <i class="bi bi-info-circle"></i> Inactive features won't be available when adding vehicles
+                            </div>
+                        </div>
+
+                        <!-- Metadata -->
+                        <div class="alert alert-info mb-4">
+                            <small>
+                                <strong>Created:</strong> @Model.CreatedAt.ToString("MMM dd, yyyy hh:mm tt")<br />
+                                <strong>Last Updated:</strong> @Model.UpdatedAt.ToString("MMM dd, yyyy hh:mm tt")
+                            </small>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Update Feature
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Help Card -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        <i class="bi bi-lightbulb text-warning"></i> Tips
+                    </h6>
+                    <ul class="mb-0 small">
+                        <li>Feature names should be clear and descriptive</li>
+                        <li>Avoid duplicate feature names within the same vehicle type</li>
+                        <li>Add icons to make features visually identifiable</li>
+                        <li>Use descriptions to clarify complex features</li>
+                        <li>Deactivating a feature will hide it from new vehicle listings but preserve existing associations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            // Icon Preview - Show on load if icon exists
+            var currentIcon = $('#IconUrl').val().trim();
+            if (currentIcon) {
+                $('#iconPreviewElement').attr('class', currentIcon + ' fs-2 ms-2');
+                $('#iconPreview').show();
+            }
+
+            // Icon Preview - Update on input
+            $('#IconUrl').on('input', function () {
+                var iconClass = $(this).val().trim();
+
+                if (iconClass) {
+                    $('#iconPreviewElement').attr('class', iconClass + ' fs-2 ms-2');
+                    $('#iconPreview').show();
+                } else {
+                    $('#iconPreview').hide();
+                }
+            });
+
+            // Character counter for description
+            var currentLength = $('#Description').val().length;
+            $('#Description').after('<div class="form-text text-end" id="charCount">' + currentLength + ' / 500 characters</div>');
+
+            $('#Description').on('input', function () {
+                var length = $(this).val().length;
+                $('#charCount').text(length + ' / 500 characters');
+
+                if (length > 500) {
+                    $('#charCount').addClass('text-danger');
+                } else {
+                    $('#charCount').removeClass('text-danger');
+                }
+            });
+        });
+    </script>
+}

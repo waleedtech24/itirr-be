@@ -1,0 +1,94 @@
+﻿/* ============================================
+   ITIRR Admin - Global Styles
+   Base styles for entire admin panel
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    background-color: var(--bg-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: var(--itirr-primary);
+    transition: var(--transition-fast);
+}
+
+    a:hover {
+        color: var(--itirr-primary-dark);
+    }
+
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* === SCROLLBAR CUSTOMIZATION === */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-body);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--itirr-secondary);
+    border-radius: var(--radius-lg);
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--itirr-primary);
+    }
+
+/* === UTILITY CLASSES === */
+.text-purple {
+    color: var(--itirr-primary) !important;
+}
+
+.bg-purple {
+    background-color: var(--itirr-primary) !important;
+}
+
+.border-purple {
+    border-color: var(--itirr-primary) !important;
+}
+
+.shadow-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+    box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+.shadow-xl {
+    box-shadow: var(--shadow-xl);
+}
+
+.transition-fast {
+    transition: var(--transition-fast);
+}
+
+.transition-normal {
+    transition: var(--transition-normal);
+}
+
+.transition-slow {
+    transition: var(--transition-slow);
+}

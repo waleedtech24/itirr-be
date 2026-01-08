@@ -1,0 +1,139 @@
+﻿@model IEnumerable<ITIRR.Core.Entities.VehicleModel>
+@{
+    ViewData["Title"] = "Vehicle Models";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="bi bi-box"></i> Vehicle Models
+        @if (ViewBag.FilteredBrand != null)
+        {
+            <small class="text-muted">- @ViewBag.FilteredBrand</small>
+        }
+    </h1>
+    <div class="page-actions">
+        <a asp-action="Create" class="btn btn-purple">
+            <i class="bi bi-plus-circle"></i> Add Model
+        </a>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <label class="form-label">Filter by Brand</label>
+        <select class="form-control" id="brandFilter" onchange="filterByBrand(this.value)">
+            <option value="">All Brands</option>
+            @foreach (var brand in (SelectList)ViewBag.Brands)
+            {
+                <option value="@brand.Value">@brand.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-8">
+        <label class="form-label">Search</label>
+        <input type="text" id="searchInput" class="form-control" placeholder="Search models..." />
+    </div>
+</div>
+
+<!-- Data Table -->
+<div class="data-table-wrapper">
+    <table class="table" id="modelsTable">
+        <thead>
+            <tr>
+                <th data-sortable>Model Name</th>
+                <th data-sortable>Brand</th>
+                <th>Vehicle Type</th>
+                <th>Year Range</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><strong>@item.Name</strong></td>
+                    <td><span class="badge badge-purple">@item.VehicleBrand?.Name</span></td>
+                    <td><span class="badge badge-info">@item.VehicleBrand?.VehicleType?.Name</span></td>
+                  <td>
+    <small class="text-muted">
+        @if (item.Year.HasValue)
+        {
+            <span>@item.Year</span>
+        }
+        else
+        {
+            <span>All Years</span>
+        }
+    </small>
+</td>
+                    <td>
+                        @if (item.IsActive)
+                        {
+                            <span class="badge badge-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">Inactive</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="table-actions">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="action-btn edit">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button onclick="deleteModel('@item.Id', '@item.Name')" class="action-btn delete">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        DataTableHelper.init('modelsTable', { searchable: true, sortable: true });
+
+        document.getElementById('searchInput').addEventListener('input', ITIRRAdmin.debounce(function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#modelsTable tbody tr');
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(searchTerm) ? '' : 'none';
+            });
+        }, 300));
+
+        function filterByBrand(brandId) {
+            window.location.href = brandId ? '@Url.Action("Index")?brandId=' + brandId : '@Url.Action("Index")';
+        }
+
+        function deleteModel(id, name) {
+            ITIRRAdmin.confirm(
+                `Delete "${name}"?`,
+                'Delete Model',
+                function() {
+                    fetch('@Url.Action("Delete")', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        body: JSON.stringify({ id: id })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            ITIRRAdmin.showSuccess(data.message);
+                            setTimeout(() => location.reload(), 1500);
+                        } else {
+                            ITIRRAdmin.showError(data.message);
+                        }
+                    });
+                }
+            );
+        }
+    </script>
+}

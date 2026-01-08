@@ -1,0 +1,138 @@
+﻿@model IEnumerable<ITIRR.Core.Entities.City>
+@{
+    ViewData["Title"] = "Cities";
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <h1>
+        <i class="bi bi-building"></i> Cities Management
+        @if (ViewBag.FilteredCountry != null)
+        {
+            <small class="text-muted">- @ViewBag.FilteredCountry</small>
+        }
+    </h1>
+    <div class="page-actions">
+        <a asp-action="Create" class="btn btn-purple">
+            <i class="bi bi-plus-circle"></i> Add New City
+        </a>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <label class="form-label">Filter by Country</label>
+        <select class="form-control" id="countryFilter" onchange="filterByCountry(this.value)">
+            <option value="">All Countries</option>
+            @foreach (var country in (SelectList)ViewBag.Countries)
+            {
+                <option value="@country.Value">@country.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-8">
+        <label class="form-label">Search</label>
+        <input type="text" id="searchInput" class="form-control" placeholder="Search cities..." />
+    </div>
+</div>
+
+<!-- Data Table -->
+<div class="data-table-wrapper">
+    <table class="table" id="citiesTable">
+        <thead>
+            <tr>
+                <th data-sortable>City Name</th>
+                <th data-sortable>Country</th>
+                <th>Coordinates</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var city in Model)
+            {
+                <tr>
+                    <td><strong>@city.Name</strong></td>
+                    <td>
+                        <span class="badge badge-purple">@city.Country?.Name</span>
+                    </td>
+                    <td>
+                        <small class="text-muted">
+                            @city.Latitude, @city.Longitude
+                        </small>
+                    </td>
+                    <td>
+                        @if (city.IsActive)
+                        {
+                            <span class="badge badge-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">Inactive</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="table-actions">
+                            <a asp-action="Edit" asp-route-id="@city.Id" class="action-btn edit">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button onclick="deleteCity('@city.Id', '@city.Name')" class="action-btn delete">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        DataTableHelper.init('citiesTable', { searchable: true, sortable: true });
+
+        document.getElementById('searchInput').addEventListener('input', ITIRRAdmin.debounce(function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#citiesTable tbody tr');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }, 300));
+
+        function filterByCountry(countryId) {
+            if (countryId) {
+                window.location.href = '@Url.Action("Index")?countryId=' + countryId;
+            } else {
+                window.location.href = '@Url.Action("Index")';
+            }
+        }
+
+        function deleteCity(id, name) {
+            ITIRRAdmin.confirm(
+                `Delete "${name}"?`,
+                'Delete City',
+                function() {
+                    fetch('@Url.Action("Delete")', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        body: JSON.stringify({ id: id })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            ITIRRAdmin.showSuccess(data.message);
+                            setTimeout(() => location.reload(), 1500);
+                        } else {
+                            ITIRRAdmin.showError(data.message);
+                        }
+                    });
+                }
+            );
+        }
+    </script>
+}

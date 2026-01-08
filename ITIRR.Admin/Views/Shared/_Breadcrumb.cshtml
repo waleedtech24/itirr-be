@@ -1,0 +1,53 @@
+﻿@if (ViewBag.Breadcrumbs != null)
+{
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-controller="Dashboard" asp-action="Index">
+                    <i class="bi bi-house-door"></i> Home
+                </a>
+            </li>
+            @foreach (var crumb in (List<dynamic>)ViewBag.Breadcrumbs)
+            {
+                if (crumb.IsActive)
+                {
+                    <li class="breadcrumb-item active" aria-current="page">@crumb.Title</li>
+                }
+                else
+                {
+                    <li class="breadcrumb-item">
+                        <a asp-controller="@crumb.Controller" asp-action="@crumb.Action">@crumb.Title</a>
+                    </li>
+                }
+            }
+        </ol>
+    </nav>
+}
+
+<style>
+    .breadcrumb {
+        background: transparent;
+        padding: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .breadcrumb-item a {
+        color: var(--itirr-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+        .breadcrumb-item a:hover {
+            color: var(--itirr-primary-dark);
+            text-decoration: underline;
+        }
+
+    .breadcrumb-item.active {
+        color: var(--text-muted);
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "›";
+        color: var(--text-muted);
+    }
+</style>

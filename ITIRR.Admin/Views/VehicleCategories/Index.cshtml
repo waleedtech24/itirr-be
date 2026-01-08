@@ -1,0 +1,130 @@
+﻿@model IEnumerable<ITIRR.Core.Entities.VehicleCategory>
+@{
+    ViewData["Title"] = "Vehicle Categories";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="bi bi-collection"></i> Vehicle Categories
+        @if (ViewBag.FilteredType != null)
+        {
+            <small class="text-muted">- @ViewBag.FilteredType</small>
+        }
+    </h1>
+    <div class="page-actions">
+        <a asp-action="Create" class="btn btn-purple">
+            <i class="bi bi-plus-circle"></i> Add Category
+        </a>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <label class="form-label">Filter by Vehicle Type</label>
+        <select class="form-control" id="typeFilter" onchange="filterByType(this.value)">
+            <option value="">All Types</option>
+            @foreach (var type in (SelectList)ViewBag.VehicleTypes)
+            {
+                <option value="@type.Value">@type.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-8">
+        <label class="form-label">Search</label>
+        <input type="text" id="searchInput" class="form-control" placeholder="Search categories..." />
+    </div>
+</div>
+
+<!-- Data Table -->
+<div class="data-table-wrapper">
+    <table class="table" id="categoriesTable">
+        <thead>
+            <tr>
+                <th data-sortable>Category Name</th>
+                <th data-sortable>Code</th>
+                <th data-sortable>Vehicle Type</th>
+                <th>Description</th>
+                <th data-sortable>Order</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td><strong>@category.Name</strong></td>
+                    <td><span class="badge badge-info">@category.Code</span></td>
+                    <td><span class="badge badge-purple">@category.VehicleType?.Name</span></td>
+                    <td><small class="text-muted">@category.Description</small></td>
+                    <td>@category.DisplayOrder</td>
+                    <td>
+                        @if (category.IsActive)
+                        {
+                            <span class="badge badge-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">Inactive</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="table-actions">
+                            <a asp-action="Edit" asp-route-id="@category.Id" class="action-btn edit">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button onclick="deleteCategory('@category.Id', '@category.Name')" class="action-btn delete">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        DataTableHelper.init('categoriesTable', { searchable: true, sortable: true });
+
+        document.getElementById('searchInput').addEventListener('input', ITIRRAdmin.debounce(function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#categoriesTable tbody tr');
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(searchTerm) ? '' : 'none';
+            });
+        }, 300));
+
+        function filterByType(typeId) {
+            window.location.href = typeId ? '@Url.Action("Index")?vehicleTypeId=' + typeId : '@Url.Action("Index")';
+        }
+
+        function deleteCategory(id, name) {
+            ITIRRAdmin.confirm(
+                `Delete "${name}"?`,
+                'Delete Category',
+                function() {
+                    fetch('@Url.Action("Delete")', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        body: JSON.stringify({ id: id })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            ITIRRAdmin.showSuccess(data.message);
+                            setTimeout(() => location.reload(), 1500);
+                        } else {
+                            ITIRRAdmin.showError(data.message);
+                        }
+                    });
+                }
+            );
+        }
+    </script>
+}

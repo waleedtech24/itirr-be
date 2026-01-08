@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "System Test";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-purple text-white">
+            <h3>System Status Test</h3>
+        </div>
+        <div class="card-body">
+            <h4>@ViewBag.Status</h4>
+
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h2>@ViewBag.CountriesCount</h2>
+                            <p>Countries</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h2>@ViewBag.CitiesCount</h2>
+                            <p>Cities</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h2>@ViewBag.TypesCount</h2>
+                            <p>Vehicle Types</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a href="@Url.Action("Index", "Dashboard")" class="btn btn-purple">
+                    <i class="bi bi-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-purple {
+        background-color: var(--itirr-primary);
+    }
+</style>

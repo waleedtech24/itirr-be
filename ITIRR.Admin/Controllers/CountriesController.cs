@@ -1,0 +1,118 @@
+﻿using ITIRR.Core;
+using ITIRR.Core.Entities;
+using ITIRR.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ITIRR.Admin.Controllers
+{
+    [Authorize(Roles = "Admin")]
+    public class CountriesController : Controller
+    {
+        private readonly ICountryService _countryService;
+
+        public CountriesController(ICountryService countryService)
+        {
+            _countryService = countryService;
+        }
+
+        // GET: Countries
+        public async Task<IActionResult> Index()
+        {
+            var countries = await _countryService.GetAllCountriesAsync();
+            return View(countries);
+        }
+
+        // GET: Countries/Create
+        public IActionResult Create()
+        {
+            ViewBag.Breadcrumbs = new List<dynamic>
+{
+    new { Title = "Countries", Controller = "Countries", Action = "Index", IsActive = false },
+    new { Title = "Create", Controller = "", Action = "", IsActive = true }
+};
+            return View();
+        }
+
+        // POST: Countries/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Country country)
+        {
+ 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _countryService.CreateCountryAsync(country);
+                    TempData["Success"] = "Country created successfully!";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            return View(country);
+        }
+
+
+
+        // GET: Countries/Edit/5
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var country = await _countryService.GetCountryByIdAsync(id);
+            if (country == null)
+            {
+                return NotFound();
+            }
+            return View(country);
+        }
+
+        // POST: Countries/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, Country country)
+        {
+            if (id != country.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _countryService.UpdateCountryAsync(country);
+                    TempData["Success"] = "Country updated successfully!";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            return View(country);
+        }
+
+        // POST: Countries/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                var result = await _countryService.DeleteCountryAsync(id);
+                if (result)
+                {
+                    return Json(new { success = true, message = "Country deleted successfully!" });
+                }
+                return Json(new { success = false, message = "Country not found" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+    }
+}
