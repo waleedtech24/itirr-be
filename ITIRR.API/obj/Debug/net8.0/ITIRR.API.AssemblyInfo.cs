@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ITIRR.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+51f606711c012262bd5101fbd607c98ed9b2b4b8")]
 [assembly: System.Reflection.AssemblyProductAttribute("ITIRR.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ITIRR.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

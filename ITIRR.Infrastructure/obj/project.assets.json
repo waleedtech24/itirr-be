@@ -4198,23 +4198,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\shini\\.nuget\\packages\\": {},
+    "C:\\Users\\Muneeb\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\dev 2025\\itirr\\ITIRR.Infrastructure\\ITIRR.Infrastructure.csproj",
+      "projectUniqueName": "D:\\ITIRR Backend\\ITIRR.Infrastructure\\ITIRR.Infrastructure.csproj",
       "projectName": "ITIRR.Infrastructure",
-      "projectPath": "D:\\dev 2025\\itirr\\ITIRR.Infrastructure\\ITIRR.Infrastructure.csproj",
-      "packagesPath": "C:\\Users\\shini\\.nuget\\packages\\",
-      "outputPath": "D:\\dev 2025\\ITIRR\\ITIRR.Infrastructure\\obj\\",
+      "projectPath": "D:\\ITIRR Backend\\ITIRR.Infrastructure\\ITIRR.Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\Muneeb\\.nuget\\packages\\",
+      "outputPath": "D:\\ITIRR Backend\\ITIRR.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\shini\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Muneeb\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4229,8 +4229,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\dev 2025\\itirr\\ITIRR.Core\\ITIRR.Core.csproj": {
-              "projectPath": "D:\\dev 2025\\itirr\\ITIRR.Core\\ITIRR.Core.csproj"
+            "D:\\ITIRR Backend\\ITIRR.Core\\ITIRR.Core.csproj": {
+              "projectPath": "D:\\ITIRR Backend\\ITIRR.Core\\ITIRR.Core.csproj"
             }
           }
         }
@@ -4245,7 +4245,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -4282,7 +4282,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
