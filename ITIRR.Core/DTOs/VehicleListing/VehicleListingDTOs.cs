@@ -78,6 +78,7 @@ namespace ITIRR.Core.DTOs.VehicleListing
 
     public class VehicleListingResponse
     {
+
         public Guid ListingId { get; set; }
         public string VehicleType { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
