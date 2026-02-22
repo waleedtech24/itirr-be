@@ -1588,7 +1588,10 @@
         },
         "runtime": {
           "bin/placeholder/ITIRR.Core.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },

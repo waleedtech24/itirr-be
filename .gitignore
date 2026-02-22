@@ -2,3 +2,9 @@
 ITIRR.Admin/bin
 ITIRR.Admin/obj
 *.uer~
+*.dll
+ITIRR.Core/bin/Debug/net8.0/ITIRR.Core.pdb
+/ITIRR.API/bin
+/ITIRR.API/bin/Debug
+/ITIRR.API/obj
+/ITIRR.Services/obj/Debug/net8.0/refint

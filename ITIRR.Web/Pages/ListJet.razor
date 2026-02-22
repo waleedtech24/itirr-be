@@ -1,0 +1,1159 @@
+﻿@page "/list-jet"
+@layout ITIRR.Web.Shared.NoFooterLayout
+@attribute [Authorize]
+@inject NavigationManager Navigation
+@inject CustomAuthStateProvider AuthStateProvider
+@inject HttpClient Http
+@using Microsoft.AspNetCore.Authorization
+@using ITIRR.Web.Auth
+@using System.Net.Http.Json
+@using System.Text.Json
+
+<nav class="navbar navbar-light">
+    <div class="container">
+        <a class="navbar-brand"><img src="img/logo.png" /></a>
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center mb-0 p-0">
+                <li class="nav-item dropdown pe-3">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0"
+                       href="#" data-bs-toggle="dropdown">
+                        <img src="img/user-profile.jpg" class="rounded-circle" width="36" height="36" />
+                        <span class="d-none d-md-block ps-2">@userName</span>
+                        <i class="bi bi-chevron-down ms-1"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end profile">
+                        <li>
+                            <a class="dropdown-item" href="#"
+                               @onclick="HandleLogout" @onclick:preventDefault="true">
+                                <i class="bi bi-box-arrow-right me-2"></i>Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</nav>
+
+<div class="container py-5">
+    @if (isPageLoading)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary"></div>
+            <p class="mt-3">Loading...</p>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="progress-header">
+                    <div class="row mb-1">
+                        <div class="col-12">
+                            <h4 class="title">@stepProgressData[currentStep].Title</h4>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row mb-2">
+                        <div class="col-6 this-shows">
+                            <h4>@stepProgressData[currentStep].Progress% complete</h4>
+                        </div>
+                        <div class="col-6 which-one text-end">
+                            <p>@stepProgressData[currentStep].Next</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="progress">
+                                <div class="progress-bar"
+                                     style="width:@stepProgressData[currentStep].Progress%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 car-location">
+                <h1>@stepHeadings[currentStep].Title</h1>
+                <p>@stepHeadings[currentStep].Subtitle</p>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger alert-dismissible">
+                @errorMessage
+                <button class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(successMessage))
+        {
+            <div class="alert alert-success alert-dismissible">
+                @successMessage
+                <button class="btn-close" @onclick="() => successMessage = string.Empty"></button>
+            </div>
+        }
+
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 step-sidebar">
+                @for (int i = 1; i <= 8; i++)
+                {
+                    var s = i;
+                    <div class="step-item @(currentStep == s ? "active" : "") @(s < currentStep ? "completed" : "")">
+                        <i class="@(s < currentStep ? "fa-solid fa-circle-check complete" : "fa-regular fa-circle-check")"></i>
+                        &nbsp; @sidebarTitles[s]
+                    </div>
+                }
+            </div>
+
+            <!-- Form Content -->
+            <div class="col-md-9 all-data">
+
+                <!-- STEP 1 - Location & Hangar -->
+                @if (currentStep == 1)
+                {
+                    <div class="detail-form">
+                        <h6>Location & Hangar Details</h6>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Country <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects"
+                                        value="@step1.CountryId"
+                                        @onchange="OnCountryChanged">
+                                    <option value="">-- Select Country --</option>
+                                    @foreach (var c in countries)
+                                    {
+                                        <option value="@c.Id">@c.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">State <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="State" @bind="step1.State" />
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">City <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects"
+                                        value="@step1.CityId"
+                                        @onchange="e => step1.CityId = ParseGuid(e.Value?.ToString())">
+                                    <option value="">-- Select City --</option>
+                                    @foreach (var c in cities)
+                                    {
+                                        <option value="@c.Id">@c.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Zip Code <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="Zip Code" @bind="step1.ZipCode" />
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Hangar Location <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. Hangar 5, Terminal B" @bind="step1.HangarLocation" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Home Airport <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. London Heathrow (LHR)" @bind="step1.HomeAirport" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoToDashboard" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep1" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 2 - Aircraft Specifications -->
+                @if (currentStep == 2)
+                {
+                    <div class="detail-form">
+                        <h6>Aircraft Specifications</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Aircraft Make <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. Gulfstream" @bind="step2.AircraftMake" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Aircraft Model <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. G650" @bind="step2.AircraftModel" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Year <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. 2021" @bind="step2.AircraftYear" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Tail Number <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. N123AB" @bind="step2.TailNumber" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Aircraft Category <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step2.AircraftCategory">
+                                    <option value="">-- Select --</option>
+                                    <option value="Light Jet">Light Jet</option>
+                                    <option value="Midsize Jet">Midsize Jet</option>
+                                    <option value="Super Midsize Jet">Super Midsize Jet</option>
+                                    <option value="Heavy Jet">Heavy Jet</option>
+                                    <option value="Ultra Long Range">Ultra Long Range</option>
+                                    <option value="Turboprop">Turboprop</option>
+                                    <option value="Helicopter">Helicopter</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Passenger Capacity <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control my-selects"
+                                       placeholder="e.g. 14" @bind="step2.PassengerCapacity" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Range (Nautical Miles)</label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. 7000" @bind="step2.RangeNauticalMiles" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Cruising Speed</label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. 516 knots" @bind="step2.CruisingSpeed" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Engine Type</label>
+                                <select class="form-select my-selects" @bind="step2.EngineType">
+                                    <option value="">-- Select --</option>
+                                    <option value="Turbofan">Turbofan</option>
+                                    <option value="Turboprop">Turboprop</option>
+                                    <option value="Piston">Piston</option>
+                                    <option value="Turboshaft">Turboshaft</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep2" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 3 - Photos -->
+                @if (currentStep == 3)
+                {
+                    <div class="detail-form">
+                        <h6>Jet Photos</h6>
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <label class="form-label mb-3">Interior Images</label>
+                                <InputFile OnChange="OnInteriorPhotosChanged" multiple
+                                           accept="image/jpeg,image/png"
+                                           class="form-control my-selects mb-2" />
+                                @if (interiorPreviews.Any())
+                                {
+                                    <div class="upload-row mb-3">
+                                        @foreach (var p in interiorPreviews)
+                                        {
+                                            <div class="image-col">
+                                                <div class="image-preview"><img src="@p" /></div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="form-label">Exterior Images</label>
+                                <InputFile OnChange="OnExteriorPhotosChanged" multiple
+                                           accept="image/jpeg,image/png"
+                                           class="form-control my-selects mb-2" />
+                                @if (exteriorPreviews.Any())
+                                {
+                                    <div class="upload-row mb-3">
+                                        @foreach (var p in exteriorPreviews)
+                                        {
+                                            <div class="image-col">
+                                                <div class="image-preview"><img src="@p" /></div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep3" disabled="@isLoading">
+                            @(isLoading ? "Uploading..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 4 - Cabin Features -->
+                @if (currentStep == 4)
+                {
+                    <div class="detail-form">
+                        <h6>Cabin Features & Amenities</h6>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="form-label">Select all available cabin features</label>
+                                <div class="features-grid">
+                                    @foreach (var feature in availableCabinFeatures)
+                                    {
+                                        var f = feature;
+                                        <label>
+                                            <input type="checkbox" class="form-check-input"
+                                                   checked="@step4CabinFeatures.Contains(f)"
+                                                   @onchange="@(e => ToggleFeature(f, (bool)e.Value!))" />
+                                            @f
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep4" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 5 - Safety & Compliance -->
+                @if (currentStep == 5)
+                {
+                    <div class="detail-form">
+                        <h6>Safety & Compliance</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Last Maintenance Date <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control my-selects"
+                                       @bind="step5.LastMaintenanceDate" />
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <label class="form-label">Safety Certifications</label>
+                                <div class="features-grid">
+                                    @foreach (var cert in availableCertifications)
+                                    {
+                                        var c = cert;
+                                        <label>
+                                            <input type="checkbox" class="form-check-input"
+                                                   checked="@step5Certifications.Contains(c)"
+                                                   @onchange="@(e => ToggleCert(c, (bool)e.Value!))" />
+                                            @c
+                                        </label>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Airworthiness Certificate</label>
+                                <InputFile OnChange="e => airworthinessFile = e.File"
+                                           accept="image/jpeg,image/png,application/pdf"
+                                           class="form-control my-selects" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Insurance Document</label>
+                                <InputFile OnChange="e => insuranceFile = e.File"
+                                           accept="image/jpeg,image/png,application/pdf"
+                                           class="form-control my-selects" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Registration Document</label>
+                                <InputFile OnChange="e => registrationFile = e.File"
+                                           accept="image/jpeg,image/png,application/pdf"
+                                           class="form-control my-selects" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep5" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 6 - Pilot/Crew -->
+                @if (currentStep == 6)
+                {
+                    <div class="detail-form">
+                        <h6>Pilot & Crew Requirements</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Pilot First Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="First Name" @bind="step6.PilotFirstName" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Pilot Last Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="Last Name" @bind="step6.PilotLastName" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Licence Number <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="Pilot Licence Number" @bind="step6.PilotLicenceNumber" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Licence Type <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step6.PilotLicenceType">
+                                    <option value="">-- Select --</option>
+                                    <option value="ATPL">ATPL (Airline Transport Pilot)</option>
+                                    <option value="CPL">CPL (Commercial Pilot)</option>
+                                    <option value="PPL">PPL (Private Pilot)</option>
+                                    <option value="IR">IR (Instrument Rating)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Licence Expiry Date <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control my-selects"
+                                       @bind="step6.PilotLicenceExpiry" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Total Crew Count <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control my-selects"
+                                       placeholder="e.g. 2" @bind="step6.CrewCount" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep6" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 7 - Advance Notice & Cancellation -->
+                @if (currentStep == 7)
+                {
+                    <div class="detail-form">
+                        <h6>Advance Notice & Trip Cancellation</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Advance Notice Required <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step7.AdvanceNotice">
+                                    <option value="">-- Select --</option>
+                                    <option value="24 Hours">24 Hours Notice</option>
+                                    <option value="48 Hours">48 Hours Notice</option>
+                                    <option value="72 Hours">72 Hours Notice</option>
+                                    <option value="1 Week">1 Week Notice</option>
+                                    <option value="2 Weeks">2 Weeks Notice</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Minimum Trip Duration <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step7.MinTripDuration">
+                                    <option value="">-- Select --</option>
+                                    <option value="Half Day">Half Day</option>
+                                    <option value="Full Day">Full Day</option>
+                                    <option value="2 Days">2 Days</option>
+                                    <option value="1 Week">1 Week</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Maximum Trip Duration <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step7.MaxTripDuration">
+                                    <option value="">-- Select --</option>
+                                    <option value="1 Week">1 Week</option>
+                                    <option value="2 Weeks">2 Weeks</option>
+                                    <option value="1 Month">1 Month</option>
+                                    <option value="No Maximum">No Maximum</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Cancellation Policy <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step7.CancellationPolicy">
+                                    <option value="">-- Select --</option>
+                                    <option value="Flexible">Flexible - Full refund 24hrs before</option>
+                                    <option value="Moderate">Moderate - Full refund 5 days before</option>
+                                    <option value="Strict">Strict - 50% refund 7 days before</option>
+                                    <option value="Non-Refundable">Non-Refundable</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep7" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 8 - Goals -->
+                @if (currentStep == 8)
+                {
+                    <div class="detail-form">
+                        <h6>Your Goals</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">What is your primary financial goal? <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step8.PrimaryGoal">
+                                    <option value="">-- Select option --</option>
+                                    <option value="Only a few times a year">Only a few times a year</option>
+                                    <option value="A few times each season">A few times each season</option>
+                                    <option value="Monthly or more">Monthly or more</option>
+                                    <option value="Weekly or throughout the season">Weekly or throughout the season</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">How often do you currently use this jet? <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step8.UsageFrequency">
+                                    <option value="">-- Select option --</option>
+                                    <option value="Only a few times a year">Only a few times a year</option>
+                                    <option value="A few times each season">A few times each season</option>
+                                    <option value="Monthly or more">Monthly or more</option>
+                                    <option value="Weekly or throughout the season">Weekly or throughout the season</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">How often do you want to share your jet? <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step8.ShareFrequency">
+                                    <option value="">-- Select option --</option>
+                                    <option value="Limited availability; a few times a year">Limited availability; a few times a year</option>
+                                    <option value="A few times each month or season">A few times each month or season</option>
+                                    <option value="Consistent sharing when not using it">Consistent sharing when not using it</option>
+                                    <option value="Maximum availability for bookings">Maximum availability for bookings</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep8" disabled="@isLoading">
+                            @(isLoading ? "Submitting..." : "Submit")
+                        </button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private string userName = "Partner";
+    private int currentStep = 1;
+    private Guid? listingId = null;
+    private bool isLoading = false;
+    private bool isPageLoading = true;
+    private string errorMessage = string.Empty;
+    private string successMessage = string.Empty;
+
+    private List<CountryDto> countries = new();
+    private List<CityDto> cities = new();
+    private List<string> step4CabinFeatures = new();
+    private List<string> step5Certifications = new();
+
+    private Step1M step1 = new();
+    private Step2M step2 = new();
+    private Step5M step5 = new();
+    private Step6M step6 = new();
+    private Step7M step7 = new();
+    private Step8M step8 = new();
+
+    private List<IBrowserFile> interiorFiles = new();
+    private List<IBrowserFile> exteriorFiles = new();
+    private List<string> interiorPreviews = new();
+    private List<string> exteriorPreviews = new();
+    private IBrowserFile? airworthinessFile;
+    private IBrowserFile? insuranceFile;
+    private IBrowserFile? registrationFile;
+
+    private List<string> availableCabinFeatures = new()
+    {
+        "Wi-Fi", "Satellite Phone", "Entertainment System", "Lie-Flat Beds",
+        "Private Bedroom", "Shower", "Full Galley Kitchen", "Bar & Beverages",
+        "Conference Table", "Noise Cancellation", "Temperature Control", "USB Charging Ports"
+    };
+
+    private List<string> availableCertifications = new()
+    {
+        "FAA Airworthiness", "EASA Certification", "CAA Approval",
+        "Air Operator Certificate", "Safety Management System", "IS-BAO Registered"
+    };
+
+    private Dictionary<int, string> sidebarTitles = new()
+    {
+        { 1, "Location & Hangar" },
+        { 2, "Aircraft Specifications" },
+        { 3, "Jet Photos" },
+        { 4, "Cabin Features" },
+        { 5, "Safety & Compliance" },
+        { 6, "Pilot & Crew" },
+        { 7, "Advance Notice" },
+        { 8, "Your Goals" }
+    };
+
+    private Dictionary<int, (string Title, string Subtitle)> stepHeadings = new()
+    {
+        { 1, ("Where is your jet hangared?",         "Tell us the location and home airport for your aircraft.") },
+        { 2, ("Aircraft Specifications",             "Provide the technical details of your private jet.") },
+        { 3, ("Jet Photos",                          "Upload high-quality interior and exterior images of your jet.") },
+        { 4, ("Cabin Features & Amenities",          "Tell guests what's available onboard your jet.") },
+        { 5, ("Safety & Compliance",                 "Upload safety documents and certifications.") },
+        { 6, ("Pilot & Crew Requirements",           "Provide details of your certified pilot and crew.") },
+        { 7, ("Advance Notice & Cancellation",       "Set booking lead time and cancellation policy.") },
+        { 8, ("Your Goals",                          "Set your hosting expectations and availability goals.") }
+    };
+
+    private Dictionary<int, (int Progress, string Title, string Next)> stepProgressData = new()
+    {
+        { 1, (0,  "Location & Hangar",   "Aircraft Specs") },
+        { 2, (13, "Aircraft Specs",      "Jet Photos") },
+        { 3, (26, "Jet Photos",          "Cabin Features") },
+        { 4, (39, "Cabin Features",      "Safety & Compliance") },
+        { 5, (52, "Safety & Compliance", "Pilot & Crew") },
+        { 6, (65, "Pilot & Crew",        "Advance Notice") },
+        { 7, (78, "Advance Notice",      "Your Goals") },
+        { 8, (91, "Your Goals",          "Completed") }
+    };
+
+    // ========== INIT ==========
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            userName = user.FindFirst("FirstName")?.Value
+                    ?? user.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value
+                    ?? "Partner";
+        }
+
+        var token = await AuthStateProvider.GetAccessTokenAsync();
+        if (!string.IsNullOrEmpty(token))
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        await LoadCountries();
+        await ResumeInProgress();
+        isPageLoading = false;
+    }
+
+    // ========== LOAD DATA ==========
+
+    private async Task LoadCountries()
+    {
+        try
+        {
+            var r = await Http.GetFromJsonAsync<ApiResp<List<CountryDto>>>(
+                "api/v1/countries",
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (r?.Data != null) countries = r.Data;
+        }
+        catch { }
+    }
+
+    private async Task LoadCities()
+    {
+        cities.Clear();
+        if (step1.CountryId == null) return;
+        try
+        {
+            var r = await Http.GetFromJsonAsync<ApiResp<List<CityDto>>>(
+                $"api/v1/countries/{step1.CountryId}/cities",
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (r?.Data != null) cities = r.Data;
+        }
+        catch { }
+    }
+
+    private async Task OnCountryChanged(ChangeEventArgs e)
+    {
+        step1.CountryId = ParseGuid(e.Value?.ToString());
+        step1.CityId = null;
+        await LoadCities();
+    }
+
+    // ========== RESUME ==========
+
+    private async Task ResumeInProgress()
+    {
+        try
+        {
+            var response = await Http.GetAsync("api/v1/jet-listing/in-progress");
+            if (!response.IsSuccessStatusCode) return;
+
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<JetFullData>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true && result.Data != null
+                && result.Data.ListingId != Guid.Empty)
+            {
+                var d = result.Data;
+                listingId = d.ListingId;
+                currentStep = d.CurrentStep > 0 ? d.CurrentStep : 1;
+
+                step1.CountryId = d.CountryId;
+                step1.State = d.State ?? string.Empty;
+                step1.CityId = d.CityId;
+                step1.ZipCode = d.ZipCode ?? string.Empty;
+                step1.HangarLocation = d.HangarLocation ?? string.Empty;
+                step1.HomeAirport = d.HomeAirport ?? string.Empty;
+
+                if (step1.CountryId != null) await LoadCities();
+
+                step2.AircraftMake = d.AircraftMake ?? string.Empty;
+                step2.AircraftModel = d.AircraftModel ?? string.Empty;
+                step2.AircraftYear = d.AircraftYear ?? string.Empty;
+                step2.TailNumber = d.TailNumber ?? string.Empty;
+                step2.AircraftCategory = d.AircraftCategory ?? string.Empty;
+                step2.PassengerCapacity = d.PassengerCapacity;
+                step2.RangeNauticalMiles = d.RangeNauticalMiles ?? string.Empty;
+                step2.CruisingSpeed = d.CruisingSpeed ?? string.Empty;
+                step2.EngineType = d.EngineType ?? string.Empty;
+
+                if (!string.IsNullOrEmpty(d.CabinFeatures))
+                    try { step4CabinFeatures = JsonSerializer.Deserialize<List<string>>(d.CabinFeatures) ?? new(); } catch { }
+
+                if (!string.IsNullOrEmpty(d.SafetyCertifications))
+                    try { step5Certifications = JsonSerializer.Deserialize<List<string>>(d.SafetyCertifications) ?? new(); } catch { }
+
+                step5.LastMaintenanceDate = d.LastMaintenanceDate ?? DateTime.Today;
+
+                step6.PilotFirstName = d.PilotFirstName ?? string.Empty;
+                step6.PilotLastName = d.PilotLastName ?? string.Empty;
+                step6.PilotLicenceNumber = d.PilotLicenceNumber ?? string.Empty;
+                step6.PilotLicenceType = d.PilotLicenceType ?? string.Empty;
+                step6.PilotLicenceExpiry = d.PilotLicenceExpiry ?? DateTime.Today;
+                step6.CrewCount = d.CrewCount;
+
+                step7.AdvanceNotice = d.AdvanceNotice ?? string.Empty;
+                step7.MinTripDuration = d.MinTripDuration ?? string.Empty;
+                step7.MaxTripDuration = d.MaxTripDuration ?? string.Empty;
+                step7.CancellationPolicy = d.CancellationPolicy ?? string.Empty;
+
+                step8.PrimaryGoal = d.PrimaryGoal ?? string.Empty;
+                step8.UsageFrequency = d.UsageFrequency ?? string.Empty;
+                step8.ShareFrequency = d.ShareFrequency ?? string.Empty;
+
+                successMessage = $"Welcome back! Resuming from step {currentStep}.";
+            }
+        }
+        catch { }
+    }
+
+    // ========== SAVE METHODS ==========
+
+    private async Task SaveStep1()
+    {
+        errorMessage = string.Empty;
+        if (step1.CountryId == null) { errorMessage = "Please select country."; return; }
+        if (string.IsNullOrWhiteSpace(step1.State)) { errorMessage = "Please enter state."; return; }
+        if (step1.CityId == null) { errorMessage = "Please select city."; return; }
+        if (string.IsNullOrWhiteSpace(step1.ZipCode)) { errorMessage = "Please enter zip code."; return; }
+        if (string.IsNullOrWhiteSpace(step1.HangarLocation)) { errorMessage = "Please enter hangar location."; return; }
+        if (string.IsNullOrWhiteSpace(step1.HomeAirport)) { errorMessage = "Please enter home airport."; return; }
+
+        isLoading = true;
+        try
+        {
+            var req = new
+            {
+                ListingId = listingId,
+                CountryId = step1.CountryId!.Value,
+                step1.State,
+                CityId = step1.CityId!.Value,
+                step1.ZipCode,
+                step1.HangarLocation,
+                step1.HomeAirport
+            };
+            var resp = await Http.PostAsJsonAsync("api/v1/jet-listing/step1", req);
+            var json = await resp.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<ListingResp>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) { listingId = result.Data?.ListingId; currentStep = 2; }
+            else errorMessage = result?.Message ?? "Error saving step 1";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep2()
+    {
+        errorMessage = string.Empty;
+        if (string.IsNullOrWhiteSpace(step2.AircraftMake)) { errorMessage = "Please enter aircraft make."; return; }
+        if (string.IsNullOrWhiteSpace(step2.AircraftModel)) { errorMessage = "Please enter aircraft model."; return; }
+        if (string.IsNullOrWhiteSpace(step2.AircraftYear)) { errorMessage = "Please enter year."; return; }
+        if (string.IsNullOrWhiteSpace(step2.TailNumber)) { errorMessage = "Please enter tail number."; return; }
+        if (string.IsNullOrWhiteSpace(step2.AircraftCategory)) { errorMessage = "Please select aircraft category."; return; }
+        if (step2.PassengerCapacity <= 0) { errorMessage = "Please enter passenger capacity."; return; }
+
+        isLoading = true;
+        try
+        {
+            var req = new
+            {
+                ListingId = listingId,
+                step2.AircraftMake,
+                step2.AircraftModel,
+                step2.AircraftYear,
+                step2.TailNumber,
+                step2.AircraftCategory,
+                step2.PassengerCapacity,
+                step2.RangeNauticalMiles,
+                step2.CruisingSpeed,
+                step2.EngineType
+            };
+            var resp = await Http.PostAsJsonAsync("api/v1/jet-listing/step2", req);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) currentStep = 3;
+            else errorMessage = result?.Message ?? "Error saving step 2";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep3()
+    {
+        errorMessage = string.Empty;
+        if (!interiorFiles.Any() && !exteriorFiles.Any())
+        { errorMessage = "Please upload at least one photo."; return; }
+
+        isLoading = true;
+        try
+        {
+            using var content = new MultipartFormDataContent();
+            content.Add(new StringContent(listingId.ToString()!), "listingId");
+            foreach (var f in interiorFiles)
+                content.Add(new StreamContent(f.OpenReadStream(10 * 1024 * 1024)), "interiorPhotos", f.Name);
+            foreach (var f in exteriorFiles)
+                content.Add(new StreamContent(f.OpenReadStream(10 * 1024 * 1024)), "exteriorPhotos", f.Name);
+
+            var resp = await Http.PostAsync("api/v1/jet-listing/step3", content);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) currentStep = 4;
+            else errorMessage = result?.Message ?? "Error uploading photos";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep4()
+    {
+        errorMessage = string.Empty;
+        isLoading = true;
+        try
+        {
+            var req = new { ListingId = listingId, CabinFeatures = step4CabinFeatures };
+            var resp = await Http.PostAsJsonAsync("api/v1/jet-listing/step4", req);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) currentStep = 5;
+            else errorMessage = result?.Message ?? "Error saving step 4";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep5()
+    {
+        errorMessage = string.Empty;
+        isLoading = true;
+        try
+        {
+            using var content = new MultipartFormDataContent();
+            content.Add(new StringContent(listingId.ToString()!), "ListingId");
+            content.Add(new StringContent(step5.LastMaintenanceDate.ToString("yyyy-MM-dd")), "LastMaintenanceDate");
+            foreach (var c in step5Certifications)
+                content.Add(new StringContent(c), "SafetyCertifications");
+            if (airworthinessFile != null)
+                content.Add(new StreamContent(airworthinessFile.OpenReadStream(10 * 1024 * 1024)), "airworthiness", airworthinessFile.Name);
+            if (insuranceFile != null)
+                content.Add(new StreamContent(insuranceFile.OpenReadStream(10 * 1024 * 1024)), "insurance", insuranceFile.Name);
+            if (registrationFile != null)
+                content.Add(new StreamContent(registrationFile.OpenReadStream(10 * 1024 * 1024)), "registration", registrationFile.Name);
+
+            var resp = await Http.PostAsync("api/v1/jet-listing/step5", content);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) currentStep = 6;
+            else errorMessage = result?.Message ?? "Error saving step 5";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep6()
+    {
+        errorMessage = string.Empty;
+        if (string.IsNullOrWhiteSpace(step6.PilotFirstName)) { errorMessage = "Please enter pilot first name."; return; }
+        if (string.IsNullOrWhiteSpace(step6.PilotLastName)) { errorMessage = "Please enter pilot last name."; return; }
+        if (string.IsNullOrWhiteSpace(step6.PilotLicenceNumber)) { errorMessage = "Please enter licence number."; return; }
+        if (string.IsNullOrWhiteSpace(step6.PilotLicenceType)) { errorMessage = "Please select licence type."; return; }
+        if (step6.CrewCount <= 0) { errorMessage = "Please enter crew count."; return; }
+
+        isLoading = true;
+        try
+        {
+            var req = new
+            {
+                ListingId = listingId,
+                step6.PilotFirstName,
+                step6.PilotLastName,
+                step6.PilotLicenceNumber,
+                step6.PilotLicenceType,
+                step6.PilotLicenceExpiry,
+                step6.CrewCount
+            };
+            var resp = await Http.PostAsJsonAsync("api/v1/jet-listing/step6", req);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) currentStep = 7;
+            else errorMessage = result?.Message ?? "Error saving step 6";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep7()
+    {
+        errorMessage = string.Empty;
+        if (string.IsNullOrWhiteSpace(step7.AdvanceNotice)) { errorMessage = "Please select advance notice."; return; }
+        if (string.IsNullOrWhiteSpace(step7.MinTripDuration)) { errorMessage = "Please select min trip duration."; return; }
+        if (string.IsNullOrWhiteSpace(step7.MaxTripDuration)) { errorMessage = "Please select max trip duration."; return; }
+        if (string.IsNullOrWhiteSpace(step7.CancellationPolicy)) { errorMessage = "Please select cancellation policy."; return; }
+
+        isLoading = true;
+        try
+        {
+            var req = new { ListingId = listingId, step7.AdvanceNotice, step7.MinTripDuration, step7.MaxTripDuration, step7.CancellationPolicy };
+            var resp = await Http.PostAsJsonAsync("api/v1/jet-listing/step7", req);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) currentStep = 8;
+            else errorMessage = result?.Message ?? "Error saving step 7";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep8()
+    {
+        errorMessage = string.Empty;
+        if (string.IsNullOrWhiteSpace(step8.PrimaryGoal)) { errorMessage = "Please select primary goal."; return; }
+        if (string.IsNullOrWhiteSpace(step8.UsageFrequency)) { errorMessage = "Please select usage frequency."; return; }
+        if (string.IsNullOrWhiteSpace(step8.ShareFrequency)) { errorMessage = "Please select share frequency."; return; }
+
+        isLoading = true;
+        try
+        {
+            var req = new { ListingId = listingId, step8.PrimaryGoal, step8.UsageFrequency, step8.ShareFrequency };
+            var resp = await Http.PostAsJsonAsync("api/v1/jet-listing/step8", req);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true)
+            {
+                successMessage = "Jet listing submitted successfully!";
+                Navigation.NavigateTo("/dashboard");
+            }
+            else errorMessage = result?.Message ?? "Error submitting";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    // ========== NAVIGATION ==========
+
+    private void GoToDashboard() => Navigation.NavigateTo("/dashboard");
+    private void GoBack() { if (currentStep > 1) currentStep--; }
+
+    // ========== FILE HANDLERS ==========
+
+    private async Task OnInteriorPhotosChanged(InputFileChangeEventArgs e)
+    {
+        interiorFiles = e.GetMultipleFiles(10).ToList();
+        interiorPreviews.Clear();
+        foreach (var f in interiorFiles)
+        {
+            var buf = new byte[f.Size];
+            await f.OpenReadStream(10 * 1024 * 1024).ReadAsync(buf);
+            interiorPreviews.Add($"data:{f.ContentType};base64,{Convert.ToBase64String(buf)}");
+        }
+    }
+
+    private async Task OnExteriorPhotosChanged(InputFileChangeEventArgs e)
+    {
+        exteriorFiles = e.GetMultipleFiles(10).ToList();
+        exteriorPreviews.Clear();
+        foreach (var f in exteriorFiles)
+        {
+            var buf = new byte[f.Size];
+            await f.OpenReadStream(10 * 1024 * 1024).ReadAsync(buf);
+            exteriorPreviews.Add($"data:{f.ContentType};base64,{Convert.ToBase64String(buf)}");
+        }
+    }
+
+    private async Task HandleLogout()
+    {
+        await AuthStateProvider.MarkUserAsLoggedOut();
+        Navigation.NavigateTo("/");
+    }
+
+    private void ToggleFeature(string f, bool add)
+    {
+        if (add) { if (!step4CabinFeatures.Contains(f)) step4CabinFeatures.Add(f); }
+        else step4CabinFeatures.Remove(f);
+    }
+
+    private void ToggleCert(string c, bool add)
+    {
+        if (add) { if (!step5Certifications.Contains(c)) step5Certifications.Add(c); }
+        else step5Certifications.Remove(c);
+    }
+
+    private static Guid? ParseGuid(string? v) =>
+        Guid.TryParse(v, out var g) ? g : null;
+
+    // ========== MODELS ==========
+
+    class Step1M
+    {
+        public Guid? CountryId { get; set; }
+        public string State { get; set; } = string.Empty;
+        public Guid? CityId { get; set; }
+        public string ZipCode { get; set; } = string.Empty;
+        public string HangarLocation { get; set; } = string.Empty;
+        public string HomeAirport { get; set; } = string.Empty;
+    }
+    class Step2M
+    {
+        public string AircraftMake { get; set; } = string.Empty;
+        public string AircraftModel { get; set; } = string.Empty;
+        public string AircraftYear { get; set; } = string.Empty;
+        public string TailNumber { get; set; } = string.Empty;
+        public string AircraftCategory { get; set; } = string.Empty;
+        public int PassengerCapacity { get; set; }
+        public string RangeNauticalMiles { get; set; } = string.Empty;
+        public string CruisingSpeed { get; set; } = string.Empty;
+        public string EngineType { get; set; } = string.Empty;
+    }
+    class Step5M
+    {
+        public DateTime LastMaintenanceDate { get; set; } = DateTime.Today;
+    }
+    class Step6M
+    {
+        public string PilotFirstName { get; set; } = string.Empty;
+        public string PilotLastName { get; set; } = string.Empty;
+        public string PilotLicenceNumber { get; set; } = string.Empty;
+        public string PilotLicenceType { get; set; } = string.Empty;
+        public DateTime PilotLicenceExpiry { get; set; } = DateTime.Today;
+        public int CrewCount { get; set; }
+    }
+    class Step7M
+    {
+        public string AdvanceNotice { get; set; } = string.Empty;
+        public string MinTripDuration { get; set; } = string.Empty;
+        public string MaxTripDuration { get; set; } = string.Empty;
+        public string CancellationPolicy { get; set; } = string.Empty;
+    }
+    class Step8M
+    {
+        public string PrimaryGoal { get; set; } = string.Empty;
+        public string UsageFrequency { get; set; } = string.Empty;
+        public string ShareFrequency { get; set; } = string.Empty;
+    }
+
+    class ApiResp<T> { public bool Success { get; set; } public string Message { get; set; } = string.Empty; public T? Data { get; set; } }
+    class ListingResp { public Guid ListingId { get; set; } public string Status { get; set; } = string.Empty; public int CurrentStep { get; set; } }
+    class CountryDto { public Guid Id { get; set; } public string Name { get; set; } = string.Empty; }
+    class CityDto { public Guid Id { get; set; } public string Name { get; set; } = string.Empty; }
+
+    class JetFullData
+    {
+        public Guid ListingId { get; set; }
+        public string Status { get; set; } = string.Empty;
+        public int CurrentStep { get; set; }
+        public Guid? CountryId { get; set; }
+        public string? State { get; set; }
+        public Guid? CityId { get; set; }
+        public string? ZipCode { get; set; }
+        public string? HangarLocation { get; set; }
+        public string? HomeAirport { get; set; }
+        public string? AircraftMake { get; set; }
+        public string? AircraftModel { get; set; }
+        public string? AircraftYear { get; set; }
+        public string? TailNumber { get; set; }
+        public string? AircraftCategory { get; set; }
+        public int PassengerCapacity { get; set; }
+        public string? RangeNauticalMiles { get; set; }
+        public string? CruisingSpeed { get; set; }
+        public string? EngineType { get; set; }
+        public string? CabinFeatures { get; set; }
+        public string? SafetyCertifications { get; set; }
+        public DateTime? LastMaintenanceDate { get; set; }
+        public string? PilotFirstName { get; set; }
+        public string? PilotLastName { get; set; }
+        public string? PilotLicenceNumber { get; set; }
+        public string? PilotLicenceType { get; set; }
+        public DateTime? PilotLicenceExpiry { get; set; }
+        public int CrewCount { get; set; }
+        public string? AdvanceNotice { get; set; }
+        public string? MinTripDuration { get; set; }
+        public string? MaxTripDuration { get; set; }
+        public string? CancellationPolicy { get; set; }
+        public string? PrimaryGoal { get; set; }
+        public string? UsageFrequency { get; set; }
+        public string? ShareFrequency { get; set; }
+    }
+}

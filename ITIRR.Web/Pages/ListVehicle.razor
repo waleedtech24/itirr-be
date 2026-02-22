@@ -1,0 +1,1248 @@
+﻿@page "/list-vehicle"
+@layout ITIRR.Web.Shared.NoFooterLayout
+@attribute [Authorize]
+@inject NavigationManager Navigation
+@inject CustomAuthStateProvider AuthStateProvider
+@inject HttpClient Http
+@inject IJSRuntime JS
+@using Microsoft.AspNetCore.Authorization
+@using ITIRR.Web.Auth
+@using System.Net.Http.Json
+@using System.Text.Json
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-light">
+    <div class="container">
+        <a class="navbar-brand">
+            <img src="img/logo.png" />
+        </a>
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center mb-0 p-0">
+                <li class="nav-item dropdown pe-3">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0"
+                       href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="img/user-profile.jpg" alt="avatar"
+                             class="rounded-circle" width="36" height="36" />
+                        <span class="d-none d-md-block ps-2">@userName</span>
+                        <i class="bi bi-chevron-down ms-1"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li class="dropdown-header d-flex align-items-center">
+                            <img src="img/user-profile.jpg" alt="Profile"
+                                 class="rounded-circle me-2" width="45" height="45" />
+                            <div>
+                                <h6 class="mb-0">@userName</h6>
+                                <small class="text-muted">Partner</small>
+                            </div>
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center"
+                               href="#" @onclick="HandleLogout" @onclick:preventDefault="true">
+                                <i class="bi bi-box-arrow-right me-2"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</nav>
+
+<div class="container py-5">
+
+    @if (isPageLoading)
+    {
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p class="mt-3">Loading your progress...</p>
+            </div>
+    }
+    else
+    {
+            <!-- Progress Header -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="progress-header">
+                        <div class="row mb-1">
+                            <div class="col-12">
+                                <h4 class="title">@stepProgressData[currentStep].Title</h4>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-12 per-progress"><p>Your progress</p></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6 this-shows">
+                                <h4>@stepProgressData[currentStep].Progress% complete</h4>
+                            </div>
+                            <div class="col-6 which-one text-end">
+                                <p>@stepProgressData[currentStep].Next</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="progress">
+                                    <div class="progress-bar"
+                                         style="width: @stepProgressData[currentStep].Progress%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="car-location">
+                        <h1>@stepHeadings[currentStep].Title</h1>
+                        <p>@stepHeadings[currentStep].Subtitle</p>
+                    </div>
+                </div>
+            </div>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+                    <div class="alert alert-danger alert-dismissible">
+                @errorMessage
+                        <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+                    </div>
+        }
+        @if (!string.IsNullOrEmpty(successMessage))
+        {
+                    <div class="alert alert-success alert-dismissible">
+                @successMessage
+                        <button type="button" class="btn-close" @onclick="() => successMessage = string.Empty"></button>
+                    </div>
+        }
+
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3 step-sidebar">
+                @for (int i = 1; i <= 9; i++)
+                {
+                    var step = i;
+                            <div class="step-item @(currentStep == step ? "active" : "") @(step < currentStep ? "completed" : "")"
+                                 data-step="@step">
+                                <i class="@(step < currentStep ? "fa-solid fa-circle-check complete" : "fa-regular fa-circle-check")"></i>
+                                &nbsp; @sidebarTitles[step]
+                            </div>
+                }
+                </div>
+
+                <!-- Form Content -->
+                <div class="col-md-9 all-data">
+
+                    <!-- ========== STEP 1 ========== -->
+                @if (currentStep == 1)
+                {
+                            <div class="detail-form">
+                                <h6>Location Details</h6>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Country <span class="text-danger">*</span></label>
+                                        <select class="form-select my-selects"
+                                                value="@step1.CountryId"
+                                                @onchange="OnCountryChanged">
+                                            <option value="">-- Select Country --</option>
+                                    @foreach (var c in countries)
+                                    {
+                                                    <option value="@c.Id">@c.Name</option>
+                                    }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">State <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="Enter State" @bind="step1.State" />
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">City <span class="text-danger">*</span></label>
+                                        <select class="form-select my-selects"
+                                                value="@step1.CityId"
+                                                @onchange="e => step1.CityId = ParseGuid(e.Value?.ToString())">
+                                            <option value="">-- Select City --</option>
+                                    @foreach (var c in cities)
+                                    {
+                                                    <option value="@c.Id">@c.Name</option>
+                                    }
+                                        </select>
+                                @if (!cities.Any() && step1.CountryId != null)
+                                {
+                                                <small class="text-muted">No cities found for selected country.</small>
+                                }
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Zip Code <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="Zip Code" @bind="step1.ZipCode" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Street Address <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="Enter Street/Road Address" @bind="step1.StreetAddress" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next-buttons">
+                                <a href="#" class="back-btn" @onclick="GoBackToDashboard"
+                                   @onclick:preventDefault="true">Back</a>
+                                <button type="button" class="btn next-btn"
+                                        @onclick="SaveStep1" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                                </button>
+                            </div>
+                }
+
+                    <!-- ========== STEP 2 ========== -->
+                @if (currentStep == 2)
+                {
+                            <div class="detail-form">
+                                <h6>VIN and Licence Plate Number</h6>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Enter your VIN <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects mb-2"
+                                               placeholder="Enter your 17 Digit VIN" @bind="step2.VIN"
+                                               disabled="@step2.IsOlderThan1981" />
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                   @bind="step2.IsOlderThan1981" />
+                                            <label class="form-check-label check-it">
+                                                My car is older than 1981
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Licence Plate Number <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="Enter Your License Plate Number"
+                                               @bind="step2.LicencePlateNumber" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next-buttons">
+                                <a href="#" class="back-btn" @onclick="GoToPreviousStep"
+                                   @onclick:preventDefault="true">Back</a>
+                                <button type="button" class="btn next-btn"
+                                        @onclick="SaveStep2" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                                </button>
+                            </div>
+                }
+
+                    <!-- ========== STEP 3 ========== -->
+                @if (currentStep == 3)
+                {
+                            <div class="detail-form">
+                                <h6>Odometer & Transmission</h6>
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Odometer Reading <span class="text-danger">*</span></label>
+                                        <select class="form-select my-selects" @bind="step3.OdometerReading">
+                                            <option value="">-- Select Odometer Reading --</option>
+                                            <option value="Under 10,000 km">Under 10,000 km</option>
+                                            <option value="10,000-50,000 km">10,000 – 50,000 km</option>
+                                            <option value="50,000-100,000 km">50,000 – 100,000 km</option>
+                                            <option value="100,000-150,000 km">100,000 – 150,000 km</option>
+                                            <option value="150,000-200,000 km">150,000 – 200,000 km</option>
+                                            <option value="200,000+ km">200,000+ km</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Transmission <span class="text-danger">*</span></label>
+                                        <div class="d-flex align-items-center">
+                                            <div class="form-check me-4">
+                                                <input class="form-check-input" type="radio"
+                                                       name="transmission" value="Automatic"
+                                                       checked="@(step3.Transmission == "Automatic")"
+                                                       @onchange="@(() => step3.Transmission = "Automatic")" />
+                                                <label class="form-check-label">Automatic</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio"
+                                                       name="transmission" value="Manual"
+                                                       checked="@(step3.Transmission == "Manual")"
+                                                       @onchange="@(() => step3.Transmission = "Manual")" />
+                                                <label class="form-check-label">Manual</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Car Features</label>
+                                        <div class="features-grid">
+                                    @foreach (var feature in availableFeatures)
+                                    {
+                                        var f = feature;
+                                                    <label>
+                                                        <input type="checkbox" class="form-check-input"
+                                                               checked="@step3.Features.Contains(f)"
+                                                               @onchange="@(e => ToggleFeature(f, (bool)e.Value!))" />
+                                            @f
+                                                    </label>
+                                    }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next-buttons">
+                                <a href="#" class="back-btn" @onclick="GoToPreviousStep"
+                                   @onclick:preventDefault="true">Back</a>
+                                <button type="button" class="btn next-btn"
+                                        @onclick="SaveStep3" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                                </button>
+                            </div>
+                }
+
+                    <!-- ========== STEP 4 ========== -->
+                @if (currentStep == 4)
+                {
+                            <div class="detail-form">
+                                <h6>Car History</h6>
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <label class="form-label">
+                                            I certify I paid applicable sales or related taxes on the purchase of this vehicle <span class="text-danger">*</span>
+                                        </label>
+                                        <div class="d-flex align-items-center mt-2">
+                                            <div class="form-check me-4">
+                                                <input class="form-check-input" type="radio" name="taxCert"
+                                                       checked="@(step4.TaxCertified == true)"
+                                                       @onchange="@(() => step4.TaxCertified = true)" />
+                                                <label class="form-check-label">Yes</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="taxCert"
+                                                       checked="@(step4.TaxCertified == false)"
+                                                       @onchange="@(() => step4.TaxCertified = false)" />
+                                                <label class="form-check-label">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Branded or Salvage Title <span class="text-danger">*</span></label>
+                                        <div class="d-flex align-items-center mt-2">
+                                            <div class="form-check me-4">
+                                                <input class="form-check-input" type="radio" name="salvage"
+                                                       checked="@(step4.HasSalvageTitle == true)"
+                                                       @onchange="@(() => step4.HasSalvageTitle = true)" />
+                                                <label class="form-check-label">Yes</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="salvage"
+                                                       checked="@(step4.HasSalvageTitle == false)"
+                                                       @onchange="@(() => step4.HasSalvageTitle = false)" />
+                                                <label class="form-check-label">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next-buttons">
+                                <a href="#" class="back-btn" @onclick="GoToPreviousStep"
+                                   @onclick:preventDefault="true">Back</a>
+                                <button type="button" class="btn next-btn"
+                                        @onclick="SaveStep4" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                                </button>
+                            </div>
+                }
+
+                    <!-- ========== STEP 5 ========== -->
+                @if (currentStep == 5)
+                {
+                            <div class="detail-form">
+                                <h6>Your Goals</h6>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <label class="form-label">What is your primary financial goal? <span class="text-danger">*</span></label>
+                                        <select class="form-select my-selects" @bind="step5.PrimaryGoal">
+                                            <option value="">-- Select option --</option>
+                                            <option value="Only a few times a year">Only a few times a year</option>
+                                            <option value="A few times each season">A few times each season</option>
+                                            <option value="Monthly or more">Monthly or more</option>
+                                            <option value="Weekly or throughout the season">Weekly or throughout the season</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <label class="form-label">How often do you or your family currently use this vehicle? <span class="text-danger">*</span></label>
+                                        <select class="form-select my-selects" @bind="step5.UsageFrequency">
+                                            <option value="">-- Select option --</option>
+                                            <option value="Only a few times a year">Only a few times a year</option>
+                                            <option value="A few times each season">A few times each season</option>
+                                            <option value="Monthly or more">Monthly or more</option>
+                                            <option value="Weekly or throughout the season">Weekly or throughout the season</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <label class="form-label">How often do you want to share your vehicle? <span class="text-danger">*</span></label>
+                                        <select class="form-select my-selects" @bind="step5.ShareFrequency">
+                                            <option value="">-- Select option --</option>
+                                            <option value="Limited availability; a few times a year">Limited availability; a few times a year</option>
+                                            <option value="A few times each month or season">A few times each month or season</option>
+                                            <option value="Consistent sharing when not using it">Consistent sharing when not using it</option>
+                                            <option value="Maximum availability for bookings">Maximum availability for bookings</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next-buttons">
+                                <a href="#" class="back-btn" @onclick="GoToPreviousStep"
+                                   @onclick:preventDefault="true">Back</a>
+                                <button type="button" class="btn next-btn"
+                                        @onclick="SaveStep5" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                                </button>
+                            </div>
+                }
+
+                    <!-- ========== STEP 6 ========== -->
+                @if (currentStep == 6)
+                {
+                            <div class="detail-form">
+                                <h6>Advance Notice</h6>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <label class="form-label">How much advance notice do you need? <span class="text-danger">*</span></label>
+                                        <select class="form-select my-selects" @bind="step6.AdvanceNotice">
+                                            <option value="">-- Select option --</option>
+                                            <option value="Same Day">Same Day Notice</option>
+                                            <option value="24 Hours">24 Hours Notice</option>
+                                            <option value="48 Hours">48 Hours Notice</option>
+                                            <option value="1 Week">1 Week Notice</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Minimum Trip Duration <span class="text-danger">*</span></label>
+                                        <select class="form-select my-selects" @bind="step6.MinTripDuration">
+                                            <option value="">-- Select option --</option>
+                                            <option value="2-Day Minimum">2-Day Minimum</option>
+                                            <option value="1-Week">1-Week</option>
+                                        </select>
+                                        <div class="form-check mt-2">
+                                            <input class="form-check-input" type="checkbox"
+                                                   @bind="step6.MinTwoDayWeekend" />
+                                            <label class="form-check-label check-it">
+                                                Require a 2-Day minimum for trips that start Friday, Saturday and Sunday.
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Maximum Trip Duration <span class="text-danger">*</span></label>
+                                        <select class="form-select my-selects" @bind="step6.MaxTripDuration">
+                                            <option value="">-- Select option --</option>
+                                            <option value="1-Month Maximum">1-Month Maximum</option>
+                                            <option value="No Maximum">No Maximum - Flexible</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next-buttons">
+                                <a href="#" class="back-btn" @onclick="GoToPreviousStep"
+                                   @onclick:preventDefault="true">Back</a>
+                                <button type="button" class="btn next-btn"
+                                        @onclick="SaveStep6" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                                </button>
+                            </div>
+                }
+
+                    <!-- ========== STEP 7 ========== -->
+                @if (currentStep == 7)
+                {
+                            <div class="detail-form">
+                                <h6>Car Images / Media</h6>
+                                <div class="row mb-4">
+                                    <div class="col-md-12">
+                                        <label class="form-label mb-3">Interior Images</label>
+                                        <InputFile OnChange="OnInteriorPhotosChanged" multiple
+                                                   accept="image/jpeg,image/png"
+                                                   class="form-control my-selects mb-2" />
+                                @if (interiorPreviews.Any())
+                                {
+                                                <div class="upload-row mb-3">
+                                        @foreach (var p in interiorPreviews)
+                                        {
+                                                            <div class="image-col">
+                                                                <div class="image-preview">
+                                                                    <img src="@p" />
+                                                                </div>
+                                                            </div>
+                                        }
+                                                </div>
+                                }
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="form-label">Exterior Images</label>
+                                        <InputFile OnChange="OnExteriorPhotosChanged" multiple
+                                                   accept="image/jpeg,image/png"
+                                                   class="form-control my-selects mb-2" />
+                                @if (exteriorPreviews.Any())
+                                {
+                                                <div class="upload-row mb-3">
+                                        @foreach (var p in exteriorPreviews)
+                                        {
+                                                            <div class="image-col">
+                                                                <div class="image-preview">
+                                                                    <img src="@p" />
+                                                                </div>
+                                                            </div>
+                                        }
+                                                </div>
+                                }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next-buttons">
+                                <a href="#" class="back-btn" @onclick="GoToPreviousStep"
+                                   @onclick:preventDefault="true">Back</a>
+                                <button type="button" class="btn next-btn"
+                                        @onclick="SaveStep7" disabled="@isLoading">
+                            @(isLoading ? "Uploading..." : "Next")
+                                </button>
+                            </div>
+                }
+
+                    <!-- ========== STEP 8 ========== -->
+                @if (currentStep == 8)
+                {
+                            <div class="detail-form">
+                                <h6>Driver License</h6>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label class="form-label">First Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="First Name" @bind="step8.FirstName" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Middle Name</label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="Middle Name" @bind="step8.MiddleName" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="Last Name" @bind="step8.LastName" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <label class="form-label">License Number <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="License Number" @bind="step8.LicenceNumber" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Country <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="Country" @bind="step8.Country" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Expiry Date <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control my-selects"
+                                               @bind="step8.ExpiryDate" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Birthday <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control my-selects"
+                                               @bind="step8.Birthday" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next-buttons">
+                                <a href="#" class="back-btn" @onclick="GoToPreviousStep"
+                                   @onclick:preventDefault="true">Back</a>
+                                <button type="button" class="btn next-btn"
+                                        @onclick="SaveStep8" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                                </button>
+                            </div>
+                }
+
+                    <!-- ========== STEP 9 ========== -->
+                @if (currentStep == 9)
+                {
+                            <div class="detail-form">
+                                <h6>PCO Licence</h6>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Vehicle Make & Model <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="Vehicle Make & Model" @bind="step9.VehicleMakeModel" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Plate Number <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="Plate Number" @bind="step9.PlateNumber" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Vehicle Color <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="Vehicle Color" @bind="step9.VehicleColor" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Year of Manufacture <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="Year of Manufacture" @bind="step9.YearOfManufacture" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">PHV Licence Number <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="PHV Licence Number" @bind="step9.PHVLicenceNumber" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">PHV Licence Expiry Date <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control my-selects"
+                                               placeholder="e.g. 2026-12-31" @bind="step9.PHVLicenceExpiryDate" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Road Tax Certificate</label>
+                                        <InputFile OnChange="OnRoadTaxChanged" accept="image/jpeg,image/png,application/pdf"
+                                                   class="form-control my-selects" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">MOT Certificate</label>
+                                        <InputFile OnChange="OnMotChanged" accept="image/jpeg,image/png,application/pdf"
+                                                   class="form-control my-selects" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Road Tax Certificate 2</label>
+                                        <InputFile OnChange="OnRoadTax2Changed" accept="image/jpeg,image/png,application/pdf"
+                                                   class="form-control my-selects" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Vehicle Logbook</label>
+                                        <InputFile OnChange="OnLogbookChanged" accept="image/jpeg,image/png,application/pdf"
+                                                   class="form-control my-selects" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="next-buttons">
+                                <a href="#" class="back-btn" @onclick="GoToPreviousStep"
+                                   @onclick:preventDefault="true">Back</a>
+                                <button type="button" class="btn next-btn"
+                                        @onclick="SaveStep9" disabled="@isLoading">
+                            @(isLoading ? "Submitting..." : "Submit")
+                                </button>
+                            </div>
+                }
+
+                </div>
+            </div>
+    }
+</div>
+
+@code {
+    [SupplyParameterFromQuery(Name = "type")]
+    public string? VehicleType { get; set; }
+
+    private string userName = "Partner";
+    private int currentStep = 1;
+    private Guid? listingId = null;
+    private bool isLoading = false;
+    private bool isPageLoading = true;
+    private string errorMessage = "";
+    private string successMessage = "";
+
+    private List<CountryDto> countries = new();
+    private List<CityDto> cities = new();
+
+    private Step1Model step1 = new();
+    private Step2Model step2 = new();
+    private Step3Model step3 = new();
+    private Step4Model step4 = new();
+    private Step5Model step5 = new();
+    private Step6Model step6 = new();
+    private Step8Model step8 = new();
+    private Step9Model step9 = new();
+
+    private List<IBrowserFile> interiorFiles = new();
+    private List<IBrowserFile> exteriorFiles = new();
+    private List<string> interiorPreviews = new();
+    private List<string> exteriorPreviews = new();
+    private IBrowserFile? roadTaxFile;
+    private IBrowserFile? motFile;
+    private IBrowserFile? roadTax2File;
+    private IBrowserFile? logbookFile;
+
+    private List<string> availableFeatures = new()
+    {
+        "Adaptive Cruise Control", "Lane Keeping Assist", "Blind Spot Monitoring",
+        "Automatic Emergency Braking", "Parking Assistance", "Traffic Sign Recognition",
+        "Collision Avoidance System", "Rear Cross Traffic Alert", "Adaptive Headlights"
+    };
+
+    private Dictionary<int, string> sidebarTitles = new()
+    {
+        { 1, "Location Detail" }, { 2, "VIN & Licence Plate Number" },
+        { 3, "Odometer & Car Features" }, { 4, "Car History" },
+        { 5, "Your Goals" }, { 6, "Car Availability" },
+        { 7, "Car Photos" }, { 8, "Driver's Licence" },
+        { 9, "Vehicle Licence (PCO)" }
+    };
+
+    private Dictionary<int, (string Title, string Subtitle)> stepHeadings = new()
+    {
+        { 1, ("Where is your car located?", "ITIRR needs your location to ensure we operate where you are.") },
+        { 2, ("VIN and Licence Plate Number", "We'll use your VIN to identify your specific car.") },
+        { 3, ("Odometer & Car Features", "Log your vehicle's mileage and specify transmission type.") },
+        { 4, ("Car History", "Share previous ownership and service records to build trust.") },
+        { 5, ("Your Goals", "Set income expectations and hosting preferences.") },
+        { 6, ("Car Availability", "Indicate available dates and restrictions for seamless booking.") },
+        { 7, ("Car Photos", "Upload clear, high-quality images of your vehicle.") },
+        { 8, ("Driver's Licence", "Upload your driver's licence to verify your identity.") },
+        { 9, ("Review and Submit", "Double-check your details before submitting.") }
+    };
+
+    private Dictionary<int, (int Progress, string Title, string Next)> stepProgressData = new()
+    {
+        { 1, (0,  "Location Detail",            "VIN & Licence Plate Number") },
+        { 2, (11, "VIN & Licence Plate Number", "Odometer & Car Features") },
+        { 3, (22, "Odometer & Car Features",    "Car History") },
+        { 4, (33, "Car History",                "Your Goals") },
+        { 5, (44, "Your Goals",                 "Car Availability") },
+        { 6, (55, "Car Availability",           "Car Photos") },
+        { 7, (66, "Car Photos",                 "Driver's Licence") },
+        { 8, (77, "Driver's Licence",           "Review and Submit") },
+        { 9, (88, "Review and Submit",          "Completed") }
+    };
+
+    // ========== INIT ==========
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            userName = user.FindFirst("FirstName")?.Value
+                    ?? user.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value
+                    ?? "Partner";
+        }
+
+        var token = await AuthStateProvider.GetAccessTokenAsync();
+        if (!string.IsNullOrEmpty(token))
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        await LoadCountries();
+        await ResumeInProgressListing();
+
+        isPageLoading = false;
+    }
+
+    // ========== LOAD DATA ==========
+
+    private async Task LoadCountries()
+    {
+        try
+        {
+            var result = await Http.GetFromJsonAsync<ApiResponse<List<CountryDto>>>(
+                "api/v1/countries",
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (result?.Data != null)
+                countries = result.Data;
+        }
+        catch (Exception ex) { errorMessage = "Failed to load countries: " + ex.Message; }
+    }
+
+    private async Task LoadCities()
+    {
+        cities.Clear();
+        if (step1.CountryId == null) return;
+        try
+        {
+            var result = await Http.GetFromJsonAsync<ApiResponse<List<CityDto>>>(
+                $"api/v1/countries/{step1.CountryId}/cities",
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (result?.Data != null)
+                cities = result.Data;
+        }
+        catch (Exception ex) { errorMessage = "Failed to load cities: " + ex.Message; }
+    }
+
+    private async Task OnCountryChanged(ChangeEventArgs e)
+    {
+        step1.CountryId = ParseGuid(e.Value?.ToString());
+        step1.CityId = null;
+        cities.Clear();
+        await LoadCities();
+    }
+
+    // ========== RESUME ==========
+
+    private async Task ResumeInProgressListing()
+    {
+        try
+        {
+            var response = await Http.GetAsync("api/v1/vehicle-listing/in-progress");
+            if (!response.IsSuccessStatusCode) return;
+
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResponse<ListingFullDataResponse>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true && result.Data != null
+                && result.Data.ListingId != Guid.Empty)
+            {
+                var data = result.Data;
+                listingId = data.ListingId;
+                currentStep = data.CurrentStep > 0 ? data.CurrentStep : 1;
+
+                // Restore Step 1
+                step1.CountryId = data.CountryId;
+                step1.State = data.State ?? "";
+                step1.CityId = data.CityId;
+                step1.ZipCode = data.ZipCode ?? "";
+                step1.StreetAddress = data.StreetAddress ?? "";
+
+                // Load cities for restored country
+                if (step1.CountryId != null)
+                    await LoadCities();
+
+                // Restore Step 2
+                step2.VIN = data.VIN ?? "";
+                step2.IsOlderThan1981 = data.IsOlderThan1981;
+                step2.LicencePlateNumber = data.LicencePlateNumber ?? "";
+
+                // Restore Step 3
+                step3.OdometerReading = data.OdometerReading ?? "";
+                step3.Transmission = data.Transmission ?? "";
+                if (!string.IsNullOrEmpty(data.Features))
+                {
+                    try
+                    {
+                        step3.Features = JsonSerializer.Deserialize<List<string>>(data.Features)
+                            ?? new List<string>();
+                    }
+                    catch { }
+                }
+
+                // Restore Step 4
+                step4.TaxCertified = data.TaxCertified ?? false;
+                step4.HasSalvageTitle = data.HasSalvageTitle ?? false;
+
+                // Restore Step 5
+                step5.PrimaryGoal = data.PrimaryGoal ?? "";
+                step5.UsageFrequency = data.UsageFrequency ?? "";
+                step5.ShareFrequency = data.ShareFrequency ?? "";
+
+                // Restore Step 6
+                step6.AdvanceNotice = data.AdvanceNotice ?? "";
+                step6.MinTripDuration = data.MinTripDuration ?? "";
+                step6.MaxTripDuration = data.MaxTripDuration ?? "";
+                step6.MinTwoDayWeekend = data.MinTwoDayWeekend;
+
+                successMessage = $"Welcome back! Resuming from step {currentStep}.";
+            }
+        }
+        catch { /* No in-progress listing — start fresh */ }
+    }
+
+    // ========== VALIDATION ==========
+
+    private bool ValidateStep1()
+    {
+        if (step1.CountryId == null) { errorMessage = "Please select a country."; return false; }
+        if (string.IsNullOrWhiteSpace(step1.State)) { errorMessage = "Please enter state."; return false; }
+        if (step1.CityId == null) { errorMessage = "Please select a city."; return false; }
+        if (string.IsNullOrWhiteSpace(step1.ZipCode)) { errorMessage = "Please enter zip code."; return false; }
+        if (string.IsNullOrWhiteSpace(step1.StreetAddress)) { errorMessage = "Please enter street address."; return false; }
+        return true;
+    }
+
+    private bool ValidateStep2()
+    {
+        if (string.IsNullOrWhiteSpace(step2.VIN) && !step2.IsOlderThan1981)
+        { errorMessage = "Please enter VIN or check 'older than 1981'."; return false; }
+        if (string.IsNullOrWhiteSpace(step2.LicencePlateNumber))
+        { errorMessage = "Please enter licence plate number."; return false; }
+        return true;
+    }
+
+    private bool ValidateStep3()
+    {
+        if (string.IsNullOrWhiteSpace(step3.OdometerReading)) { errorMessage = "Please select odometer reading."; return false; }
+        if (string.IsNullOrWhiteSpace(step3.Transmission)) { errorMessage = "Please select transmission type."; return false; }
+        return true;
+    }
+
+    private bool ValidateStep5()
+    {
+        if (string.IsNullOrWhiteSpace(step5.PrimaryGoal)) { errorMessage = "Please select primary goal."; return false; }
+        if (string.IsNullOrWhiteSpace(step5.UsageFrequency)) { errorMessage = "Please select usage frequency."; return false; }
+        if (string.IsNullOrWhiteSpace(step5.ShareFrequency)) { errorMessage = "Please select share frequency."; return false; }
+        return true;
+    }
+
+    private bool ValidateStep6()
+    {
+        if (string.IsNullOrWhiteSpace(step6.AdvanceNotice)) { errorMessage = "Please select advance notice."; return false; }
+        if (string.IsNullOrWhiteSpace(step6.MinTripDuration)) { errorMessage = "Please select minimum trip duration."; return false; }
+        if (string.IsNullOrWhiteSpace(step6.MaxTripDuration)) { errorMessage = "Please select maximum trip duration."; return false; }
+        return true;
+    }
+
+    private bool ValidateStep8()
+    {
+        if (string.IsNullOrWhiteSpace(step8.FirstName)) { errorMessage = "Please enter first name."; return false; }
+        if (string.IsNullOrWhiteSpace(step8.LastName)) { errorMessage = "Please enter last name."; return false; }
+        if (string.IsNullOrWhiteSpace(step8.LicenceNumber)) { errorMessage = "Please enter licence number."; return false; }
+        if (string.IsNullOrWhiteSpace(step8.Country)) { errorMessage = "Please enter country."; return false; }
+        return true;
+    }
+
+    private bool ValidateStep9()
+    {
+        if (string.IsNullOrWhiteSpace(step9.VehicleMakeModel)) { errorMessage = "Please enter vehicle make & model."; return false; }
+        if (string.IsNullOrWhiteSpace(step9.PlateNumber)) { errorMessage = "Please enter plate number."; return false; }
+        if (string.IsNullOrWhiteSpace(step9.VehicleColor)) { errorMessage = "Please enter vehicle color."; return false; }
+        if (string.IsNullOrWhiteSpace(step9.YearOfManufacture)) { errorMessage = "Please enter year of manufacture."; return false; }
+        if (string.IsNullOrWhiteSpace(step9.PHVLicenceNumber)) { errorMessage = "Please enter PHV licence number."; return false; }
+        if (string.IsNullOrWhiteSpace(step9.PHVLicenceExpiryDate)) { errorMessage = "Please enter PHV licence expiry date."; return false; }
+        return true;
+    }
+
+    // ========== SAVE METHODS ==========
+
+    private async Task SaveStep1()
+    {
+        errorMessage = "";
+        if (!ValidateStep1()) return;
+        isLoading = true;
+        try
+        {
+            var request = new
+            {
+                ListingId = listingId,
+                VehicleType = VehicleType ?? "car",
+                CountryId = step1.CountryId!.Value,
+                step1.State,
+                CityId = step1.CityId!.Value,
+                step1.ZipCode,
+                step1.StreetAddress
+            };
+            var response = await Http.PostAsJsonAsync("api/v1/vehicle-listing/step1", request);
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResponse<ListingResponse>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) { listingId = result.Data?.ListingId; currentStep = 2; }
+            else errorMessage = result?.Message ?? "Error saving step 1";
+        }
+        catch (Exception ex) { errorMessage = "Error: " + ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep2()
+    {
+        errorMessage = "";
+        if (!ValidateStep2()) return;
+        isLoading = true;
+        try
+        {
+            var request = new { ListingId = listingId, step2.VIN, step2.IsOlderThan1981, step2.LicencePlateNumber };
+            var response = await Http.PostAsJsonAsync("api/v1/vehicle-listing/step2", request);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<ListingResponse>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (result?.Success == true) currentStep = 3;
+            else errorMessage = result?.Message ?? "Error saving step 2";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep3()
+    {
+        errorMessage = "";
+        if (!ValidateStep3()) return;
+        isLoading = true;
+        try
+        {
+            var request = new { ListingId = listingId, step3.OdometerReading, step3.Transmission, Features = step3.Features };
+            var response = await Http.PostAsJsonAsync("api/v1/vehicle-listing/step3", request);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<ListingResponse>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (result?.Success == true) currentStep = 4;
+            else errorMessage = result?.Message ?? "Error saving step 3";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep4()
+    {
+        errorMessage = "";
+        isLoading = true;
+        try
+        {
+            var request = new { ListingId = listingId, step4.TaxCertified, step4.HasSalvageTitle };
+            var response = await Http.PostAsJsonAsync("api/v1/vehicle-listing/step4", request);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<ListingResponse>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (result?.Success == true) currentStep = 5;
+            else errorMessage = result?.Message ?? "Error saving step 4";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep5()
+    {
+        errorMessage = "";
+        if (!ValidateStep5()) return;
+        isLoading = true;
+        try
+        {
+            var request = new { ListingId = listingId, step5.PrimaryGoal, step5.UsageFrequency, step5.ShareFrequency };
+            var response = await Http.PostAsJsonAsync("api/v1/vehicle-listing/step5", request);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<ListingResponse>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (result?.Success == true) currentStep = 6;
+            else errorMessage = result?.Message ?? "Error saving step 5";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep6()
+    {
+        errorMessage = "";
+        if (!ValidateStep6()) return;
+        isLoading = true;
+        try
+        {
+            var request = new { ListingId = listingId, step6.AdvanceNotice, step6.MinTripDuration, step6.MaxTripDuration, step6.MinTwoDayWeekend };
+            var response = await Http.PostAsJsonAsync("api/v1/vehicle-listing/step6", request);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<ListingResponse>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (result?.Success == true) currentStep = 7;
+            else errorMessage = result?.Message ?? "Error saving step 6";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep7()
+    {
+        errorMessage = "";
+        if (!interiorFiles.Any() && !exteriorFiles.Any())
+        { errorMessage = "Please upload at least one photo."; return; }
+        isLoading = true;
+        try
+        {
+            using var content = new MultipartFormDataContent();
+            content.Add(new StringContent(listingId.ToString()!), "listingId");
+            foreach (var file in interiorFiles)
+                content.Add(new StreamContent(file.OpenReadStream(10 * 1024 * 1024)), "interiorPhotos", file.Name);
+            foreach (var file in exteriorFiles)
+                content.Add(new StreamContent(file.OpenReadStream(10 * 1024 * 1024)), "exteriorPhotos", file.Name);
+
+            var response = await Http.PostAsync("api/v1/vehicle-listing/step7", content);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<ListingResponse>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (result?.Success == true) currentStep = 8;
+            else errorMessage = result?.Message ?? "Error uploading photos";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep8()
+    {
+        errorMessage = "";
+        if (!ValidateStep8()) return;
+        isLoading = true;
+        try
+        {
+            var request = new
+            {
+                ListingId = listingId,
+                step8.FirstName,
+                step8.MiddleName,
+                step8.LastName,
+                step8.LicenceNumber,
+                step8.Country,
+                step8.ExpiryDate,
+                step8.Birthday
+            };
+            var response = await Http.PostAsJsonAsync("api/v1/vehicle-listing/step8", request);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<ListingResponse>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (result?.Success == true) currentStep = 9;
+            else errorMessage = result?.Message ?? "Error saving step 8";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep9()
+    {
+        errorMessage = "";
+        if (!ValidateStep9()) return;
+        isLoading = true;
+        try
+        {
+            using var content = new MultipartFormDataContent();
+            content.Add(new StringContent(listingId.ToString()!), "ListingId");
+            content.Add(new StringContent(step9.VehicleMakeModel), "VehicleMakeModel");
+            content.Add(new StringContent(step9.PlateNumber), "PlateNumber");
+            content.Add(new StringContent(step9.VehicleColor), "VehicleColor");
+            content.Add(new StringContent(step9.YearOfManufacture), "YearOfManufacture");
+            content.Add(new StringContent(step9.PHVLicenceNumber), "PHVLicenceNumber");
+            content.Add(new StringContent(step9.PHVLicenceExpiryDate), "PHVLicenceExpiryDate");
+
+            if (roadTaxFile != null) content.Add(new StreamContent(roadTaxFile.OpenReadStream(10 * 1024 * 1024)), "roadTax", roadTaxFile.Name);
+            if (motFile != null) content.Add(new StreamContent(motFile.OpenReadStream(10 * 1024 * 1024)), "mot", motFile.Name);
+            if (roadTax2File != null) content.Add(new StreamContent(roadTax2File.OpenReadStream(10 * 1024 * 1024)), "roadTax2", roadTax2File.Name);
+            if (logbookFile != null) content.Add(new StreamContent(logbookFile.OpenReadStream(10 * 1024 * 1024)), "logbook", logbookFile.Name);
+
+            var response = await Http.PostAsync("api/v1/vehicle-listing/step9", content);
+            var result = await response.Content.ReadFromJsonAsync<ApiResponse<ListingResponse>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true)
+            {
+                successMessage = "Listing submitted successfully!";
+                Navigation.NavigateTo("/dashboard");
+            }
+            else errorMessage = result?.Message ?? "Error submitting listing";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    // ========== NAVIGATION ==========
+
+    private void GoBackToDashboard() => Navigation.NavigateTo("/dashboard");
+    private void GoToPreviousStep() { if (currentStep > 1) currentStep--; }
+
+    // ========== FILE HANDLERS ==========
+
+    private async Task OnInteriorPhotosChanged(InputFileChangeEventArgs e)
+    {
+        interiorFiles = e.GetMultipleFiles(10).ToList();
+        interiorPreviews.Clear();
+        foreach (var file in interiorFiles)
+        {
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream(10 * 1024 * 1024).ReadAsync(buffer);
+            interiorPreviews.Add($"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}");
+        }
+    }
+
+    private async Task OnExteriorPhotosChanged(InputFileChangeEventArgs e)
+    {
+        exteriorFiles = e.GetMultipleFiles(10).ToList();
+        exteriorPreviews.Clear();
+        foreach (var file in exteriorFiles)
+        {
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream(10 * 1024 * 1024).ReadAsync(buffer);
+            exteriorPreviews.Add($"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}");
+        }
+    }
+
+    private void OnRoadTaxChanged(InputFileChangeEventArgs e) => roadTaxFile = e.File;
+    private void OnMotChanged(InputFileChangeEventArgs e) => motFile = e.File;
+    private void OnRoadTax2Changed(InputFileChangeEventArgs e) => roadTax2File = e.File;
+    private void OnLogbookChanged(InputFileChangeEventArgs e) => logbookFile = e.File;
+
+    private void ToggleFeature(string feature, bool add)
+    {
+        if (add) { if (!step3.Features.Contains(feature)) step3.Features.Add(feature); }
+        else step3.Features.Remove(feature);
+    }
+
+    private async Task HandleLogout()
+    {
+        await AuthStateProvider.MarkUserAsLoggedOut();
+        Navigation.NavigateTo("/");
+    }
+
+    private static Guid? ParseGuid(string? value)
+    {
+        if (string.IsNullOrEmpty(value)) return null;
+        return Guid.TryParse(value, out var g) ? g : null;
+    }
+
+    // ========== MODELS ==========
+
+    class Step1Model { public Guid? CountryId { get; set; } public string State { get; set; } = ""; public Guid? CityId { get; set; } public string ZipCode { get; set; } = ""; public string StreetAddress { get; set; } = ""; }
+    class Step2Model { public string VIN { get; set; } = ""; public bool IsOlderThan1981 { get; set; } public string LicencePlateNumber { get; set; } = ""; }
+    class Step3Model { public string OdometerReading { get; set; } = ""; public string Transmission { get; set; } = ""; public List<string> Features { get; set; } = new(); }
+    class Step4Model { public bool TaxCertified { get; set; } public bool HasSalvageTitle { get; set; } }
+    class Step5Model { public string PrimaryGoal { get; set; } = ""; public string UsageFrequency { get; set; } = ""; public string ShareFrequency { get; set; } = ""; }
+    class Step6Model { public string AdvanceNotice { get; set; } = ""; public string MinTripDuration { get; set; } = ""; public string MaxTripDuration { get; set; } = ""; public bool MinTwoDayWeekend { get; set; } }
+    class Step8Model { public string FirstName { get; set; } = ""; public string? MiddleName { get; set; } public string LastName { get; set; } = ""; public string LicenceNumber { get; set; } = ""; public string Country { get; set; } = ""; public DateTime ExpiryDate { get; set; } = DateTime.Today; public DateTime Birthday { get; set; } = DateTime.Today; }
+    class Step9Model { public string VehicleMakeModel { get; set; } = ""; public string PlateNumber { get; set; } = ""; public string VehicleColor { get; set; } = ""; public string YearOfManufacture { get; set; } = ""; public string PHVLicenceNumber { get; set; } = ""; public string PHVLicenceExpiryDate { get; set; } = ""; }
+
+    class ApiResponse<T> { public bool Success { get; set; } public string Message { get; set; } = ""; public T? Data { get; set; } }
+    class ListingResponse { public Guid ListingId { get; set; } public string Status { get; set; } = ""; public int CurrentStep { get; set; } }
+    class CountryDto { public Guid Id { get; set; } public string Name { get; set; } = ""; }
+    class CityDto { public Guid Id { get; set; } public string Name { get; set; } = ""; }
+
+    class ListingFullDataResponse
+    {
+        public Guid ListingId { get; set; }
+        public string VehicleType { get; set; } = "";
+        public string Status { get; set; } = "";
+        public int CurrentStep { get; set; }
+        public Guid? CountryId { get; set; }
+        public string? State { get; set; }
+        public Guid? CityId { get; set; }
+        public string? ZipCode { get; set; }
+        public string? StreetAddress { get; set; }
+        public string? VIN { get; set; }
+        public bool IsOlderThan1981 { get; set; }
+        public string? LicencePlateNumber { get; set; }
+        public string? OdometerReading { get; set; }
+        public string? Transmission { get; set; }
+        public string? Features { get; set; }
+        public bool? TaxCertified { get; set; }
+        public bool? HasSalvageTitle { get; set; }
+        public string? PrimaryGoal { get; set; }
+        public string? UsageFrequency { get; set; }
+        public string? ShareFrequency { get; set; }
+        public string? AdvanceNotice { get; set; }
+        public string? MinTripDuration { get; set; }
+        public string? MaxTripDuration { get; set; }
+        public bool MinTwoDayWeekend { get; set; }
+    }
+}

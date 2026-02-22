@@ -15,6 +15,12 @@ D:\dev 2025\ITIRR\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.dll
 D:\dev 2025\ITIRR\ITIRR.Services\obj\Debug\net8.0\refint\ITIRR.Services.dll
 D:\dev 2025\ITIRR\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.pdb
 D:\dev 2025\ITIRR\ITIRR.Services\obj\Debug\net8.0\ref\ITIRR.Services.dll
+D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.csproj.AssemblyReference.cache
+D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.AssemblyInfoInputs.cache
+D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.AssemblyInfo.cs
+D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.csproj.CoreCompileInputs.cache
+D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.sourcelink.json
 D:\ITIRR Backend\ITIRR.Services\bin\Debug\net8.0\ITIRR.Services.deps.json
 D:\ITIRR Backend\ITIRR.Services\bin\Debug\net8.0\ITIRR.Services.dll
 D:\ITIRR Backend\ITIRR.Services\bin\Debug\net8.0\ITIRR.Services.pdb
@@ -22,12 +28,6 @@ D:\ITIRR Backend\ITIRR.Services\bin\Debug\net8.0\ITIRR.Core.dll
 D:\ITIRR Backend\ITIRR.Services\bin\Debug\net8.0\ITIRR.Infrastructure.dll
 D:\ITIRR Backend\ITIRR.Services\bin\Debug\net8.0\ITIRR.Core.pdb
 D:\ITIRR Backend\ITIRR.Services\bin\Debug\net8.0\ITIRR.Infrastructure.pdb
-D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.csproj.AssemblyReference.cache
-D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.GeneratedMSBuildEditorConfig.editorconfig
-D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.AssemblyInfoInputs.cache
-D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.AssemblyInfo.cs
-D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.csproj.CoreCompileInputs.cache
-D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.sourcelink.json
 D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Se.BA2DA87A.Up2Date
 D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\ITIRR.Services.dll
 D:\ITIRR Backend\ITIRR.Services\obj\Debug\net8.0\refint\ITIRR.Services.dll

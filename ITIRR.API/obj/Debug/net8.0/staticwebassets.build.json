@@ -1,1 +1,3318 @@
-{"Version":1,"Hash":"tX1zjqG6t5ENzJMcf9Dsb0hijKN3HhFwPzi+qX9QFXk=","Source":"ITIRR.API","BasePath":"_content/ITIRR.API","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
+{
+  "Version": 1,
+  "Hash": "88QI0k3TR1xDHXq3lZ6djsAPVKLzj60efaqI6psFsDk=",
+  "Source": "ITIRR.API",
+  "BasePath": "_content/ITIRR.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ITIRR.API\\wwwroot",
+      "Source": "ITIRR.API",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\boat-listings\\314ba666-8e45-47f4-9254-e5215bdda16e_Screenshot 2025-11-24 231603.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/boat-listings/314ba666-8e45-47f4-9254-e5215bdda16e_Screenshot 2025-11-24 231603#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "on3sexhg87",
+      "Integrity": "fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\boat-listings\\314ba666-8e45-47f4-9254-e5215bdda16e_Screenshot 2025-11-24 231603.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\boat-listings\\8074ecc0-f8ed-4565-98fd-3d0472a48896_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/boat-listings/8074ecc0-f8ed-4565-98fd-3d0472a48896_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\boat-listings\\8074ecc0-f8ed-4565-98fd-3d0472a48896_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-docs\\3d0b433b-b10a-4fb7-b18a-00a91437e45b_Screenshot 2025-11-28 025221.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/jet-docs/3d0b433b-b10a-4fb7-b18a-00a91437e45b_Screenshot 2025-11-28 025221#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "0dyeutq7vj",
+      "Integrity": "dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\jet-docs\\3d0b433b-b10a-4fb7-b18a-00a91437e45b_Screenshot 2025-11-28 025221.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-docs\\8dfa6fd4-0c4a-4636-bc9d-adcf5736b451_Screenshot 2025-11-27 202704.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/jet-docs/8dfa6fd4-0c4a-4636-bc9d-adcf5736b451_Screenshot 2025-11-27 202704#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "67xbsk83pl",
+      "Integrity": "LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\jet-docs\\8dfa6fd4-0c4a-4636-bc9d-adcf5736b451_Screenshot 2025-11-27 202704.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-docs\\c5ba1460-c1a4-4c6b-8ec9-c324a146a413_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/jet-docs/c5ba1460-c1a4-4c6b-8ec9-c324a146a413_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\jet-docs\\c5ba1460-c1a4-4c6b-8ec9-c324a146a413_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-listings\\15f21b18-7f8e-4997-8056-42b8c36f7467_Screenshot 2025-12-03 000359.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/jet-listings/15f21b18-7f8e-4997-8056-42b8c36f7467_Screenshot 2025-12-03 000359#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "3awocd0wdd",
+      "Integrity": "lWanyViVNqep+Aq3rF5vVLg/bXrkoeIAUFqes+tokTU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\jet-listings\\15f21b18-7f8e-4997-8056-42b8c36f7467_Screenshot 2025-12-03 000359.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-listings\\ff7079f8-9fe1-498b-85ce-a945ef48cc36_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/jet-listings/ff7079f8-9fe1-498b-85ce-a945ef48cc36_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\jet-listings\\ff7079f8-9fe1-498b-85ce-a945ef48cc36_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\0b54fc81-6a09-457f-9c8c-a408d23af422_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/pco-docs/0b54fc81-6a09-457f-9c8c-a408d23af422_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\pco-docs\\0b54fc81-6a09-457f-9c8c-a408d23af422_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\4a67ac97-aaad-441c-9328-28fe8ee6f13b_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/pco-docs/4a67ac97-aaad-441c-9328-28fe8ee6f13b_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\pco-docs\\4a67ac97-aaad-441c-9328-28fe8ee6f13b_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\641d490b-9bad-4429-80f5-1f89fd9b1ea0_Screenshot 2025-12-03 000359.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/pco-docs/641d490b-9bad-4429-80f5-1f89fd9b1ea0_Screenshot 2025-12-03 000359#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "3awocd0wdd",
+      "Integrity": "lWanyViVNqep+Aq3rF5vVLg/bXrkoeIAUFqes+tokTU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\pco-docs\\641d490b-9bad-4429-80f5-1f89fd9b1ea0_Screenshot 2025-12-03 000359.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\85c00bbe-2459-44a5-b669-f14f25366d13_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/pco-docs/85c00bbe-2459-44a5-b669-f14f25366d13_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\pco-docs\\85c00bbe-2459-44a5-b669-f14f25366d13_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\b217e21c-2fdf-44a1-811d-9ff0705e98f2_Screenshot 2025-11-27 202704.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/pco-docs/b217e21c-2fdf-44a1-811d-9ff0705e98f2_Screenshot 2025-11-27 202704#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "67xbsk83pl",
+      "Integrity": "LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\pco-docs\\b217e21c-2fdf-44a1-811d-9ff0705e98f2_Screenshot 2025-11-27 202704.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\c7998ae4-9638-4ded-9f9e-17269368697b_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/pco-docs/c7998ae4-9638-4ded-9f9e-17269368697b_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\pco-docs\\c7998ae4-9638-4ded-9f9e-17269368697b_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\e40673e4-db7a-4e59-b138-568cd725f109_Screenshot 2025-11-28 025221.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/pco-docs/e40673e4-db7a-4e59-b138-568cd725f109_Screenshot 2025-11-28 025221#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "0dyeutq7vj",
+      "Integrity": "dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\pco-docs\\e40673e4-db7a-4e59-b138-568cd725f109_Screenshot 2025-11-28 025221.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\ebd87c26-03f1-456b-9d02-e0e052b05d91_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/pco-docs/ebd87c26-03f1-456b-9d02-e0e052b05d91_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\pco-docs\\ebd87c26-03f1-456b-9d02-e0e052b05d91_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\skipper-docs\\e9283976-e572-48b9-bca3-593240da1e60_Screenshot 2025-11-24 231603.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/skipper-docs/e9283976-e572-48b9-bca3-593240da1e60_Screenshot 2025-11-24 231603#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "on3sexhg87",
+      "Integrity": "fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\skipper-docs\\e9283976-e572-48b9-bca3-593240da1e60_Screenshot 2025-11-24 231603.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\03e32595-8733-495f-9a18-54d9783230a0_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/03e32595-8733-495f-9a18-54d9783230a0_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\03e32595-8733-495f-9a18-54d9783230a0_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\14214df5-57f0-4770-80d7-31a765c060e8_Screenshot 2025-11-24 231603.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/14214df5-57f0-4770-80d7-31a765c060e8_Screenshot 2025-11-24 231603#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "on3sexhg87",
+      "Integrity": "fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\14214df5-57f0-4770-80d7-31a765c060e8_Screenshot 2025-11-24 231603.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\1ecf1a1f-fc4e-4553-95a0-d292d9401ab8_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/1ecf1a1f-fc4e-4553-95a0-d292d9401ab8_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\1ecf1a1f-fc4e-4553-95a0-d292d9401ab8_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\23aba8ff-96bc-4b8a-81e1-b5babb540258_Screenshot 2025-11-27 202704.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/23aba8ff-96bc-4b8a-81e1-b5babb540258_Screenshot 2025-11-27 202704#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "67xbsk83pl",
+      "Integrity": "LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\23aba8ff-96bc-4b8a-81e1-b5babb540258_Screenshot 2025-11-27 202704.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\443b774c-c96f-48c9-8c0f-5e5d5cb14050_Screenshot 2025-11-27 202704.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/443b774c-c96f-48c9-8c0f-5e5d5cb14050_Screenshot 2025-11-27 202704#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "67xbsk83pl",
+      "Integrity": "LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\443b774c-c96f-48c9-8c0f-5e5d5cb14050_Screenshot 2025-11-27 202704.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\54533d4f-3936-423c-bce4-11c8112d714d_Screenshot 2025-11-28 025221.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/54533d4f-3936-423c-bce4-11c8112d714d_Screenshot 2025-11-28 025221#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "0dyeutq7vj",
+      "Integrity": "dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\54533d4f-3936-423c-bce4-11c8112d714d_Screenshot 2025-11-28 025221.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\669df261-ec02-4521-9bf9-9f0306fb147d_Screenshot 2025-11-24 231603.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/669df261-ec02-4521-9bf9-9f0306fb147d_Screenshot 2025-11-24 231603#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "on3sexhg87",
+      "Integrity": "fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\669df261-ec02-4521-9bf9-9f0306fb147d_Screenshot 2025-11-24 231603.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\676b9dc6-cd19-4018-af95-93f666a0e0e3_Screenshot 2025-11-28 025221.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/676b9dc6-cd19-4018-af95-93f666a0e0e3_Screenshot 2025-11-28 025221#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "0dyeutq7vj",
+      "Integrity": "dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\676b9dc6-cd19-4018-af95-93f666a0e0e3_Screenshot 2025-11-28 025221.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\78abcbe5-e5cc-4a44-adb7-e9077aeba855_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/78abcbe5-e5cc-4a44-adb7-e9077aeba855_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\78abcbe5-e5cc-4a44-adb7-e9077aeba855_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\98a8d585-1523-4c69-865b-b96e0d39759d_Screenshot 2025-11-27 202704.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/98a8d585-1523-4c69-865b-b96e0d39759d_Screenshot 2025-11-27 202704#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "67xbsk83pl",
+      "Integrity": "LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\98a8d585-1523-4c69-865b-b96e0d39759d_Screenshot 2025-11-27 202704.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\a98dca94-1201-4d3c-839a-b343e749bd5f_Screenshot 2025-11-24 231603.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/a98dca94-1201-4d3c-839a-b343e749bd5f_Screenshot 2025-11-24 231603#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "on3sexhg87",
+      "Integrity": "fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\a98dca94-1201-4d3c-839a-b343e749bd5f_Screenshot 2025-11-24 231603.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\abe1062e-d7da-45e3-84d2-6e151be7a664_Screenshot 2025-11-28 025221.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/abe1062e-d7da-45e3-84d2-6e151be7a664_Screenshot 2025-11-28 025221#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "0dyeutq7vj",
+      "Integrity": "dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\abe1062e-d7da-45e3-84d2-6e151be7a664_Screenshot 2025-11-28 025221.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\ac6de609-b8a6-44f1-a3d6-6876f1aa293f_Screenshot 2025-11-27 202704.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/ac6de609-b8a6-44f1-a3d6-6876f1aa293f_Screenshot 2025-11-27 202704#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "67xbsk83pl",
+      "Integrity": "LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\ac6de609-b8a6-44f1-a3d6-6876f1aa293f_Screenshot 2025-11-27 202704.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\bde296ed-05c1-4770-ac82-d69f3f3a7414_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/bde296ed-05c1-4770-ac82-d69f3f3a7414_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\bde296ed-05c1-4770-ac82-d69f3f3a7414_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\c6129fc9-8aaa-49a5-a647-f802999c9c11_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/c6129fc9-8aaa-49a5-a647-f802999c9c11_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\c6129fc9-8aaa-49a5-a647-f802999c9c11_Screenshot 2025-11-26 231848.png"
+    },
+    {
+      "Identity": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\fd73e65e-d467-49a4-93be-3a7f3d9ed73e_Screenshot 2025-11-26 231848.png",
+      "SourceId": "ITIRR.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\",
+      "BasePath": "_content/ITIRR.API",
+      "RelativePath": "uploads/vehicle-listings/fd73e65e-d467-49a4-93be-3a7f3d9ed73e_Screenshot 2025-11-26 231848#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6p4ep7c277",
+      "Integrity": "SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\vehicle-listings\\fd73e65e-d467-49a4-93be-3a7f3d9ed73e_Screenshot 2025-11-26 231848.png"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "uploads/boat-listings/314ba666-8e45-47f4-9254-e5215bdda16e_Screenshot 2025-11-24 231603.on3sexhg87.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\boat-listings\\314ba666-8e45-47f4-9254-e5215bdda16e_Screenshot 2025-11-24 231603.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:47:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "on3sexhg87"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/boat-listings/314ba666-8e45-47f4-9254-e5215bdda16e_Screenshot 2025-11-24 231603.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/boat-listings/314ba666-8e45-47f4-9254-e5215bdda16e_Screenshot 2025-11-24 231603.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\boat-listings\\314ba666-8e45-47f4-9254-e5215bdda16e_Screenshot 2025-11-24 231603.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:47:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/boat-listings/8074ecc0-f8ed-4565-98fd-3d0472a48896_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\boat-listings\\8074ecc0-f8ed-4565-98fd-3d0472a48896_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:47:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/boat-listings/8074ecc0-f8ed-4565-98fd-3d0472a48896_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/boat-listings/8074ecc0-f8ed-4565-98fd-3d0472a48896_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\boat-listings\\8074ecc0-f8ed-4565-98fd-3d0472a48896_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:47:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/jet-docs/3d0b433b-b10a-4fb7-b18a-00a91437e45b_Screenshot 2025-11-28 025221.0dyeutq7vj.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-docs\\3d0b433b-b10a-4fb7-b18a-00a91437e45b_Screenshot 2025-11-28 025221.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9704"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:43:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0dyeutq7vj"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/jet-docs/3d0b433b-b10a-4fb7-b18a-00a91437e45b_Screenshot 2025-11-28 025221.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/jet-docs/3d0b433b-b10a-4fb7-b18a-00a91437e45b_Screenshot 2025-11-28 025221.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-docs\\3d0b433b-b10a-4fb7-b18a-00a91437e45b_Screenshot 2025-11-28 025221.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9704"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:43:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/jet-docs/8dfa6fd4-0c4a-4636-bc9d-adcf5736b451_Screenshot 2025-11-27 202704.67xbsk83pl.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-docs\\8dfa6fd4-0c4a-4636-bc9d-adcf5736b451_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:43:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "67xbsk83pl"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/jet-docs/8dfa6fd4-0c4a-4636-bc9d-adcf5736b451_Screenshot 2025-11-27 202704.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/jet-docs/8dfa6fd4-0c4a-4636-bc9d-adcf5736b451_Screenshot 2025-11-27 202704.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-docs\\8dfa6fd4-0c4a-4636-bc9d-adcf5736b451_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:43:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/jet-docs/c5ba1460-c1a4-4c6b-8ec9-c324a146a413_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-docs\\c5ba1460-c1a4-4c6b-8ec9-c324a146a413_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:43:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/jet-docs/c5ba1460-c1a4-4c6b-8ec9-c324a146a413_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/jet-docs/c5ba1460-c1a4-4c6b-8ec9-c324a146a413_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-docs\\c5ba1460-c1a4-4c6b-8ec9-c324a146a413_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:43:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/jet-listings/15f21b18-7f8e-4997-8056-42b8c36f7467_Screenshot 2025-12-03 000359.3awocd0wdd.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-listings\\15f21b18-7f8e-4997-8056-42b8c36f7467_Screenshot 2025-12-03 000359.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9072"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lWanyViVNqep+Aq3rF5vVLg/bXrkoeIAUFqes+tokTU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:42:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3awocd0wdd"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/jet-listings/15f21b18-7f8e-4997-8056-42b8c36f7467_Screenshot 2025-12-03 000359.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-lWanyViVNqep+Aq3rF5vVLg/bXrkoeIAUFqes+tokTU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/jet-listings/15f21b18-7f8e-4997-8056-42b8c36f7467_Screenshot 2025-12-03 000359.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-listings\\15f21b18-7f8e-4997-8056-42b8c36f7467_Screenshot 2025-12-03 000359.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9072"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lWanyViVNqep+Aq3rF5vVLg/bXrkoeIAUFqes+tokTU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:42:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-lWanyViVNqep+Aq3rF5vVLg/bXrkoeIAUFqes+tokTU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/jet-listings/ff7079f8-9fe1-498b-85ce-a945ef48cc36_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-listings\\ff7079f8-9fe1-498b-85ce-a945ef48cc36_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:42:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/jet-listings/ff7079f8-9fe1-498b-85ce-a945ef48cc36_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/jet-listings/ff7079f8-9fe1-498b-85ce-a945ef48cc36_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\jet-listings\\ff7079f8-9fe1-498b-85ce-a945ef48cc36_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:42:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/0b54fc81-6a09-457f-9c8c-a408d23af422_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\0b54fc81-6a09-457f-9c8c-a408d23af422_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:33:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/pco-docs/0b54fc81-6a09-457f-9c8c-a408d23af422_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/0b54fc81-6a09-457f-9c8c-a408d23af422_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\0b54fc81-6a09-457f-9c8c-a408d23af422_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:33:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/4a67ac97-aaad-441c-9328-28fe8ee6f13b_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\4a67ac97-aaad-441c-9328-28fe8ee6f13b_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:33:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/pco-docs/4a67ac97-aaad-441c-9328-28fe8ee6f13b_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/4a67ac97-aaad-441c-9328-28fe8ee6f13b_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\4a67ac97-aaad-441c-9328-28fe8ee6f13b_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:33:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/641d490b-9bad-4429-80f5-1f89fd9b1ea0_Screenshot 2025-12-03 000359.3awocd0wdd.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\641d490b-9bad-4429-80f5-1f89fd9b1ea0_Screenshot 2025-12-03 000359.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9072"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lWanyViVNqep+Aq3rF5vVLg/bXrkoeIAUFqes+tokTU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:33:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3awocd0wdd"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/pco-docs/641d490b-9bad-4429-80f5-1f89fd9b1ea0_Screenshot 2025-12-03 000359.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-lWanyViVNqep+Aq3rF5vVLg/bXrkoeIAUFqes+tokTU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/641d490b-9bad-4429-80f5-1f89fd9b1ea0_Screenshot 2025-12-03 000359.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\641d490b-9bad-4429-80f5-1f89fd9b1ea0_Screenshot 2025-12-03 000359.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9072"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lWanyViVNqep+Aq3rF5vVLg/bXrkoeIAUFqes+tokTU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:33:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-lWanyViVNqep+Aq3rF5vVLg/bXrkoeIAUFqes+tokTU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/85c00bbe-2459-44a5-b669-f14f25366d13_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\85c00bbe-2459-44a5-b669-f14f25366d13_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:33:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/pco-docs/85c00bbe-2459-44a5-b669-f14f25366d13_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/85c00bbe-2459-44a5-b669-f14f25366d13_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\85c00bbe-2459-44a5-b669-f14f25366d13_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:33:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/b217e21c-2fdf-44a1-811d-9ff0705e98f2_Screenshot 2025-11-27 202704.67xbsk83pl.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\b217e21c-2fdf-44a1-811d-9ff0705e98f2_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:33:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "67xbsk83pl"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/pco-docs/b217e21c-2fdf-44a1-811d-9ff0705e98f2_Screenshot 2025-11-27 202704.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/b217e21c-2fdf-44a1-811d-9ff0705e98f2_Screenshot 2025-11-27 202704.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\b217e21c-2fdf-44a1-811d-9ff0705e98f2_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:33:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/c7998ae4-9638-4ded-9f9e-17269368697b_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\c7998ae4-9638-4ded-9f9e-17269368697b_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:33:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/pco-docs/c7998ae4-9638-4ded-9f9e-17269368697b_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/c7998ae4-9638-4ded-9f9e-17269368697b_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\c7998ae4-9638-4ded-9f9e-17269368697b_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:33:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/e40673e4-db7a-4e59-b138-568cd725f109_Screenshot 2025-11-28 025221.0dyeutq7vj.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\e40673e4-db7a-4e59-b138-568cd725f109_Screenshot 2025-11-28 025221.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9704"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:33:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0dyeutq7vj"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/pco-docs/e40673e4-db7a-4e59-b138-568cd725f109_Screenshot 2025-11-28 025221.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/e40673e4-db7a-4e59-b138-568cd725f109_Screenshot 2025-11-28 025221.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\e40673e4-db7a-4e59-b138-568cd725f109_Screenshot 2025-11-28 025221.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9704"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:33:06 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/ebd87c26-03f1-456b-9d02-e0e052b05d91_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\ebd87c26-03f1-456b-9d02-e0e052b05d91_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:33:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/pco-docs/ebd87c26-03f1-456b-9d02-e0e052b05d91_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pco-docs/ebd87c26-03f1-456b-9d02-e0e052b05d91_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\pco-docs\\ebd87c26-03f1-456b-9d02-e0e052b05d91_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:33:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/skipper-docs/e9283976-e572-48b9-bca3-593240da1e60_Screenshot 2025-11-24 231603.on3sexhg87.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\skipper-docs\\e9283976-e572-48b9-bca3-593240da1e60_Screenshot 2025-11-24 231603.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:48:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "on3sexhg87"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/skipper-docs/e9283976-e572-48b9-bca3-593240da1e60_Screenshot 2025-11-24 231603.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/skipper-docs/e9283976-e572-48b9-bca3-593240da1e60_Screenshot 2025-11-24 231603.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\skipper-docs\\e9283976-e572-48b9-bca3-593240da1e60_Screenshot 2025-11-24 231603.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 15:48:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/03e32595-8733-495f-9a18-54d9783230a0_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\03e32595-8733-495f-9a18-54d9783230a0_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/03e32595-8733-495f-9a18-54d9783230a0_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/03e32595-8733-495f-9a18-54d9783230a0_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\03e32595-8733-495f-9a18-54d9783230a0_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/14214df5-57f0-4770-80d7-31a765c060e8_Screenshot 2025-11-24 231603.on3sexhg87.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\14214df5-57f0-4770-80d7-31a765c060e8_Screenshot 2025-11-24 231603.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "on3sexhg87"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/14214df5-57f0-4770-80d7-31a765c060e8_Screenshot 2025-11-24 231603.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/14214df5-57f0-4770-80d7-31a765c060e8_Screenshot 2025-11-24 231603.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\14214df5-57f0-4770-80d7-31a765c060e8_Screenshot 2025-11-24 231603.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/1ecf1a1f-fc4e-4553-95a0-d292d9401ab8_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\1ecf1a1f-fc4e-4553-95a0-d292d9401ab8_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:09:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/1ecf1a1f-fc4e-4553-95a0-d292d9401ab8_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/1ecf1a1f-fc4e-4553-95a0-d292d9401ab8_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\1ecf1a1f-fc4e-4553-95a0-d292d9401ab8_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:09:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/23aba8ff-96bc-4b8a-81e1-b5babb540258_Screenshot 2025-11-27 202704.67xbsk83pl.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\23aba8ff-96bc-4b8a-81e1-b5babb540258_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "67xbsk83pl"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/23aba8ff-96bc-4b8a-81e1-b5babb540258_Screenshot 2025-11-27 202704.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/23aba8ff-96bc-4b8a-81e1-b5babb540258_Screenshot 2025-11-27 202704.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\23aba8ff-96bc-4b8a-81e1-b5babb540258_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/443b774c-c96f-48c9-8c0f-5e5d5cb14050_Screenshot 2025-11-27 202704.67xbsk83pl.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\443b774c-c96f-48c9-8c0f-5e5d5cb14050_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:09:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "67xbsk83pl"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/443b774c-c96f-48c9-8c0f-5e5d5cb14050_Screenshot 2025-11-27 202704.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/443b774c-c96f-48c9-8c0f-5e5d5cb14050_Screenshot 2025-11-27 202704.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\443b774c-c96f-48c9-8c0f-5e5d5cb14050_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:09:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/54533d4f-3936-423c-bce4-11c8112d714d_Screenshot 2025-11-28 025221.0dyeutq7vj.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\54533d4f-3936-423c-bce4-11c8112d714d_Screenshot 2025-11-28 025221.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9704"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:09:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0dyeutq7vj"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/54533d4f-3936-423c-bce4-11c8112d714d_Screenshot 2025-11-28 025221.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/54533d4f-3936-423c-bce4-11c8112d714d_Screenshot 2025-11-28 025221.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\54533d4f-3936-423c-bce4-11c8112d714d_Screenshot 2025-11-28 025221.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9704"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:09:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/669df261-ec02-4521-9bf9-9f0306fb147d_Screenshot 2025-11-24 231603.on3sexhg87.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\669df261-ec02-4521-9bf9-9f0306fb147d_Screenshot 2025-11-24 231603.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:32:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "on3sexhg87"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/669df261-ec02-4521-9bf9-9f0306fb147d_Screenshot 2025-11-24 231603.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/669df261-ec02-4521-9bf9-9f0306fb147d_Screenshot 2025-11-24 231603.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\669df261-ec02-4521-9bf9-9f0306fb147d_Screenshot 2025-11-24 231603.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:32:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/676b9dc6-cd19-4018-af95-93f666a0e0e3_Screenshot 2025-11-28 025221.0dyeutq7vj.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\676b9dc6-cd19-4018-af95-93f666a0e0e3_Screenshot 2025-11-28 025221.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9704"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0dyeutq7vj"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/676b9dc6-cd19-4018-af95-93f666a0e0e3_Screenshot 2025-11-28 025221.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/676b9dc6-cd19-4018-af95-93f666a0e0e3_Screenshot 2025-11-28 025221.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\676b9dc6-cd19-4018-af95-93f666a0e0e3_Screenshot 2025-11-28 025221.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9704"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/78abcbe5-e5cc-4a44-adb7-e9077aeba855_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\78abcbe5-e5cc-4a44-adb7-e9077aeba855_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/78abcbe5-e5cc-4a44-adb7-e9077aeba855_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/78abcbe5-e5cc-4a44-adb7-e9077aeba855_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\78abcbe5-e5cc-4a44-adb7-e9077aeba855_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/98a8d585-1523-4c69-865b-b96e0d39759d_Screenshot 2025-11-27 202704.67xbsk83pl.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\98a8d585-1523-4c69-865b-b96e0d39759d_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:14:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "67xbsk83pl"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/98a8d585-1523-4c69-865b-b96e0d39759d_Screenshot 2025-11-27 202704.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/98a8d585-1523-4c69-865b-b96e0d39759d_Screenshot 2025-11-27 202704.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\98a8d585-1523-4c69-865b-b96e0d39759d_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:14:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/a98dca94-1201-4d3c-839a-b343e749bd5f_Screenshot 2025-11-24 231603.on3sexhg87.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\a98dca94-1201-4d3c-839a-b343e749bd5f_Screenshot 2025-11-24 231603.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:09:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "on3sexhg87"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/a98dca94-1201-4d3c-839a-b343e749bd5f_Screenshot 2025-11-24 231603.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/a98dca94-1201-4d3c-839a-b343e749bd5f_Screenshot 2025-11-24 231603.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\a98dca94-1201-4d3c-839a-b343e749bd5f_Screenshot 2025-11-24 231603.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:09:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fPwN9lSYpCGR//cBFkk1VpGe5koiGnSQZQMISuEM3IU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/abe1062e-d7da-45e3-84d2-6e151be7a664_Screenshot 2025-11-28 025221.0dyeutq7vj.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\abe1062e-d7da-45e3-84d2-6e151be7a664_Screenshot 2025-11-28 025221.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9704"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0dyeutq7vj"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/abe1062e-d7da-45e3-84d2-6e151be7a664_Screenshot 2025-11-28 025221.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/abe1062e-d7da-45e3-84d2-6e151be7a664_Screenshot 2025-11-28 025221.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\abe1062e-d7da-45e3-84d2-6e151be7a664_Screenshot 2025-11-28 025221.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9704"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dHfGv4q1VD5+eVB9m++GugEUJ23oimXf80AgxKT19iQ="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/ac6de609-b8a6-44f1-a3d6-6876f1aa293f_Screenshot 2025-11-27 202704.67xbsk83pl.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\ac6de609-b8a6-44f1-a3d6-6876f1aa293f_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "67xbsk83pl"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/ac6de609-b8a6-44f1-a3d6-6876f1aa293f_Screenshot 2025-11-27 202704.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/ac6de609-b8a6-44f1-a3d6-6876f1aa293f_Screenshot 2025-11-27 202704.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\ac6de609-b8a6-44f1-a3d6-6876f1aa293f_Screenshot 2025-11-27 202704.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "13277"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 14:31:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-LtekCPghvqWHoyEgzZU8nHysv68zGee/pFjYQ51q5S0="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/bde296ed-05c1-4770-ac82-d69f3f3a7414_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\bde296ed-05c1-4770-ac82-d69f3f3a7414_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:14:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/bde296ed-05c1-4770-ac82-d69f3f3a7414_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/bde296ed-05c1-4770-ac82-d69f3f3a7414_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\bde296ed-05c1-4770-ac82-d69f3f3a7414_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:14:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/c6129fc9-8aaa-49a5-a647-f802999c9c11_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\c6129fc9-8aaa-49a5-a647-f802999c9c11_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:32:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/c6129fc9-8aaa-49a5-a647-f802999c9c11_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/c6129fc9-8aaa-49a5-a647-f802999c9c11_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\c6129fc9-8aaa-49a5-a647-f802999c9c11_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:32:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/fd73e65e-d467-49a4-93be-3a7f3d9ed73e_Screenshot 2025-11-26 231848.6p4ep7c277.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\fd73e65e-d467-49a4-93be-3a7f3d9ed73e_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:09:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6p4ep7c277"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/vehicle-listings/fd73e65e-d467-49a4-93be-3a7f3d9ed73e_Screenshot 2025-11-26 231848.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/vehicle-listings/fd73e65e-d467-49a4-93be-3a7f3d9ed73e_Screenshot 2025-11-26 231848.png",
+      "AssetFile": "D:\\ITIRR Backend\\ITIRR.API\\wwwroot\\uploads\\vehicle-listings\\fd73e65e-d467-49a4-93be-3a7f3d9ed73e_Screenshot 2025-11-26 231848.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37154"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 22 Feb 2026 10:09:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SoRZGg4VoUJx2g7+jr/4ymvpuVD5JIwWy81PELaa0WU="
+        }
+      ]
+    }
+  ]
+}

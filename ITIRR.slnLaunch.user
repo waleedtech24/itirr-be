@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "ITIRR.API\\ITIRR.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ITIRR.Web\\ITIRR.Web.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
