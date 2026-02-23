@@ -1,8 +1,0 @@
-﻿.vs
-ITIRR.Admin/bin
-ITIRR.Admin/obj
-*.uer~
-ITIRR.API/obj
-ITIRR.Core/obj
-ITIRR.Infrastructure/obj
-ITIRR.Services/obj

@@ -22,42 +22,6 @@ namespace ITIRR.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ITIRR.Core.Country", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Countries");
-                });
-
             modelBuilder.Entity("ITIRR.Core.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -68,6 +32,9 @@ namespace ITIRR.Infrastructure.Migrations
 
                     b.Property<string>("AccountType")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AgencyName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Bio")
@@ -126,6 +93,12 @@ namespace ITIRR.Infrastructure.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("OtpCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("OtpExpiresAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -231,6 +204,184 @@ namespace ITIRR.Infrastructure.Migrations
                     b.ToTable("AuditLogs");
                 });
 
+            modelBuilder.Entity("ITIRR.Core.Entities.BoatListing", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AdvanceNotice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BoatLength")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BoatMake")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BoatModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BoatType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BoatYear")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentStep")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FuelType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HullMaterial")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MaxTripDuration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MinTripDuration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("MinTwoDayWeekend")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PassengerCapacity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PrimaryGoal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegistrationNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShareFrequency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkipperFirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkipperLastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkipperLicenceDocUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SkipperLicenceExpiry")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SkipperLicenceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkipperLicenceType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkipperMiddleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UsageFrequency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BoatListings");
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.BoatListingMedia", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BoatListingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MediaType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MediaUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoatListingId");
+
+                    b.ToTable("BoatListingMedia");
+                });
+
             modelBuilder.Entity("ITIRR.Core.Entities.City", b =>
                 {
                     b.Property<Guid>("Id")
@@ -275,6 +426,44 @@ namespace ITIRR.Infrastructure.Migrations
                     b.HasIndex("StateId");
 
                     b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.Country", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("ITIRR.Core.Entities.Document", b =>
@@ -404,6 +593,63 @@ namespace ITIRR.Infrastructure.Migrations
                     b.ToTable("DocumentTypes");
                 });
 
+            modelBuilder.Entity("ITIRR.Core.Entities.DriversLicence", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LicenceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DriversLicences");
+                });
+
             modelBuilder.Entity("ITIRR.Core.Entities.HostGoal", b =>
                 {
                     b.Property<Guid>("Id")
@@ -462,6 +708,209 @@ namespace ITIRR.Infrastructure.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("HostGoals");
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.JetListing", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AdvanceNotice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AircraftCategory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AircraftMake")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AircraftModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AircraftYear")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AirworthinessDocUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CabinFeatures")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CancellationPolicy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CrewCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CruisingSpeed")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CurrentStep")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EngineType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HangarLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HomeAirport")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InsuranceDocUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastMaintenanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MaxTripDuration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MinTripDuration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PassengerCapacity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PilotFirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PilotLastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PilotLicenceExpiry")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PilotLicenceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PilotLicenceType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrimaryGoal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RangeNauticalMiles")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RegistrationDocUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SafetyCertifications")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShareFrequency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TailNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UsageFrequency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JetListings");
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.JetListingMedia", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("JetListingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("MediaType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MediaUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JetListingId");
+
+                    b.ToTable("JetListingMedia");
                 });
 
             modelBuilder.Entity("ITIRR.Core.Entities.Message", b =>
@@ -587,6 +1036,79 @@ namespace ITIRR.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.PCOLicence", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MOTCertificateUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PHVLicenceExpiryDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PHVLicenceNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlateNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoadTaxCertificate2Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoadTaxCertificateUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("VehicleColor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("VehicleListingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("VehicleLogbookUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleMakeModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("YearOfManufacture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VehicleListingId");
+
+                    b.ToTable("PCOLicences");
                 });
 
             modelBuilder.Entity("ITIRR.Core.Entities.State", b =>
@@ -1104,6 +1626,149 @@ namespace ITIRR.Infrastructure.Migrations
                     b.ToTable("VehicleHistories");
                 });
 
+            modelBuilder.Entity("ITIRR.Core.Entities.VehicleListing", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AdvanceNotice")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentStep")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Features")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("HasSalvageTitle")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsOlderThan1981")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LicencePlateNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaxTripDuration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MinTripDuration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("MinTwoDayWeekend")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OdometerReading")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PrimaryGoal")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShareFrequency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("TaxCertified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Transmission")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UsageFrequency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VIN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("VehicleListings");
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.VehicleListingMedia", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MediaType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MediaUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("VehicleListingId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VehicleListingId");
+
+                    b.ToTable("VehicleListingMedia");
+                });
+
             modelBuilder.Entity("ITIRR.Core.Entities.VehicleLocation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1439,9 +2104,20 @@ namespace ITIRR.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ITIRR.Core.Entities.BoatListingMedia", b =>
+                {
+                    b.HasOne("ITIRR.Core.Entities.BoatListing", "BoatListing")
+                        .WithMany("Media")
+                        .HasForeignKey("BoatListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BoatListing");
+                });
+
             modelBuilder.Entity("ITIRR.Core.Entities.City", b =>
                 {
-                    b.HasOne("ITIRR.Core.Country", "Country")
+                    b.HasOne("ITIRR.Core.Entities.Country", "Country")
                         .WithMany("Cities")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1488,6 +2164,17 @@ namespace ITIRR.Infrastructure.Migrations
                     b.Navigation("VerifiedByUser");
                 });
 
+            modelBuilder.Entity("ITIRR.Core.Entities.DriversLicence", b =>
+                {
+                    b.HasOne("ITIRR.Core.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ITIRR.Core.Entities.HostGoal", b =>
                 {
                     b.HasOne("ITIRR.Core.Entities.ApplicationUser", "Host")
@@ -1505,6 +2192,17 @@ namespace ITIRR.Infrastructure.Migrations
                     b.Navigation("Host");
 
                     b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.JetListingMedia", b =>
+                {
+                    b.HasOne("ITIRR.Core.Entities.JetListing", "JetListing")
+                        .WithMany("Media")
+                        .HasForeignKey("JetListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("JetListing");
                 });
 
             modelBuilder.Entity("ITIRR.Core.Entities.Message", b =>
@@ -1543,9 +2241,26 @@ namespace ITIRR.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ITIRR.Core.Entities.PCOLicence", b =>
+                {
+                    b.HasOne("ITIRR.Core.Entities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ITIRR.Core.Entities.VehicleListing", "VehicleListing")
+                        .WithMany()
+                        .HasForeignKey("VehicleListingId");
+
+                    b.Navigation("User");
+
+                    b.Navigation("VehicleListing");
+                });
+
             modelBuilder.Entity("ITIRR.Core.Entities.State", b =>
                 {
-                    b.HasOne("ITIRR.Core.Country", "Country")
+                    b.HasOne("ITIRR.Core.Entities.Country", "Country")
                         .WithMany("States")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1697,6 +2412,40 @@ namespace ITIRR.Infrastructure.Migrations
                     b.Navigation("Vehicle");
                 });
 
+            modelBuilder.Entity("ITIRR.Core.Entities.VehicleListing", b =>
+                {
+                    b.HasOne("ITIRR.Core.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("ITIRR.Core.Entities.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.HasOne("ITIRR.Core.Entities.ApplicationUser", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Country");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.VehicleListingMedia", b =>
+                {
+                    b.HasOne("ITIRR.Core.Entities.VehicleListing", "VehicleListing")
+                        .WithMany("Media")
+                        .HasForeignKey("VehicleListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("VehicleListing");
+                });
+
             modelBuilder.Entity("ITIRR.Core.Entities.VehicleLocation", b =>
                 {
                     b.HasOne("ITIRR.Core.Entities.City", "City")
@@ -1789,11 +2538,9 @@ namespace ITIRR.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ITIRR.Core.Country", b =>
+            modelBuilder.Entity("ITIRR.Core.Entities.BoatListing", b =>
                 {
-                    b.Navigation("Cities");
-
-                    b.Navigation("States");
+                    b.Navigation("Media");
                 });
 
             modelBuilder.Entity("ITIRR.Core.Entities.City", b =>
@@ -1801,9 +2548,21 @@ namespace ITIRR.Infrastructure.Migrations
                     b.Navigation("VehicleLocations");
                 });
 
+            modelBuilder.Entity("ITIRR.Core.Entities.Country", b =>
+                {
+                    b.Navigation("Cities");
+
+                    b.Navigation("States");
+                });
+
             modelBuilder.Entity("ITIRR.Core.Entities.DocumentType", b =>
                 {
                     b.Navigation("Documents");
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.JetListing", b =>
+                {
+                    b.Navigation("Media");
                 });
 
             modelBuilder.Entity("ITIRR.Core.Entities.State", b =>
@@ -1845,6 +2604,11 @@ namespace ITIRR.Infrastructure.Migrations
             modelBuilder.Entity("ITIRR.Core.Entities.VehicleFeature", b =>
                 {
                     b.Navigation("VehicleFeatureMappings");
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.VehicleListing", b =>
+                {
+                    b.Navigation("Media");
                 });
 
             modelBuilder.Entity("ITIRR.Core.Entities.VehicleModel", b =>

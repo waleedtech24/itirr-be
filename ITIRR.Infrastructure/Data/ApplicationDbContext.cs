@@ -40,6 +40,16 @@ namespace ITIRR.Infrastructure.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
 
+        public DbSet<VehicleListing> VehicleListings { get; set; }
+        public DbSet<VehicleListingMedia> VehicleListingMedia { get; set; }
+        public DbSet<DriversLicence> DriversLicences { get; set; }
+        public DbSet<PCOLicence> PCOLicences { get; set; }
+
+        public DbSet<BoatListing> BoatListings { get; set; }
+        public DbSet<BoatListingMedia> BoatListingMedia { get; set; }
+        public DbSet<JetListing> JetListings { get; set; }
+        public DbSet<JetListingMedia> JetListingMedia { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

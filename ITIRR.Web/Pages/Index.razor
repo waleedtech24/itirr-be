@@ -1,0 +1,345 @@
+﻿@page "/"
+@inject NavigationManager Navigation
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-light">
+    <div class="container">
+        <a class="navbar-brand">
+            <img src="img/logo.png" />
+        </a>
+        <button class="btn btn-partner" @onclick="GoToLogin">Become a Partner</button>
+    </div>
+</nav>
+
+<!-- HERO SECTION - Dark with background image -->
+<div class="container-fluid become-main-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 become-mian-left">
+                <h1 class="d-flex justify-content-center text-center">Become a Partner — Grow Your Fleet, <br /> Earn With Confidence</h1>
+                <p class="d-flex justify-content-center text-center">Join our elite network of rental providers and unlock access to high-value clients worldwide. List your <br /> fleet with us and reach thousands of premium clients worldwide.</p>
+                <div class="sep">
+                    <button @onclick="GoToLogin" class="border-btn">Become a Partner</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EARN TEAM SECTION -->
+<div class="container earn-team-sec">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Join ITIRR and earn on your terms</h1>
+            <p>Join a fast-growing network of verified hosts earning from their premium assets. Backed by global demand, seamless <br /> payouts, and round-the-clock support — your fleet is in the right hands.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 mb-2">
+            <div class="earn-team-crad">
+                <h1>$4.2M+</h1>
+                <h3>Revenue Paid to Hosts</h3>
+                <p>Real income, real success — our hosts are earning more than ever.</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 mb-2">
+            <div class="earn-team-crad">
+                <h1>15,000+</h1>
+                <h3>Active Renters Worldwide</h3>
+                <p>A global pool of high-end clients looking to book vehicles like yours.</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 mb-2">
+            <div class="earn-team-crad">
+                <h1>1,200+</h1>
+                <h3>Luxury Assets Listed</h3>
+                <p>Cars, Private Jets, Yachts &amp; Boats — join a fast-growing network.</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 mb-2">
+            <div class="earn-team-crad">
+                <h1>80+</h1>
+                <h3>Cities Covered</h3>
+                <p>From Dubai to Miami — operate confidently with global reach</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- HOST SECTION -->
+<div class="container-fluid host-sec">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="row g-3 pt-5 pb-5">
+                    <div class="col-6 img-one">
+                        <img src="img/trending-5.png" alt="Luxury Car" class="img-fluid rounded" />
+                    </div>
+                    <div class="col-6 img-two">
+                        <img src="img/trending-7.png" alt="Luxury Yacht" class="img-fluid rounded" />
+                    </div>
+                    <div class="col-6 position-relative img-three">
+                        <img src="img/trending-8.png" alt="Luxury Car" class="img-fluid rounded" />
+                        <a href="#" class="play">
+                            <img src="img/play.png" alt="" />
+                        </a>
+                    </div>
+                    <div class="col-6 img-four">
+                        <img src="img/trending-1.png" alt="Private Jet" class="img-fluid rounded" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h6>Seamless Service. Global Standards.</h6>
+                <h1>How Host With Us?</h1>
+                <p>List, verify, and start earning with a few simple steps.</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="step">
+                            <div class="step-icon"><img src="img/detail.svg" alt="" /></div>
+                            <div>
+                                <h6>Submit Your Details</h6>
+                                <p>Start by providing your business credentials, contact info, and fleet overview to begin the hosting process.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon"><img src="img/document.svg" alt="" /></div>
+                            <div>
+                                <h6>Upload Documents</h6>
+                                <p>Securely upload all necessary legal, compliance, and ownership documents for verification.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon"><img src="img/verified.svg" alt="" /></div>
+                            <div>
+                                <h6>Get Verified</h6>
+                                <p>Securely upload all necessary legal, compliance, and ownership documents for verification.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon"><img src="img/esay.svg" alt="" /></div>
+                            <div>
+                                <h6>Start Earning</h6>
+                                <p>Securely upload all necessary legal, compliance, and ownership documents for verification.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- WHO CAN HOST -->
+<div class="container">
+    <div class="row earn-team-sec">
+        <div class="col-md-12">
+            <h1>Who Can Host?</h1>
+            <p>Open to vehicle owners, operators, and businesses with luxury fleets.</p>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-xl-3 col-lg-6 col-md-6 mb-2">
+            <div class="how-host-card">
+                <img src="img/rental.png" alt="" />
+                <h3>Rental Companies</h3>
+                <p>Professionals offering premium vehicles to elite clientele.</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 mb-2">
+            <div class="how-host-card">
+                <img src="img/certified.png" alt="" />
+                <h3>Certified Operators</h3>
+                <p>Jet, yacht, and boat operators with valid licenses and fleets.</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 mb-2">
+            <div class="how-host-card">
+                <img src="img/tour-agency.png" alt="" />
+                <h3>Tour Agencies</h3>
+                <p>Licensed tour providers offering luxury travel experiences.</p>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 mb-2">
+            <div class="how-host-card">
+                <img src="img/privtae-owner.png" alt="" />
+                <h3>Private Owners</h3>
+                <p>Individuals with well-maintained high-value vehicles.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PLATFORM SECTION - Dark purple -->
+<div class="container-fluid paltform-sec">
+    <div class="container">
+        <div class="row platfrom-mian">
+            <div class="col-md-12">
+                <h1>Your Fleet, Fully Backed by Our Platform</h1>
+                <p>From onboarding to bookings — we handle the heavy lifting so you can focus on growing your income.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="platform-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <path d="M24 34.6667C24 34.6667 26.6667 34.6667 29.3333 40C29.3333 40 37.804 26.6667 45.3333 24" stroke="#552D6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M56 29.8208V22.0795C56 17.7061 56 15.5194 54.9224 14.0928C53.8448 12.6661 51.4083 11.9735 46.5352 10.5883C43.2059 9.6419 40.2709 8.50171 37.9261 7.4608C34.7291 6.04163 33.1307 5.33203 32 5.33203C30.8693 5.33203 29.2709 6.04163 26.0739 7.4608C23.729 8.50171 20.7942 9.64187 17.4649 10.5883C12.5918 11.9735 10.1553 12.6661 9.07763 14.0928C8 15.5194 8 17.7061 8 22.0795V29.8208C8 44.8214 21.5007 53.8214 28.2507 57.3838C29.8696 58.2382 30.6789 58.6654 32 58.6654C33.3211 58.6654 34.1304 58.2382 35.7493 57.3838C42.4992 53.8214 56 44.8214 56 29.8208Z" stroke="#552D6C" stroke-width="4" stroke-linecap="round" />
+                    </svg>
+                    <h3>Insurance included</h3>
+                    <p>Every listing is protected with tailored insurance coverage to safeguard against damage, liability, or loss. Your peace of mind is built into every booking, no matter the vehicle or location.</p>
+                </div>
+                <div class="platform-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <path d="M46.6665 46.668L58.6665 58.668" stroke="#552D6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M53.3335 29.332C53.3335 16.0772 42.5884 5.33203 29.3335 5.33203C16.0787 5.33203 5.3335 16.0772 5.3335 29.332C5.3335 42.587 16.0787 53.332 29.3335 53.332C42.5884 53.332 53.3335 42.587 53.3335 29.332Z" stroke="#552D6C" stroke-width="4" stroke-linejoin="round" />
+                        <path d="M35.3414 24.8284C35.6209 21.4564 30.4617 18.703 26.519 20.5503C21.5937 22.8578 22.0231 28.6904 28.1062 28.999C30.8132 29.136 33.1809 28.8438 34.79 30.5875C36.399 32.3315 37.0964 36.7723 32.3532 38.2795C27.6102 39.7864 22.6665 37.0987 22.6665 33.8203M29.2558 17.332V19.9392M29.2558 39.2531V41.332" stroke="#552D6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3>Demand generation</h3>
+                    <p>Tap into a high-intent, global audience with optimized exposure and smart marketing tools. We bring the renters — you focus on earning from your premium assets.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="platform-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <path d="M45.3333 28.812C45.3333 27.8901 45.3333 27.4293 45.472 27.0187C45.8752 25.8252 46.9381 25.362 48.0029 24.877C49.2 24.3318 49.7984 24.0592 50.3914 24.0112C51.0648 23.9567 51.7392 24.1018 52.3146 24.4248C53.0776 24.8529 53.6096 25.6665 54.1544 26.3281C56.6701 29.3835 57.9277 30.9115 58.388 32.5963C58.7594 33.9557 58.7594 35.3776 58.388 36.7371C57.7168 39.1944 55.596 41.2544 54.0261 43.1611C53.2232 44.1363 52.8216 44.624 52.3146 44.9085C51.7392 45.2315 51.0648 45.3765 50.3914 45.3221C49.7984 45.2741 49.2 45.0016 48.0029 44.4563C46.9381 43.9712 45.8752 43.5083 45.472 42.3147C45.3333 41.904 45.3333 41.4432 45.3333 40.5213V28.812Z" stroke="#552D6C" stroke-width="4" />
+                        <path d="M18.6666 28.8123C18.6666 27.6517 18.6341 26.6086 17.6957 25.7925C17.3545 25.4957 16.902 25.2896 15.9971 24.8775C14.8 24.3322 14.2015 24.0596 13.6084 24.0116C11.8291 23.8677 10.8718 25.0822 9.84566 26.3285C7.32998 29.384 6.07214 30.9117 5.61187 32.5965C5.24046 33.9563 5.24046 35.3781 5.61187 36.7376C6.28318 39.1949 8.40403 41.2547 9.97387 43.1616C10.9634 44.3635 11.9087 45.46 13.6084 45.3227C14.2015 45.2747 14.8 45.0019 15.9971 44.4568C16.902 44.0445 17.3545 43.8384 17.6957 43.5416C18.6341 42.7256 18.6666 41.6827 18.6666 40.5219V28.8123Z" stroke="#552D6C" stroke-width="4" />
+                        <path d="M13.3333 24C13.3333 15.1634 21.6907 8 32 8C42.3093 8 50.6666 15.1634 50.6666 24" stroke="#552D6C" stroke-width="4" stroke-linecap="square" stroke-linejoin="round" />
+                        <path d="M50.6667 45.332V47.4654C50.6667 52.1782 45.891 55.9987 40.0001 55.9987H34.6667" stroke="#552D6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3>Safety &amp; support</h3>
+                    <p>Get 24/7 host assistance, real-time alerts, and professional help whenever needed. We're with you before, during, and after every rental to ensure smooth operations.</p>
+                </div>
+                <div class="platform-card">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+                        <path d="M10.6667 23.9987C10.6667 15.1992 10.6667 10.7994 13.7909 8.06571C16.9151 5.33203 21.9434 5.33203 32.0001 5.33203C42.0566 5.33203 47.0851 5.33203 50.2091 8.06571C53.3334 10.7994 53.3334 15.1992 53.3334 23.9987V39.9987C53.3334 48.7982 53.3334 53.1979 50.2091 55.9318C47.0851 58.6654 42.0566 58.6654 32.0001 58.6654C21.9434 58.6654 16.9151 58.6654 13.7909 55.9318C10.6667 53.1979 10.6667 48.7982 10.6667 39.9987V23.9987Z" stroke="#552D6C" stroke-width="4" stroke-linecap="round" />
+                        <path d="M33.6766 37.9902C33.227 38.4232 32.626 38.6654 32.0004 38.6654C31.3748 38.6654 30.7737 38.4232 30.3241 37.9902C26.2058 33.9998 20.687 29.5422 23.3784 23.0704C24.8336 19.5711 28.3268 17.332 32.0004 17.332C35.674 17.332 39.167 19.5711 40.6222 23.0704C43.3102 29.5339 37.8049 34.0134 33.6766 37.9902Z" stroke="#552D6C" stroke-width="4" />
+                        <path d="M32 26.668H32.024" stroke="#552D6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M29.3333 50.668H34.6666" stroke="#552D6C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3>An easy-to-use app</h3>
+                    <p>Manage your fleet, track bookings, and stay in control with our intuitive mobile dashboard. Built for speed, clarity, and convenience — wherever business takes you.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FAQ SECTION -->
+<div class="container faq-sec">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Frequently asked questions</h1>
+            <p>Find quick answers to common questions about hosting, bookings, payouts, and platform policies — all in one place.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="accordion" id="faqLeft1">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingL1">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseL1">
+                            How do I list my vehicle on the platform?
+                        </button>
+                    </h2>
+                    <div id="collapseL1" class="accordion-collapse collapse" data-bs-parent="#faqLeft1">
+                        <div class="accordion-body">Simply sign up as a host, submit your vehicle details, upload necessary documents, and our team will verify your listing within 24–72 hours.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="faqLeft2">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseL2">
+                            Can I choose who rents my vehicle?
+                        </button>
+                    </h2>
+                    <div id="collapseL2" class="accordion-collapse collapse" data-bs-parent="#faqLeft2">
+                        <div class="accordion-body">Simply sign up as a host, submit your vehicle details, upload necessary documents, and our team will verify your listing within 24–72 hours.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="faqLeft3">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseL3">
+                            Is there a commission or service fee for hosts?
+                        </button>
+                    </h2>
+                    <div id="collapseL3" class="accordion-collapse collapse" data-bs-parent="#faqLeft3">
+                        <div class="accordion-body">Simply sign up as a host, submit your vehicle details, upload necessary documents, and our team will verify your listing within 24–72 hours.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="faqLeft4">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseL4">
+                            What if my vehicle gets damaged during a rental?
+                        </button>
+                    </h2>
+                    <div id="collapseL4" class="accordion-collapse collapse" data-bs-parent="#faqLeft4">
+                        <div class="accordion-body">Simply sign up as a host, submit your vehicle details, upload necessary documents, and our team will verify your listing within 24–72 hours.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="accordion" id="faqRight1">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseR1">
+                            How do I list my vehicle on the platform?
+                        </button>
+                    </h2>
+                    <div id="collapseR1" class="accordion-collapse collapse" data-bs-parent="#faqRight1">
+                        <div class="accordion-body">Simply sign up as a host, submit your vehicle details, upload necessary documents, and our team will verify your listing within 24–72 hours.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="faqRight2">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseR2">
+                            Can I choose who rents my vehicle?
+                        </button>
+                    </h2>
+                    <div id="collapseR2" class="accordion-collapse collapse" data-bs-parent="#faqRight2">
+                        <div class="accordion-body">Simply sign up as a host, submit your vehicle details, upload necessary documents, and our team will verify your listing within 24–72 hours.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="faqRight3">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseR3">
+                            Is there a commission or service fee for hosts?
+                        </button>
+                    </h2>
+                    <div id="collapseR3" class="accordion-collapse collapse" data-bs-parent="#faqRight3">
+                        <div class="accordion-body">Simply sign up as a host, submit your vehicle details, upload necessary documents, and our team will verify your listing within 24–72 hours.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion" id="faqRight4">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseR4">
+                            What if my vehicle gets damaged during a rental?
+                        </button>
+                    </h2>
+                    <div id="collapseR4" class="accordion-collapse collapse" data-bs-parent="#faqRight4">
+                        <div class="accordion-body">Simply sign up as a host, submit your vehicle details, upload necessary documents, and our team will verify your listing within 24–72 hours.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private void GoToLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}
