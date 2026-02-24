@@ -10,3 +10,10 @@ ITIRR.Admin/ITIRR.Admin.csproj.user
 ITIRR.API/ITIRR.API.csproj.user
 ITIRR.Web/ITIRR.Web.csproj.user
 ITIRR.Services/obj
+ITIRR.API/bin
+ITIRR.Core/bin
+ITIRR.Services/bin
+ITIRR.Web/bin
+*.csproj
+ITIRR.Admin/ITIRR.Admin.csproj
+ITIRR.Infrastructure/bin
