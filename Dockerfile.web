@@ -10,7 +10,7 @@ COPY . .
 RUN dotnet restore "ITIRR.Web/ITIRR.Web.csproj"
 RUN dotnet publish "ITIRR.Web/ITIRR.Web.csproj" -c Release -o /app/publish
 
-FROM base AS final
+FROM base AS final  
 WORKDIR /app
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "ITIRR.Web.dll"]
