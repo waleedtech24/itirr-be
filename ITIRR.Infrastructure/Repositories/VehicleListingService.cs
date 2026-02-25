@@ -307,7 +307,13 @@ namespace ITIRR.Services.Services
             => await _listingRepository.GetByIdAsync(id);
 
         public async Task<IEnumerable<VehicleListing>> GetMyListingsAsync(string userId)
-            => await _listingRepository.GetByOwnerAsync(userId);
+        {
+            return await _context.VehicleListings
+                .Include(v => v.Media)   
+                .Where(v => v.OwnerId == userId && !v.IsDeleted)
+                .OrderByDescending(v => v.CreatedAt)
+                .ToListAsync();
+        }
 
         public async Task<VehicleListing?> GetInProgressListingAsync(string userId)
         {

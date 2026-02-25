@@ -228,10 +228,24 @@ namespace ITIRR.API.Controllers
                 var response = listings.Select(l => new VehicleListingResponse
                 {
                     ListingId = l.Id,
-                    VehicleType = l.VehicleType,
+                    VehicleType = l.VehicleType ?? "car",
                     Status = l.Status,
                     CurrentStep = l.CurrentStep,
-                    Message = "Success"
+                    Message = "Success.",
+                    LicencePlateNumber = l.LicencePlateNumber,
+                    VIN = l.VIN,
+                    StreetAddress = l.StreetAddress,
+                    State = l.State,
+                    ZipCode = l.ZipCode,
+                    OdometerReading = l.OdometerReading,
+                    Transmission = l.Transmission,
+                    PrimaryGoal = l.PrimaryGoal,
+                    FirstPhotoUrl = l.Media != null && l.Media.Any(m => m.MediaType == "Exterior")
+                                        ? l.Media.First(m => m.MediaType == "Exterior").MediaUrl
+                                        : l.Media != null && l.Media.Any()
+                                        ? l.Media.First().MediaUrl
+                                        : null,
+                    CreatedAt = l.CreatedAt
                 });
 
                 return Ok(ApiResponse<IEnumerable<VehicleListingResponse>>.SuccessResponse(
