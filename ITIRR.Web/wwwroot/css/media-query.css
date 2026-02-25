@@ -1,0 +1,116 @@
+/* ============================================== MEDIA QUERY START HERE =============================================== */
+
+@media only screen and (min-width: 1400px) and (max-width: 2560px) {
+}
+
+@media only screen and (min-width: 1200px) and (max-width: 1440px) {
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1024px) {
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+}
+
+@media only screen and (min-width: 320px) and (max-width: 479px) {
+    .select-vehbtn .btn-bac {
+        padding: 10px 50px !important;
+    }
+
+    .select-vehbtn .btn-nex {
+        padding: 10px 50px !important;
+    }
+
+    .host-sec h6 {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .host-sec h1 {
+        font-size: 16px;
+        line-height: normal;
+    }
+
+    .host-sec p {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .navbar .btn {
+        display: none;
+    }
+
+    .become-mian-left h1 {
+        font-size: 27px;
+        line-height: 35px;
+    }
+
+    .become-mian-left span {
+        font-size: 13px;
+    }
+
+    .earn-team-sec h1 {
+        font-size: 30px;
+        line-height: 35px;
+    }
+
+    .paltform-sec .platfrom-mian h1 {
+        font-size: 31px;
+    }
+
+    .back-setbtn {
+        padding: 10px 65px;
+    }
+
+    .next-setbtn {
+        padding: 10px 63px;
+    }
+
+    .car-modal .btn-edit {
+        padding: 10px 50px;
+    }
+
+    .car-modal .btn-confirm {
+        padding: 10px 40px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .become-mian-left span {
+        font-size: 11px;
+    }
+
+    .become-mian-left h1 {
+        font-size: 27px;
+        line-height: 35px;
+    }
+
+    .paltform-sec .platfrom-mian h1 {
+        font-size: 22px;
+        line-height: 33px;
+    }
+
+    .faq-sec h1 {
+        font-size: 29px;
+        line-height: 35px;
+    }
+
+    .back-setbtn {
+        padding: 10px 50px;
+    }
+
+    .next-setbtn {
+        padding: 10px 50px;
+    }
+
+    .car-modal .btn-edit {
+        padding: 10px 30px;
+    }
+
+    .car-modal .btn-confirm {
+        padding: 10px 30px;
+    }
+}

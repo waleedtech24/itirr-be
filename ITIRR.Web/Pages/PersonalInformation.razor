@@ -1,0 +1,635 @@
+﻿@page "/personal-information"
+@layout ITIRR.Web.Shared.DashboardLayout
+@attribute [Authorize]
+@inject NavigationManager Navigation
+@inject CustomAuthStateProvider AuthStateProvider
+@inject HttpClient Http
+@using Microsoft.AspNetCore.Authorization
+@using ITIRR.Web.Auth
+@using System.Net.Http.Json
+@using System.Text.Json
+
+<div class="container-fluid">
+
+    <!-- BREADCRUMB -->
+    <div class="row">
+        <div class="col-md-12">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb custom-breadcrumb">
+                    <li class="breadcrumb-item"><a href="/partner-home">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Personal Information</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- HEADING -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="agency-header">
+                <h1>Personal Information</h1>
+                <p>View verified host details, and rental listings. Transparency and trust are core to every booking.</p>
+            </div>
+        </div>
+    </div>
+
+    @if (isPageLoading)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary"></div>
+            <p class="mt-3">Loading profile...</p>
+        </div>
+    }
+    else
+    {
+        <!-- TABS -->
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs d-flex justify-content-start agency-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link Basic @(activeTab == "basic" ? "active" : "")"
+                           href="#" @onclick="@(() => SetTab("basic"))" @onclick:preventDefault="true">
+                            Basic Information
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link Contact @(activeTab == "contact" ? "active" : "")"
+                           href="#" @onclick="@(() => SetTab("contact"))" @onclick:preventDefault="true">
+                            Contact Detail
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link Document @(activeTab == "document" ? "active" : "")"
+                           href="#" @onclick="@(() => SetTab("document"))" @onclick:preventDefault="true">
+                            Document Validation
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- ========== BASIC TAB ========== -->
+                @if (activeTab == "basic")
+                {
+                    <div class="basic-bg mb-4">
+                        <div class="container-fluid">
+
+                            <!-- Profile Photo -->
+                            <div class="row">
+                                <div class="col-md-4 col-sm-12 my-profile">
+                                    <img src="@GetImageUrl(profile.ProfilePhotoUrl, "img/user-profile.jpg")"
+                                         id="profileImage" alt="Profile" class="d-block" />
+
+                                    @* ✅ FIXED: InputFile wrapped inside label — clicking label opens file picker *@
+                                    <label class="upload" style="cursor:pointer; display:inline-block;">
+                                        @if (isUploadingPhoto)
+                                        {
+                                            <span><i class="fa-solid fa-spinner fa-spin me-1"></i> Uploading...</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Upload Photo</span>
+                                        }
+                                        <InputFile OnChange="OnProfilePhotoChanged"
+                                                   accept="image/*"
+                                                   style="display:none;" />
+                                    </label>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <!-- Alerts -->
+                            @if (!string.IsNullOrEmpty(basicSuccess))
+                            {
+                                <div class="alert alert-success alert-dismissible">
+                                    @basicSuccess
+                                    <button class="btn-close" @onclick="@(() => basicSuccess = string.Empty)"></button>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(basicError))
+                            {
+                                <div class="alert alert-danger alert-dismissible">
+                                    @basicError
+                                    <button class="btn-close" @onclick="@(() => basicError = string.Empty)"></button>
+                                </div>
+                            }
+
+                            <!-- Basic Form -->
+                            <div class="my-form">
+                                <h6>Basic Information</h6>
+                                <div class="form-start">
+                                    <label>Agency Name</label>
+                                    <input type="text" class="form-control special"
+                                           placeholder="William Motors"
+                                           @bind="profile.AgencyName" />
+                                </div>
+                                <div class="form-start">
+                                    <label>About</label>
+                                    <textarea class="form-control enter-text" rows="4"
+                                              placeholder="Write here about your company ...."
+                                              @bind="profile.About"></textarea>
+                                </div>
+                                <hr />
+                            </div>
+
+                            <!-- Languages -->
+                            <div class="languages">
+                                <h5>Languages</h5>
+                                <div class="form-start">
+                                    <label>Enter Languages</label>
+                                    <input type="text" class="form-control enter-text"
+                                           placeholder='Use comma "," to separate'
+                                           @bind="profile.Languages" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 update-now">
+                            <button class="upload btn" @onclick="SaveBasicInfo" disabled="@isSavingBasic">
+                                @(isSavingBasic ? "Updating..." : "Update")
+                            </button>
+                        </div>
+                    </div>
+                }
+
+                <!-- ========== CONTACT TAB ========== -->
+                @if (activeTab == "contact")
+                {
+                    <div class="basic-bg mb-4">
+                        <div class="container-fluid">
+                            <div class="my-form">
+                                <h6>Contact Information</h6>
+
+                                @if (!string.IsNullOrEmpty(contactSuccess))
+                                {
+                                    <div class="alert alert-success alert-dismissible">
+                                        @contactSuccess
+                                        <button class="btn-close" @onclick="@(() => contactSuccess = string.Empty)"></button>
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(contactError))
+                                {
+                                    <div class="alert alert-danger alert-dismissible">
+                                        @contactError
+                                        <button class="btn-close" @onclick="@(() => contactError = string.Empty)"></button>
+                                    </div>
+                                }
+
+                                <div class="row">
+                                    <div class="form-start col-md-6">
+                                        <label>Phone Number</label>
+                                        <input type="text" class="form-control enter-text"
+                                               placeholder="eg. +1 3578 678 89"
+                                               @bind="profile.PhoneNumber" />
+                                    </div>
+                                    <div class="form-start col-md-6">
+                                        <label>Email Address</label>
+                                        <input type="text" class="form-control enter-text"
+                                               placeholder="eg. contact@example.com"
+                                               @bind="profile.Email" />
+                                    </div>
+                                </div>
+                                <hr />
+                            </div>
+
+                            <div class="languages">
+                                <h5>Social Media</h5>
+                                <div class="row">
+                                    <div class="form-start col-md-6">
+                                        <label>Facebook</label>
+                                        <input type="text" class="form-control enter-text"
+                                               placeholder="Facebook profile link"
+                                               @bind="profile.Facebook" />
+                                    </div>
+                                    <div class="form-start col-md-6">
+                                        <label>Twitter / X</label>
+                                        <input type="text" class="form-control enter-text"
+                                               placeholder="Twitter/X profile link"
+                                               @bind="profile.Twitter" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 update-now">
+                            <button class="upload btn" @onclick="SaveContactInfo" disabled="@isSavingContact">
+                                @(isSavingContact ? "Updating..." : "Update")
+                            </button>
+                        </div>
+                    </div>
+                }
+
+                <!-- ========== DOCUMENT TAB ========== -->
+                @if (activeTab == "document")
+                {
+                    <div class="basic-bg mb-4">
+                        <div class="container-fluid py-4">
+
+                            @if (!string.IsNullOrEmpty(docSuccess))
+                            {
+                                <div class="alert alert-success alert-dismissible mb-3">
+                                    @docSuccess
+                                    <button class="btn-close" @onclick="@(() => docSuccess = string.Empty)"></button>
+                                </div>
+                            }
+                            @if (!string.IsNullOrEmpty(docError))
+                            {
+                                <div class="alert alert-danger alert-dismissible mb-3">
+                                    @docError
+                                    <button class="btn-close" @onclick="@(() => docError = string.Empty)"></button>
+                                </div>
+                            }
+
+                            <div class="row g-4">
+
+                                <!-- LEFT: Upload Box -->
+                                <div class="col-md-6 col-sm-12">
+                                    <h5 class="upload-doc mb-3">Upload Document</h5>
+
+                                    <!-- Drop Zone -->
+                                    <div style="border: 2px dashed #ccc; border-radius: 12px; padding: 40px 20px;
+                                                text-align: center; background: #fafafa;">
+                                        <i class="fa-solid fa-cloud-arrow-up fa-3x mb-3" style="color:#6c757d;"></i>
+                                        <h6>Drag & Drop files here</h6>
+                                        <p class="text-muted small mb-3">Upload your documents — PDF or JPEG format only.</p>
+                                        <p class="text-muted its-font mb-3">──────── &nbsp; OR &nbsp; ────────</p>
+
+                                        @* ✅ FIXED: InputFile inside label — same pattern as photo upload *@
+                                        <label class="btn btn-upload" style="cursor:pointer;">
+                                            <i class="fa-solid fa-folder-open me-2"></i> Browse Files
+                                            <InputFile OnChange="OnDocumentSelected"
+                                                       multiple
+                                                       accept=".pdf,.jpg,.jpeg,.png"
+                                                       style="display:none;" />
+                                        </label>
+                                    </div>
+
+                                    <!-- Selected files preview before upload -->
+                                    @if (pendingDocFiles.Any())
+                                    {
+                                        <div class="mt-3 p-3" style="background:#f8f9fa; border-radius:8px;">
+                                            <p class="mb-2 fw-semibold">
+                                                <i class="fa-solid fa-paperclip me-1"></i>
+                                                @pendingDocFiles.Count file(s) ready to upload
+                                            </p>
+                                            <ul class="list-unstyled mb-3">
+                                                @foreach (var f in pendingDocFiles)
+                                                {
+                                                    <li class="d-flex align-items-center gap-2 mb-1">
+                                                        <i class="fa-solid @GetDocIconByName(f.Name) text-muted"></i>
+                                                        <span class="small">@f.Name</span>
+                                                        <small class="text-muted ms-auto">
+                                                            @((f.Size / 1024.0 / 1024.0).ToString("F1"))MB
+                                                        </small>
+                                                    </li>
+                                                }
+                                            </ul>
+                                            <button class="btn vehicle w-100"
+                                                    @onclick="UploadDocuments"
+                                                    disabled="@isUploadingDoc">
+                                                @if (isUploadingDoc)
+                                                {
+                                                    <i class="fa-solid fa-spinner fa-spin me-2"></i>
+                                                    <span>Uploading...</span>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa-solid fa-cloud-arrow-up me-2"></i>
+                                                    <span>Upload Now</span>
+                                                }
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+
+                                <!-- RIGHT: Uploaded Files List -->
+                                <div class="col-md-6 col-sm-12">
+                                    <h5 class="upload-doc-2 mb-3">Uploaded Documents</h5>
+
+                                    @if (isLoadingDocs)
+                                    {
+                                        <div class="text-center py-4">
+                                            <div class="spinner-border spinner-border-sm text-primary"></div>
+                                            <p class="mt-2 text-muted small">Loading documents...</p>
+                                        </div>
+                                    }
+                                    else if (!documents.Any())
+                                    {
+                                        <div class="text-center py-5"
+                                             style="border: 2px dashed #eee; border-radius:12px;">
+                                            <i class="fa-solid fa-folder-open fa-2x text-muted mb-2"></i>
+                                            <p class="text-muted small">No documents uploaded yet.</p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <ul class="list-unstyled">
+                                            @foreach (var doc in documents)
+                                            {
+                                                var d = doc;
+                                                <li class="d-flex align-items-center justify-content-between mb-3 p-3"
+                                                    style="background:#f8f9fa; border-radius:10px;">
+                                                    <div class="d-flex align-items-center gap-3">
+                                                        <!-- File icon -->
+                                                        <div style="width:42px; height:42px; border-radius:8px;
+                                                                    background:#fff; display:flex; align-items:center;
+                                                                    justify-content:center; box-shadow:0 1px 4px rgba(0,0,0,.1);">
+                                                            <i class="fa-solid @GetDocIcon(d.FileType) fa-lg"
+                                                               style="color: @GetDocColor(d.FileType);"></i>
+                                                        </div>
+                                                        <!-- File details -->
+                                                        <div>
+                                                            <span class="d-block fw-semibold small"
+                                                                  style="max-width:180px; overflow:hidden;
+                                                                         text-overflow:ellipsis; white-space:nowrap;">
+                                                                @d.FileName
+                                                            </span>
+                                                            <small class="text-muted">
+                                                                @((d.FileSize / 1024.0 / 1024.0).ToString("F1"))MB
+                                                                &nbsp;·&nbsp;
+                                                                @d.UploadedAt.ToString("dd MMM yyyy")
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Delete button -->
+                                                    <button class="btn btn-sm"
+                                                            style="width:32px; height:32px; border-radius:50%;
+                                                                   background:#fee2e2; color:#dc2626; border:none;
+                                                                   display:flex; align-items:center; justify-content:center;"
+                                                            @onclick="@(() => DeleteDocument(d.Id))">
+                                                        <i class="fa-solid fa-xmark"></i>
+                                                    </button>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private bool isPageLoading = true;
+    private string activeTab = "basic";
+
+    private bool isSavingBasic = false;
+    private bool isSavingContact = false;
+    private bool isUploadingPhoto = false;
+    private bool isUploadingDoc = false;
+    private bool isLoadingDocs = false;
+
+    private string basicSuccess = string.Empty;
+    private string basicError = string.Empty;
+    private string contactSuccess = string.Empty;
+    private string contactError = string.Empty;
+    private string docSuccess = string.Empty;
+    private string docError = string.Empty;
+
+    private ProfileModel profile = new();
+    private List<DocumentModel> documents = new();
+    private List<IBrowserFile> pendingDocFiles = new();
+
+    // ── INIT ──
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await AuthStateProvider.GetAccessTokenAsync();
+        if (!string.IsNullOrEmpty(token))
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        await LoadProfile();
+        isPageLoading = false;
+    }
+
+    // ── LOAD PROFILE ──
+    private async Task LoadProfile()
+    {
+        try
+        {
+            var response = await Http.GetAsync("api/v1/profile");
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<ProfileModel>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true && result.Data != null)
+                profile = result.Data;
+        }
+        catch { }
+    }
+
+    // ── LOAD DOCUMENTS ──
+    private async Task LoadDocuments()
+    {
+        isLoadingDocs = true;
+        try
+        {
+            var response = await Http.GetAsync("api/v1/profile/documents");
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<List<DocumentModel>>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true && result.Data != null)
+                documents = result.Data;
+        }
+        catch { }
+        finally { isLoadingDocs = false; }
+    }
+
+    // ── TAB SWITCH ──
+    private async Task SetTab(string tab)
+    {
+        activeTab = tab;
+        if (tab == "document" && !documents.Any())
+            await LoadDocuments();
+    }
+
+    // ── SAVE BASIC ──
+    private async Task SaveBasicInfo()
+    {
+        basicError = basicSuccess = string.Empty;
+        isSavingBasic = true;
+        try
+        {
+            var request = new { profile.AgencyName, profile.About, profile.Languages };
+            var response = await Http.PutAsJsonAsync("api/v1/profile/basic", request);
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<ProfileModel>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) basicSuccess = "Basic information updated successfully!";
+            else basicError = result?.Message ?? "Failed to update.";
+        }
+        catch (Exception ex) { basicError = ex.Message; }
+        finally { isSavingBasic = false; }
+    }
+
+    // ── SAVE CONTACT ──
+    private async Task SaveContactInfo()
+    {
+        contactError = contactSuccess = string.Empty;
+        isSavingContact = true;
+        try
+        {
+            var request = new { profile.PhoneNumber, profile.Email, profile.Facebook, profile.Twitter };
+            var response = await Http.PutAsJsonAsync("api/v1/profile/contact", request);
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<ProfileModel>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) contactSuccess = "Contact information updated successfully!";
+            else contactError = result?.Message ?? "Failed to update.";
+        }
+        catch (Exception ex) { contactError = ex.Message; }
+        finally { isSavingContact = false; }
+    }
+
+    // ── PROFILE PHOTO — ✅ FIXED: InputFile inside label, no JS needed ──
+    private async Task OnProfilePhotoChanged(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file == null) return;
+
+        isUploadingPhoto = true;
+        basicError = basicSuccess = string.Empty;
+        try
+        {
+            using var content = new MultipartFormDataContent();
+            content.Add(new StreamContent(file.OpenReadStream(5 * 1024 * 1024)), "photo", file.Name);
+
+            var response = await Http.PostAsync("api/v1/profile/photo", content);
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<ProfileModel>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true && result.Data != null)
+            {
+                profile.ProfilePhotoUrl = result.Data.ProfilePhotoUrl;
+                basicSuccess = "Profile photo updated!";
+            }
+            else basicError = result?.Message ?? "Failed to upload photo.";
+        }
+        catch (Exception ex) { basicError = ex.Message; }
+        finally { isUploadingPhoto = false; }
+    }
+
+    // ── DOCUMENT SELECT ──
+    private void OnDocumentSelected(InputFileChangeEventArgs e)
+    {
+        pendingDocFiles = e.GetMultipleFiles(10).ToList();
+        docError = docSuccess = string.Empty;
+    }
+
+    // ── UPLOAD DOCUMENTS ──
+    private async Task UploadDocuments()
+    {
+        if (!pendingDocFiles.Any()) return;
+        isUploadingDoc = true;
+        docError = docSuccess = string.Empty;
+        try
+        {
+            foreach (var file in pendingDocFiles)
+            {
+                using var content = new MultipartFormDataContent();
+                content.Add(new StreamContent(file.OpenReadStream(10 * 1024 * 1024)), "file", file.Name);
+
+                var response = await Http.PostAsync("api/v1/profile/documents", content);
+                var json = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize<ApiResp<DocumentModel>>(json,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (result?.Success == true && result.Data != null)
+                    documents.Insert(0, result.Data);
+            }
+            pendingDocFiles.Clear();
+            docSuccess = "Documents uploaded successfully!";
+        }
+        catch (Exception ex) { docError = ex.Message; }
+        finally { isUploadingDoc = false; }
+    }
+
+    // ── DELETE DOCUMENT ──
+    private async Task DeleteDocument(Guid id)
+    {
+        try
+        {
+            var response = await Http.DeleteAsync($"api/v1/profile/documents/{id}");
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<bool>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true)
+                documents.RemoveAll(d => d.Id == id);
+        }
+        catch { }
+    }
+
+    // ── HELPERS ──
+    private string GetImageUrl(string? photoUrl, string fallback = "")
+    {
+        if (string.IsNullOrEmpty(photoUrl)) return fallback;
+        if (photoUrl.StartsWith("http://") || photoUrl.StartsWith("https://"))
+            return photoUrl;
+        var apiBase = Http.BaseAddress?.ToString().TrimEnd('/') ?? string.Empty;
+        return apiBase + "/" + photoUrl.TrimStart('/');
+    }
+
+    private string GetDocIcon(string? fileType) => fileType?.ToLower() switch
+    {
+        "pdf" => "fa-file-pdf",
+        "image" => "fa-file-image",
+        _ => "fa-file"
+    };
+
+    private string GetDocIconByName(string fileName)
+    {
+        var ext = Path.GetExtension(fileName).ToLower();
+        return ext == ".pdf" ? "fa-file-pdf" : "fa-file-image";
+    }
+
+    private string GetDocColor(string? fileType) => fileType?.ToLower() switch
+    {
+        "pdf" => "#dc2626",
+        "image" => "#2563eb",
+        _ => "#6b7280"
+    };
+
+    // ── MODELS ──
+    class ApiResp<T>
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; } = string.Empty;
+        public T? Data { get; set; }
+    }
+
+    class ProfileModel
+    {
+        public Guid Id { get; set; }
+        public string? AgencyName { get; set; }
+        public string? About { get; set; }
+        public string? Languages { get; set; }
+        public string? ProfilePhotoUrl { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? Email { get; set; }
+        public string? Facebook { get; set; }
+        public string? Twitter { get; set; }
+    }
+
+    class DocumentModel
+    {
+        public Guid Id { get; set; }
+        public string FileName { get; set; } = string.Empty;
+        public string FileUrl { get; set; } = string.Empty;
+        public string FileType { get; set; } = string.Empty;
+        public long FileSize { get; set; }
+        public DateTime UploadedAt { get; set; }
+    }
+}

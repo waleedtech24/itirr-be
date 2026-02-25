@@ -1,0 +1,92 @@
+﻿@page "/dashboard"
+@layout ITIRR.Web.Shared.DashboardLayout
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+
+<!-- BREADCRUMB -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb custom-breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE CONTENT -->
+<div class="container-fluid">
+    <div class="row agency-header">
+        <div class="col-md-12">
+            <h1>Overview</h1>
+            <p>Welcome back! Here's a summary of your listings and activity.</p>
+        </div>
+    </div>
+
+    <!-- STATS CARDS ROW -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card shadow-sm border-0 p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="stat-icon bg-purple-light">
+                        <i class="fa-solid fa-car-rear text-purple"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted small">Total Listings</p>
+                        <h4 class="mb-0 fw-bold">6</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card shadow-sm border-0 p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="stat-icon bg-green-light">
+                        <i class="bi bi-check-circle text-success"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted small">Active Listings</p>
+                        <h4 class="mb-0 fw-bold">4</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card shadow-sm border-0 p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="stat-icon bg-blue-light">
+                        <i class="bi bi-geo-alt text-primary"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted small">Active Trips</p>
+                        <h4 class="mb-0 fw-bold">2</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card shadow-sm border-0 p-3">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="stat-icon bg-yellow-light">
+                        <i class="bi bi-wallet text-warning"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0 text-muted small">Total Earnings</p>
+                        <h4 class="mb-0 fw-bold">$0.00</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIST NEW VEHICLE BUTTON -->
+    <div class="row mb-4">
+        <div class="col-md-12 d-flex justify-content-end">
+            <a href="/dashboard" class="btn vehicle">
+                + List New Vehicle
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,990 @@
+﻿@page "/list-boat"
+@layout ITIRR.Web.Shared.NoFooterLayout
+@attribute [Authorize]
+@inject NavigationManager Navigation
+@inject CustomAuthStateProvider AuthStateProvider
+@inject HttpClient Http
+@using Microsoft.AspNetCore.Authorization
+@using ITIRR.Web.Auth
+@using System.Net.Http.Json
+@using System.Text.Json
+
+<nav class="navbar navbar-light">
+    <div class="container">
+        <a class="navbar-brand"><img src="img/logo.png" /></a>
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center mb-0 p-0">
+                <li class="nav-item dropdown pe-3">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0"
+                       href="#" data-bs-toggle="dropdown">
+                        <img src="img/user-profile.jpg" class="rounded-circle" width="36" height="36" />
+                        <span class="d-none d-md-block ps-2">@userName</span>
+                        <i class="bi bi-chevron-down ms-1"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end profile">
+                        <li>
+                            <a class="dropdown-item" href="#"
+                               @onclick="HandleLogout" @onclick:preventDefault="true">
+                                <i class="bi bi-box-arrow-right me-2"></i>Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</nav>
+
+<div class="container py-5">
+    @if (isPageLoading)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary"></div>
+            <p class="mt-3">Loading...</p>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="progress-header">
+                    <div class="row mb-1">
+                        <div class="col-12">
+                            <h4 class="title">@stepProgressData[currentStep].Title</h4>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row mb-2">
+                        <div class="col-6 this-shows">
+                            <h4>@stepProgressData[currentStep].Progress% complete</h4>
+                        </div>
+                        <div class="col-6 which-one text-end">
+                            <p>@stepProgressData[currentStep].Next</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="progress">
+                                <div class="progress-bar"
+                                     style="width:@stepProgressData[currentStep].Progress%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 car-location">
+                <h1>@stepHeadings[currentStep].Title</h1>
+                <p>@stepHeadings[currentStep].Subtitle</p>
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger alert-dismissible">
+                @errorMessage
+                <button class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(successMessage))
+        {
+            <div class="alert alert-success alert-dismissible">
+                @successMessage
+                <button class="btn-close" @onclick="() => successMessage = string.Empty"></button>
+            </div>
+        }
+
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 step-sidebar">
+                @for (int i = 1; i <= 6; i++)
+                {
+                    var s = i;
+                    <div class="step-item @(currentStep == s ? "active" : "") @(s < currentStep ? "completed" : "")">
+                        <i class="@(s < currentStep ? "fa-solid fa-circle-check complete" : "fa-regular fa-circle-check")"></i>
+                        &nbsp; @sidebarTitles[s]
+                    </div>
+                }
+            </div>
+
+            <!-- Form Content -->
+            <div class="col-md-9 all-data">
+
+                <!-- STEP 1 - Location -->
+                @if (currentStep == 1)
+                {
+                    <div class="detail-form">
+                        <h6>Location Details</h6>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Country <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects"
+                                        value="@step1.CountryId"
+                                        @onchange="OnCountryChanged">
+                                    <option value="">-- Select Country --</option>
+                                    @foreach (var c in countries)
+                                    {
+                                        <option value="@c.Id">@c.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">State <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="State" @bind="step1.State" />
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">City <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects"
+                                        value="@step1.CityId"
+                                        @onchange="e => step1.CityId = ParseGuid(e.Value?.ToString())">
+                                    <option value="">-- Select City --</option>
+                                    @foreach (var c in cities)
+                                    {
+                                        <option value="@c.Id">@c.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Zip Code <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="Zip Code" @bind="step1.ZipCode" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="form-label">Street Address <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="Street Address" @bind="step1.StreetAddress" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoToDashboard" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep1" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 2 - Boat Details -->
+                @if (currentStep == 2)
+                {
+                    <div class="detail-form">
+                        <h6>Boat Details</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Boat Type <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step2.BoatType">
+                                    <option value="">-- Select Type --</option>
+                                    <option value="Sailboat">Sailboat</option>
+                                    <option value="Motor Yacht">Motor Yacht</option>
+                                    <option value="Catamaran">Catamaran</option>
+                                    <option value="Speedboat">Speedboat</option>
+                                    <option value="Pontoon">Pontoon</option>
+                                    <option value="Fishing Boat">Fishing Boat</option>
+                                    <option value="Houseboat">Houseboat</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Boat Make <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. Sunseeker" @bind="step2.BoatMake" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Boat Model <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. Manhattan 66" @bind="step2.BoatModel" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Year <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. 2020" @bind="step2.BoatYear" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Length (ft) <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="e.g. 45" @bind="step2.BoatLength" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Passenger Capacity <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control my-selects"
+                                       placeholder="e.g. 12" @bind="step2.PassengerCapacity" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Registration Number <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="Registration Number" @bind="step2.RegistrationNumber" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Hull Material</label>
+                                <select class="form-select my-selects" @bind="step2.HullMaterial">
+                                    <option value="">-- Select --</option>
+                                    <option value="Fiberglass">Fiberglass</option>
+                                    <option value="Aluminum">Aluminum</option>
+                                    <option value="Steel">Steel</option>
+                                    <option value="Wood">Wood</option>
+                                    <option value="Carbon Fiber">Carbon Fiber</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Fuel Type</label>
+                                <select class="form-select my-selects" @bind="step2.FuelType">
+                                    <option value="">-- Select --</option>
+                                    <option value="Diesel">Diesel</option>
+                                    <option value="Gasoline">Gasoline</option>
+                                    <option value="Electric">Electric</option>
+                                    <option value="Sail (Wind)">Sail (Wind)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep2" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 3 - Goals -->
+                @if (currentStep == 3)
+                {
+                    <div class="detail-form">
+                        <h6>Your Goals</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    What is your primary financial goal for sharing this boat?
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select my-selects" @bind="step3.PrimaryGoal">
+                                    <option value="">-- Select option --</option>
+                                    <option value="Only a few times a year">Only a few times a year</option>
+                                    <option value="A few times each season">A few times each season</option>
+                                    <option value="Monthly or more">Monthly or more</option>
+                                    <option value="Weekly or throughout the season">Weekly or throughout the season</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    How often do you or your family currently use this boat?
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select my-selects" @bind="step3.UsageFrequency">
+                                    <option value="">-- Select option --</option>
+                                    <option value="Only a few times a year">Only a few times a year</option>
+                                    <option value="A few times each season">A few times each season</option>
+                                    <option value="Monthly or more">Monthly or more</option>
+                                    <option value="Weekly or throughout the season">Weekly or throughout the season</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">
+                                    How often do you want to share your boat?
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select my-selects" @bind="step3.ShareFrequency">
+                                    <option value="">-- Select option --</option>
+                                    <option value="Limited availability; a few times a year">Limited availability; a few times a year</option>
+                                    <option value="A few times each month or season">A few times each month or season</option>
+                                    <option value="Consistent sharing when not using it">Consistent sharing when not using it</option>
+                                    <option value="Maximum availability for bookings">Maximum availability for bookings</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep3" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 4 - Photos -->
+                @if (currentStep == 4)
+                {
+                    <div class="detail-form">
+                        <h6>Boat Images / Media</h6>
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <label class="form-label mb-3">Interior Images</label>
+                                <InputFile OnChange="OnInteriorPhotosChanged" multiple
+                                           accept="image/jpeg,image/png"
+                                           class="form-control my-selects mb-2" />
+                                @if (interiorPreviews.Any())
+                                {
+                                    <div class="upload-row mb-3">
+                                        @foreach (var p in interiorPreviews)
+                                        {
+                                            <div class="image-col">
+                                                <div class="image-preview">
+                                                    <img src="@p" />
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="form-label">Exterior Images</label>
+                                <InputFile OnChange="OnExteriorPhotosChanged" multiple
+                                           accept="image/jpeg,image/png"
+                                           class="form-control my-selects mb-2" />
+                                @if (exteriorPreviews.Any())
+                                {
+                                    <div class="upload-row mb-3">
+                                        @foreach (var p in exteriorPreviews)
+                                        {
+                                            <div class="image-col">
+                                                <div class="image-preview">
+                                                    <img src="@p" />
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep4" disabled="@isLoading">
+                            @(isLoading ? "Uploading..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 5 - Availability -->
+                @if (currentStep == 5)
+                {
+                    <div class="detail-form">
+                        <h6>Advance Notice & Trip Duration</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Advance Notice <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step5.AdvanceNotice">
+                                    <option value="">-- Select --</option>
+                                    <option value="Same Day">Same Day Notice</option>
+                                    <option value="24 Hours">24 Hours Notice</option>
+                                    <option value="48 Hours">48 Hours Notice</option>
+                                    <option value="1 Week">1 Week Notice</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Minimum Trip Duration <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step5.MinTripDuration">
+                                    <option value="">-- Select --</option>
+                                    <option value="Half Day">Half Day</option>
+                                    <option value="Full Day">Full Day</option>
+                                    <option value="2-Day Minimum">2-Day Minimum</option>
+                                    <option value="1-Week">1-Week</option>
+                                </select>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox"
+                                           @bind="step5.MinTwoDayWeekend" />
+                                    <label class="form-check-label check-it">
+                                        Require 2-Day minimum for trips starting Friday, Saturday, Sunday.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Maximum Trip Duration <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step5.MaxTripDuration">
+                                    <option value="">-- Select --</option>
+                                    <option value="1 Week">1 Week</option>
+                                    <option value="2 Weeks">2 Weeks</option>
+                                    <option value="1-Month Maximum">1-Month Maximum</option>
+                                    <option value="No Maximum">No Maximum - Flexible</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep5" disabled="@isLoading">
+                            @(isLoading ? "Saving..." : "Next")
+                        </button>
+                    </div>
+                }
+
+                <!-- STEP 6 - Skipper/Captain Licence -->
+                @if (currentStep == 6)
+                {
+                    <div class="detail-form">
+                        <h6>Skipper / Captain Licence</h6>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label">First Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="First Name" @bind="step6.SkipperFirstName" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Middle Name</label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="Middle Name" @bind="step6.SkipperMiddleName" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Last Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="Last Name" @bind="step6.SkipperLastName" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Licence Number <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control my-selects"
+                                       placeholder="Licence Number" @bind="step6.SkipperLicenceNumber" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Licence Type <span class="text-danger">*</span></label>
+                                <select class="form-select my-selects" @bind="step6.SkipperLicenceType">
+                                    <option value="">-- Select --</option>
+                                    <option value="RYA Coastal Skipper">RYA Coastal Skipper</option>
+                                    <option value="RYA Yachtmaster">RYA Yachtmaster</option>
+                                    <option value="ICC">ICC (International Certificate)</option>
+                                    <option value="MCA">MCA Commercial Endorsement</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Licence Expiry Date <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control my-selects"
+                                       @bind="step6.SkipperLicenceExpiry" />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label class="form-label">Upload Licence Document</label>
+                                <InputFile OnChange="OnLicenceDocChanged"
+                                           accept="image/jpeg,image/png,application/pdf"
+                                           class="form-control my-selects" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-buttons">
+                        <a href="#" class="back-btn"
+                           @onclick="GoBack" @onclick:preventDefault="true">Back</a>
+                        <button class="btn next-btn" @onclick="SaveStep6" disabled="@isLoading">
+                            @(isLoading ? "Submitting..." : "Submit")
+                        </button>
+                    </div>
+                }
+
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private string userName = "Partner";
+    private int currentStep = 1;
+    private Guid? listingId = null;
+    private bool isLoading = false;
+    private bool isPageLoading = true;
+    private string errorMessage = string.Empty;
+    private string successMessage = string.Empty;
+
+    private List<CountryDto> countries = new();
+    private List<CityDto> cities = new();
+
+    private Step1M step1 = new();
+    private Step2M step2 = new();
+    private Step3M step3 = new();
+    private Step5M step5 = new();
+    private Step6M step6 = new();
+
+    private List<IBrowserFile> interiorFiles = new();
+    private List<IBrowserFile> exteriorFiles = new();
+    private List<string> interiorPreviews = new();
+    private List<string> exteriorPreviews = new();
+    private IBrowserFile? licenceDocFile;
+
+    private Dictionary<int, string> sidebarTitles = new()
+    {
+        { 1, "Location Detail" },
+        { 2, "Boat Details" },
+        { 3, "Your Goals" },
+        { 4, "Boat Photos" },
+        { 5, "Advance Notice" },
+        { 6, "Skipper/Captain Licence" }
+    };
+
+    private Dictionary<int, (string Title, string Subtitle)> stepHeadings = new()
+    {
+        { 1, ("Where is your boat located?",        "ITIRR needs your location to ensure we operate where you are.") },
+        { 2, ("Boat Details",                        "Tell us about your boat so guests know what to expect.") },
+        { 3, ("Your Goals",                          "Set your income expectations and hosting preferences.") },
+        { 4, ("Boat Photos",                         "Upload clear, high-quality images of your boat.") },
+        { 5, ("Advance Notice & Availability",       "Set booking notice and trip duration limits.") },
+        { 6, ("Skipper / Captain Licence",           "Provide your skipper credentials for verification.") }
+    };
+
+    private Dictionary<int, (int Progress, string Title, string Next)> stepProgressData = new()
+    {
+        { 1, (0,  "Location Detail",    "Boat Details") },
+        { 2, (17, "Boat Details",       "Your Goals") },
+        { 3, (34, "Your Goals",         "Boat Photos") },
+        { 4, (51, "Boat Photos",        "Advance Notice") },
+        { 5, (68, "Advance Notice",     "Skipper Licence") },
+        { 6, (85, "Skipper Licence",    "Completed") }
+    };
+
+    // ========== INIT ==========
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            userName = user.FindFirst("FirstName")?.Value
+                    ?? user.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value
+                    ?? "Partner";
+        }
+
+        var token = await AuthStateProvider.GetAccessTokenAsync();
+        if (!string.IsNullOrEmpty(token))
+            Http.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        await LoadCountries();
+        await ResumeInProgress();
+        isPageLoading = false;
+    }
+
+    // ========== LOAD DATA ==========
+
+    private async Task LoadCountries()
+    {
+        try
+        {
+            var r = await Http.GetFromJsonAsync<ApiResp<List<CountryDto>>>(
+                "api/v1/countries",
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (r?.Data != null) countries = r.Data;
+        }
+        catch { }
+    }
+
+    private async Task LoadCities()
+    {
+        cities.Clear();
+        if (step1.CountryId == null) return;
+        try
+        {
+            var r = await Http.GetFromJsonAsync<ApiResp<List<CityDto>>>(
+                $"api/v1/countries/{step1.CountryId}/cities",
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (r?.Data != null) cities = r.Data;
+        }
+        catch { }
+    }
+
+    private async Task OnCountryChanged(ChangeEventArgs e)
+    {
+        step1.CountryId = ParseGuid(e.Value?.ToString());
+        step1.CityId = null;
+        await LoadCities();
+    }
+
+    // ========== RESUME ==========
+
+    private async Task ResumeInProgress()
+    {
+        try
+        {
+            var response = await Http.GetAsync("api/v1/boat-listing/in-progress");
+            if (!response.IsSuccessStatusCode) return;
+
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<BoatFullData>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true && result.Data != null
+                && result.Data.ListingId != Guid.Empty)
+            {
+                var d = result.Data;
+                listingId = d.ListingId;
+                currentStep = d.CurrentStep > 0 ? d.CurrentStep : 1;
+
+                step1.CountryId = d.CountryId;
+                step1.State = d.State ?? string.Empty;
+                step1.CityId = d.CityId;
+                step1.ZipCode = d.ZipCode ?? string.Empty;
+                step1.StreetAddress = d.StreetAddress ?? string.Empty;
+
+                if (step1.CountryId != null) await LoadCities();
+
+                step2.BoatType = d.BoatType ?? string.Empty;
+                step2.BoatMake = d.BoatMake ?? string.Empty;
+                step2.BoatModel = d.BoatModel ?? string.Empty;
+                step2.BoatYear = d.BoatYear ?? string.Empty;
+                step2.BoatLength = d.BoatLength ?? string.Empty;
+                step2.PassengerCapacity = d.PassengerCapacity;
+                step2.RegistrationNumber = d.RegistrationNumber ?? string.Empty;
+                step2.HullMaterial = d.HullMaterial ?? string.Empty;
+                step2.FuelType = d.FuelType ?? string.Empty;
+
+                step3.PrimaryGoal = d.PrimaryGoal ?? string.Empty;
+                step3.UsageFrequency = d.UsageFrequency ?? string.Empty;
+                step3.ShareFrequency = d.ShareFrequency ?? string.Empty;
+
+                step5.AdvanceNotice = d.AdvanceNotice ?? string.Empty;
+                step5.MinTripDuration = d.MinTripDuration ?? string.Empty;
+                step5.MaxTripDuration = d.MaxTripDuration ?? string.Empty;
+                step5.MinTwoDayWeekend = d.MinTwoDayWeekend;
+
+                step6.SkipperFirstName = d.SkipperFirstName ?? string.Empty;
+                step6.SkipperMiddleName = d.SkipperMiddleName;
+                step6.SkipperLastName = d.SkipperLastName ?? string.Empty;
+                step6.SkipperLicenceNumber = d.SkipperLicenceNumber ?? string.Empty;
+                step6.SkipperLicenceType = d.SkipperLicenceType ?? string.Empty;
+                step6.SkipperLicenceExpiry = d.SkipperLicenceExpiry ?? DateTime.Today;
+
+                successMessage = $"Welcome back! Resuming from step {currentStep}.";
+            }
+        }
+        catch { }
+    }
+
+    // ========== SAVE METHODS ==========
+
+    private async Task SaveStep1()
+    {
+        errorMessage = string.Empty;
+        if (step1.CountryId == null) { errorMessage = "Please select a country."; return; }
+        if (string.IsNullOrWhiteSpace(step1.State)) { errorMessage = "Please enter state."; return; }
+        if (step1.CityId == null) { errorMessage = "Please select a city."; return; }
+        if (string.IsNullOrWhiteSpace(step1.ZipCode)) { errorMessage = "Please enter zip code."; return; }
+        if (string.IsNullOrWhiteSpace(step1.StreetAddress)) { errorMessage = "Please enter street address."; return; }
+
+        isLoading = true;
+        try
+        {
+            var req = new
+            {
+                ListingId = listingId,
+                CountryId = step1.CountryId!.Value,
+                step1.State,
+                CityId = step1.CityId!.Value,
+                step1.ZipCode,
+                step1.StreetAddress
+            };
+            var resp = await Http.PostAsJsonAsync("api/v1/boat-listing/step1", req);
+            var json = await resp.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<ListingResp>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) { listingId = result.Data?.ListingId; currentStep = 2; }
+            else errorMessage = result?.Message ?? "Error saving step 1";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep2()
+    {
+        errorMessage = string.Empty;
+        if (string.IsNullOrWhiteSpace(step2.BoatType)) { errorMessage = "Please select boat type."; return; }
+        if (string.IsNullOrWhiteSpace(step2.BoatMake)) { errorMessage = "Please enter boat make."; return; }
+        if (string.IsNullOrWhiteSpace(step2.BoatModel)) { errorMessage = "Please enter boat model."; return; }
+        if (string.IsNullOrWhiteSpace(step2.BoatYear)) { errorMessage = "Please enter boat year."; return; }
+        if (string.IsNullOrWhiteSpace(step2.BoatLength)) { errorMessage = "Please enter boat length."; return; }
+        if (step2.PassengerCapacity <= 0) { errorMessage = "Please enter passenger capacity."; return; }
+        if (string.IsNullOrWhiteSpace(step2.RegistrationNumber)) { errorMessage = "Please enter registration number."; return; }
+
+        isLoading = true;
+        try
+        {
+            var req = new
+            {
+                ListingId = listingId,
+                step2.BoatType,
+                step2.BoatMake,
+                step2.BoatModel,
+                step2.BoatYear,
+                step2.BoatLength,
+                step2.PassengerCapacity,
+                step2.RegistrationNumber,
+                step2.HullMaterial,
+                step2.FuelType
+            };
+            var resp = await Http.PostAsJsonAsync("api/v1/boat-listing/step2", req);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) currentStep = 3;
+            else errorMessage = result?.Message ?? "Error saving step 2";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep3()
+    {
+        errorMessage = string.Empty;
+        if (string.IsNullOrWhiteSpace(step3.PrimaryGoal)) { errorMessage = "Please select primary goal."; return; }
+        if (string.IsNullOrWhiteSpace(step3.UsageFrequency)) { errorMessage = "Please select usage frequency."; return; }
+        if (string.IsNullOrWhiteSpace(step3.ShareFrequency)) { errorMessage = "Please select share frequency."; return; }
+
+        isLoading = true;
+        try
+        {
+            var req = new { ListingId = listingId, step3.PrimaryGoal, step3.UsageFrequency, step3.ShareFrequency };
+            var resp = await Http.PostAsJsonAsync("api/v1/boat-listing/step3", req);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) currentStep = 4;
+            else errorMessage = result?.Message ?? "Error saving step 3";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep4()
+    {
+        errorMessage = string.Empty;
+        if (!interiorFiles.Any() && !exteriorFiles.Any())
+        { errorMessage = "Please upload at least one photo."; return; }
+
+        isLoading = true;
+        try
+        {
+            using var content = new MultipartFormDataContent();
+            content.Add(new StringContent(listingId.ToString()!), "listingId");
+            foreach (var f in interiorFiles)
+                content.Add(new StreamContent(f.OpenReadStream(10 * 1024 * 1024)), "interiorPhotos", f.Name);
+            foreach (var f in exteriorFiles)
+                content.Add(new StreamContent(f.OpenReadStream(10 * 1024 * 1024)), "exteriorPhotos", f.Name);
+
+            var resp = await Http.PostAsync("api/v1/boat-listing/step4", content);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) currentStep = 5;
+            else errorMessage = result?.Message ?? "Error uploading photos";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep5()
+    {
+        errorMessage = string.Empty;
+        if (string.IsNullOrWhiteSpace(step5.AdvanceNotice)) { errorMessage = "Please select advance notice."; return; }
+        if (string.IsNullOrWhiteSpace(step5.MinTripDuration)) { errorMessage = "Please select minimum trip duration."; return; }
+        if (string.IsNullOrWhiteSpace(step5.MaxTripDuration)) { errorMessage = "Please select maximum trip duration."; return; }
+
+        isLoading = true;
+        try
+        {
+            var req = new { ListingId = listingId, step5.AdvanceNotice, step5.MinTripDuration, step5.MaxTripDuration, step5.MinTwoDayWeekend };
+            var resp = await Http.PostAsJsonAsync("api/v1/boat-listing/step5", req);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true) currentStep = 6;
+            else errorMessage = result?.Message ?? "Error saving step 5";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    private async Task SaveStep6()
+    {
+        errorMessage = string.Empty;
+        if (string.IsNullOrWhiteSpace(step6.SkipperFirstName)) { errorMessage = "Please enter first name."; return; }
+        if (string.IsNullOrWhiteSpace(step6.SkipperLastName)) { errorMessage = "Please enter last name."; return; }
+        if (string.IsNullOrWhiteSpace(step6.SkipperLicenceNumber)) { errorMessage = "Please enter licence number."; return; }
+        if (string.IsNullOrWhiteSpace(step6.SkipperLicenceType)) { errorMessage = "Please select licence type."; return; }
+
+        isLoading = true;
+        try
+        {
+            using var content = new MultipartFormDataContent();
+            content.Add(new StringContent(listingId.ToString()!), "ListingId");
+            content.Add(new StringContent(step6.SkipperFirstName), "SkipperFirstName");
+            content.Add(new StringContent(step6.SkipperMiddleName ?? ""), "SkipperMiddleName");
+            content.Add(new StringContent(step6.SkipperLastName), "SkipperLastName");
+            content.Add(new StringContent(step6.SkipperLicenceNumber), "SkipperLicenceNumber");
+            content.Add(new StringContent(step6.SkipperLicenceType), "SkipperLicenceType");
+            content.Add(new StringContent(step6.SkipperLicenceExpiry.ToString("yyyy-MM-dd")), "SkipperLicenceExpiry");
+
+            if (licenceDocFile != null)
+                content.Add(new StreamContent(licenceDocFile.OpenReadStream(10 * 1024 * 1024)),
+                    "licenceDoc", licenceDocFile.Name);
+
+            var resp = await Http.PostAsync("api/v1/boat-listing/step6", content);
+            var result = await resp.Content.ReadFromJsonAsync<ApiResp<ListingResp>>(
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true)
+            {
+                successMessage = "Boat listing submitted successfully!";
+                Navigation.NavigateTo("/addvehicles");
+            }
+            else errorMessage = result?.Message ?? "Error submitting";
+        }
+        catch (Exception ex) { errorMessage = ex.Message; }
+        finally { isLoading = false; }
+    }
+
+    // ========== NAVIGATION ==========
+
+    private void GoToDashboard() => Navigation.NavigateTo("/addvehicles");
+    private void GoBack() { if (currentStep > 1) currentStep--; }
+
+    // ========== FILE HANDLERS ==========
+
+    private async Task OnInteriorPhotosChanged(InputFileChangeEventArgs e)
+    {
+        interiorFiles = e.GetMultipleFiles(10).ToList();
+        interiorPreviews.Clear();
+        foreach (var f in interiorFiles)
+        {
+            var buf = new byte[f.Size];
+            await f.OpenReadStream(10 * 1024 * 1024).ReadAsync(buf);
+            interiorPreviews.Add($"data:{f.ContentType};base64,{Convert.ToBase64String(buf)}");
+        }
+    }
+
+    private async Task OnExteriorPhotosChanged(InputFileChangeEventArgs e)
+    {
+        exteriorFiles = e.GetMultipleFiles(10).ToList();
+        exteriorPreviews.Clear();
+        foreach (var f in exteriorFiles)
+        {
+            var buf = new byte[f.Size];
+            await f.OpenReadStream(10 * 1024 * 1024).ReadAsync(buf);
+            exteriorPreviews.Add($"data:{f.ContentType};base64,{Convert.ToBase64String(buf)}");
+        }
+    }
+
+    private void OnLicenceDocChanged(InputFileChangeEventArgs e) => licenceDocFile = e.File;
+
+    private async Task HandleLogout()
+    {
+        await AuthStateProvider.MarkUserAsLoggedOut();
+        Navigation.NavigateTo("/");
+    }
+
+    private static Guid? ParseGuid(string? v) =>
+        Guid.TryParse(v, out var g) ? g : null;
+
+    // ========== MODELS ==========
+
+    class Step1M
+    {
+        public Guid? CountryId { get; set; }
+        public string State { get; set; } = string.Empty;
+        public Guid? CityId { get; set; }
+        public string ZipCode { get; set; } = string.Empty;
+        public string StreetAddress { get; set; } = string.Empty;
+    }
+    class Step2M
+    {
+        public string BoatType { get; set; } = string.Empty;
+        public string BoatMake { get; set; } = string.Empty;
+        public string BoatModel { get; set; } = string.Empty;
+        public string BoatYear { get; set; } = string.Empty;
+        public string BoatLength { get; set; } = string.Empty;
+        public int PassengerCapacity { get; set; }
+        public string RegistrationNumber { get; set; } = string.Empty;
+        public string HullMaterial { get; set; } = string.Empty;
+        public string FuelType { get; set; } = string.Empty;
+    }
+    class Step3M
+    {
+        public string PrimaryGoal { get; set; } = string.Empty;
+        public string UsageFrequency { get; set; } = string.Empty;
+        public string ShareFrequency { get; set; } = string.Empty;
+    }
+    class Step5M
+    {
+        public string AdvanceNotice { get; set; } = string.Empty;
+        public string MinTripDuration { get; set; } = string.Empty;
+        public string MaxTripDuration { get; set; } = string.Empty;
+        public bool MinTwoDayWeekend { get; set; }
+    }
+    class Step6M
+    {
+        public string SkipperFirstName { get; set; } = string.Empty;
+        public string? SkipperMiddleName { get; set; }
+        public string SkipperLastName { get; set; } = string.Empty;
+        public string SkipperLicenceNumber { get; set; } = string.Empty;
+        public string SkipperLicenceType { get; set; } = string.Empty;
+        public DateTime SkipperLicenceExpiry { get; set; } = DateTime.Today;
+    }
+
+    class ApiResp<T> { public bool Success { get; set; } public string Message { get; set; } = string.Empty; public T? Data { get; set; } }
+    class ListingResp { public Guid ListingId { get; set; } public string Status { get; set; } = string.Empty; public int CurrentStep { get; set; } }
+    class CountryDto { public Guid Id { get; set; } public string Name { get; set; } = string.Empty; }
+    class CityDto { public Guid Id { get; set; } public string Name { get; set; } = string.Empty; }
+
+    class BoatFullData
+    {
+        public Guid ListingId { get; set; }
+        public string Status { get; set; } = string.Empty;
+        public int CurrentStep { get; set; }
+        public Guid? CountryId { get; set; }
+        public string? State { get; set; }
+        public Guid? CityId { get; set; }
+        public string? ZipCode { get; set; }
+        public string? StreetAddress { get; set; }
+        public string? BoatType { get; set; }
+        public string? BoatMake { get; set; }
+        public string? BoatModel { get; set; }
+        public string? BoatYear { get; set; }
+        public string? BoatLength { get; set; }
+        public int PassengerCapacity { get; set; }
+        public string? RegistrationNumber { get; set; }
+        public string? HullMaterial { get; set; }
+        public string? FuelType { get; set; }
+        public string? PrimaryGoal { get; set; }
+        public string? UsageFrequency { get; set; }
+        public string? ShareFrequency { get; set; }
+        public string? AdvanceNotice { get; set; }
+        public string? MinTripDuration { get; set; }
+        public string? MaxTripDuration { get; set; }
+        public bool MinTwoDayWeekend { get; set; }
+        public string? SkipperFirstName { get; set; }
+        public string? SkipperMiddleName { get; set; }
+        public string? SkipperLastName { get; set; }
+        public string? SkipperLicenceNumber { get; set; }
+        public string? SkipperLicenceType { get; set; }
+        public DateTime? SkipperLicenceExpiry { get; set; }
+    }
+}   

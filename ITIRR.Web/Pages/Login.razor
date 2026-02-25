@@ -1,0 +1,126 @@
+﻿@page "/login"
+@inject IAuthApiService AuthService
+@inject CustomAuthStateProvider AuthStateProvider
+@inject NavigationManager Navigation
+@using ITIRR.Web.Models.Auth
+@using ITIRR.Web.Services
+@using ITIRR.Web.Auth
+
+<nav class="navbar navbar-light">
+    <div class="container">
+        <a class="navbar-brand"><img src="img/logo.png" /></a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="reg-partner">
+                <h1>Login as a Partner</h1>
+                <p>Join a fast-growing network of verified hosts earning from their premium assets.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="partner-box">
+
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-danger">@errorMessage</div>
+                }
+
+                <!-- Toggle Phone/Email -->
+                <div class="radios-change d-flex flex-wrap gap-3 mb-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="contactMethod"
+                               checked="@(contactType == "phone")"
+                               @onchange="SetPhone" />
+                        <label class="form-check-label">Phone Number</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="contactMethod"
+                               checked="@(contactType == "email")"
+                               @onchange="SetEmail" />
+                        <label class="form-check-label">Email Address</label>
+                    </div>
+                </div>
+
+                <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+                    <DataAnnotationsValidator />
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label">
+                            @(contactType == "phone" ? "Phone Number" : "Email Address")
+                        </label>
+                        <InputText class="form-control my-input"
+                                   @bind-Value="loginModel.EmailOrPhone"
+                                   placeholder="@(contactType == "phone" ? "Phone Number" : "Email Address")" />
+                        <ValidationMessage For="@(() => loginModel.EmailOrPhone)" class="text-danger" />
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Password</label>
+                        <InputText type="password" class="form-control my-input"
+                                   @bind-Value="loginModel.Password"
+                                   placeholder="Password" />
+                        <ValidationMessage For="@(() => loginModel.Password)" class="text-danger" />
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="started d-block text-center w-100"
+                                disabled="@isLoading">
+                            @(isLoading ? "Logging in..." : "Login")
+                        </button>
+                    </div>
+
+                    <div class="col-12 mt-3 acc-link">
+                        <p>Don't have an account? <a href="/register">Register Now</a></p>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LoginModel loginModel = new();
+    private string contactType = "email";
+    private string errorMessage = string.Empty;
+    private bool isLoading = false;
+    private void SetPhone(ChangeEventArgs e) => contactType = "phone";
+    private void SetEmail(ChangeEventArgs e) => contactType = "email";
+
+    private async Task HandleLogin()
+    {
+        isLoading = true;
+        errorMessage = string.Empty;
+
+        try
+        {
+            var result = await AuthService.LoginAsync(loginModel);
+
+            if (result.Success)
+            {
+                await AuthStateProvider.MarkUserAsAuthenticated(
+                    result.AccessToken, result.RefreshToken);
+                Navigation.NavigateTo("/dashboard");
+            }
+            else
+            {
+                errorMessage = result.Errors.Any()
+                    ? string.Join(", ", result.Errors)
+                    : result.Message;
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "An error occurred: " + ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

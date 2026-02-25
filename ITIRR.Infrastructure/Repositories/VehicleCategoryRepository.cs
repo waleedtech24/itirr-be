@@ -15,7 +15,6 @@ namespace ITIRR.Infrastructure.Repositories
             : base(context, logService)
         {
         }
-
         public async Task<IEnumerable<VehicleCategory>> GetByVehicleTypeAsync(Guid vehicleTypeId)
         {
             return await _dbSet

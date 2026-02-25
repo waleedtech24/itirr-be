@@ -1,0 +1,108 @@
+﻿@page "/verify-otp"
+@inject IAuthApiService AuthService
+@inject CustomAuthStateProvider AuthStateProvider
+@inject NavigationManager Navigation
+@using ITIRR.Web.Models.Auth
+@using ITIRR.Web.Services
+@using ITIRR.Web.Auth
+
+<nav class="navbar navbar-light">
+    <div class="container">
+        <a class="navbar-brand"><img src="img/logo.png" /></a>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6 col-12 passcode-sec">
+            <div class="card mt-5">
+                <div class="text-center">
+                    <h3 class="header-partener">1-Time Passcode</h3>
+                    <p class="header-partener-para">
+                        We sent a verification code to
+                        <strong>@otpModel.EmailOrPhone</strong>
+                    </p>
+                </div>
+
+                <div class="card-body">
+
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger">@errorMessage</div>
+                    }
+
+                    @if (!string.IsNullOrEmpty(successMessage))
+                    {
+                        <div class="alert alert-success">@successMessage</div>
+                    }
+
+                    <EditForm Model="otpModel" OnValidSubmit="HandleVerifyOtp">
+                        <DataAnnotationsValidator />
+
+                        <div class="mb-3">
+                            <label class="form-label email-lable">Enter OTP</label>
+                            <InputText class="form-control custom-pn-input__phonenumber"
+                                       @bind-Value="otpModel.OtpCode"
+                                       placeholder="Enter 6-digit OTP" />
+                            <ValidationMessage For="@(() => otpModel.OtpCode)" class="text-danger" />
+                            <p class="send-otp">We sent a code to your email/phone</p>
+                        </div>
+
+                        <button type="submit"
+                                class="btn btn-custom-color btn-primary w-100 mb-3"
+                                disabled="@isLoading">
+                            @(isLoading ? "Verifying..." : "Verify")
+                        </button>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private VerifyOtpModel otpModel = new();
+    private string errorMessage = string.Empty;
+    private string successMessage = string.Empty;
+    private bool isLoading = false;
+
+    [SupplyParameterFromQuery(Name = "email")]
+    public string? Email { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrEmpty(Email))
+            otpModel.EmailOrPhone = Uri.UnescapeDataString(Email);
+    }
+
+    private async Task HandleVerifyOtp()
+    {
+        isLoading = true;
+        errorMessage = string.Empty;
+
+        try
+        {
+            var result = await AuthService.VerifyOtpAsync(otpModel);
+
+            if (result.Success)
+            {
+                successMessage = "OTP verified! Redirecting...";
+                await AuthStateProvider.MarkUserAsAuthenticated(
+                    result.AccessToken, result.RefreshToken);
+                Navigation.NavigateTo("/login");
+            }
+            else
+            {
+                errorMessage = result.Message;
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "An error occurred: " + ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

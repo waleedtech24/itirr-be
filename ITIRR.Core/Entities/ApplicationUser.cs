@@ -19,6 +19,7 @@ namespace ITIRR.Core.Entities
         public string AccountType { get; set; } = "Individual"; // Individual/Agency
         public string UserType { get; set; } = "Renter"; // Renter/Host/Admin
         public string? Bio { get; set; }
+        public string? AgencyName { get; set; }
 
         // Stripe Integration
         public string? StripeCustomerId { get; set; }
@@ -33,5 +34,9 @@ namespace ITIRR.Core.Entities
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public bool IsDeleted { get; set; } = false;
         public DateTime? DeletedAt { get; set; }
+
+        // OTP Fields
+        public string? OtpCode { get; set; }
+        public DateTime? OtpExpiresAt { get; set; }
     }
 }

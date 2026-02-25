@@ -12,7 +12,7 @@ namespace ITIRR.Infrastructure.Repositories
     public class CountryRepository : Repository<Country>, ICountryRepository
     {
         public CountryRepository(ApplicationDbContext context, ILogService logService)
-     : base(context, logService)  // ✅ Correct
+     : base(context, logService)  
         {
         }
 

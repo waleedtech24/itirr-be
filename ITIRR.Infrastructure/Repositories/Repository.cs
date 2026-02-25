@@ -124,7 +124,6 @@ namespace ITIRR.Infrastructure.Repositories
                 _dbSet.Update(entity);
                 await _context.SaveChangesAsync();
 
-                // Log with old and new values
                 string? oldValue = oldEntity != null ? JsonSerializer.Serialize(oldEntity) : null;
                 string newValue = JsonSerializer.Serialize(entity);
 

@@ -35,5 +35,23 @@ namespace ITIRR.Infrastructure.Repositories
                 .Include(vt => vt.VehicleCategories)
                 .FirstOrDefaultAsync(vt => vt.Code == code && !vt.IsDeleted);
         }
+
+        public async Task<IEnumerable<VehicleType>> GetActiveVehicleTypesAsync()
+        {
+            return await _dbSet
+                .Where(vt => vt.IsActive && !vt.IsDeleted)
+                .OrderBy(vt => vt.DisplayOrder)
+                .ToListAsync();
+     
+        
+        }
+
+
+        public async Task<VehicleType?> GetVehicleTypeWithCategoriesAsync(string code)
+        {
+            return await _dbSet
+                .Include(vt => vt.VehicleCategories)
+                .FirstOrDefaultAsync(vt => vt.Code == code && !vt.IsDeleted);
+        }
     }
 }
