@@ -854,7 +854,7 @@
             if (result?.Success == true)
             {
                 successMessage = "Boat listing submitted successfully!";
-                Navigation.NavigateTo("/dashboard");
+                Navigation.NavigateTo("/addvehicles");
             }
             else errorMessage = result?.Message ?? "Error submitting";
         }
@@ -864,7 +864,7 @@
 
     // ========== NAVIGATION ==========
 
-    private void GoToDashboard() => Navigation.NavigateTo("/dashboard");
+    private void GoToDashboard() => Navigation.NavigateTo("/addvehicles");
     private void GoBack() { if (currentStep > 1) currentStep--; }
 
     // ========== FILE HANDLERS ==========

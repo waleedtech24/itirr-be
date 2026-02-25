@@ -78,11 +78,20 @@ namespace ITIRR.Core.DTOs.VehicleListing
 
     public class VehicleListingResponse
     {
-
         public Guid ListingId { get; set; }
         public string VehicleType { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public int CurrentStep { get; set; }
         public string Message { get; set; } = string.Empty;
+        public string? LicencePlateNumber { get; set; }
+        public string? VIN { get; set; }
+        public string? StreetAddress { get; set; }
+        public string? State { get; set; }
+        public string? ZipCode { get; set; }
+        public string? OdometerReading { get; set; }
+        public string? Transmission { get; set; }
+        public string? PrimaryGoal { get; set; }
+        public string? FirstPhotoUrl { get; set; }  
+        public DateTime CreatedAt { get; set; }
     }
 }

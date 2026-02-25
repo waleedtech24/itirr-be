@@ -49,6 +49,8 @@ namespace ITIRR.Infrastructure.Data
         public DbSet<BoatListingMedia> BoatListingMedia { get; set; }
         public DbSet<JetListing> JetListings { get; set; }
         public DbSet<JetListingMedia> JetListingMedia { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<UserDocument> UserDocuments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
