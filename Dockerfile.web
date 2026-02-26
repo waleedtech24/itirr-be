@@ -5,11 +5,11 @@ WORKDIR /src
 COPY . .
 RUN dotnet publish "ITIRR.Web/ITIRR.Web.csproj" -c Release -o /app/publish
 
-# ---------- Serve with Nginx ----------
+# ---------- Nginx ----------
 FROM nginx:alpine
-WORKDIR /usr/share/nginx/html
 
-COPY --from=build /app/publish/wwwroot .
+COPY --from=build /app/publish/wwwroot /usr/share/nginx/html
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 
 EXPOSE 8080
 
