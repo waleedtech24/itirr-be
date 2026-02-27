@@ -264,7 +264,11 @@ namespace ITIRR.Services.Services
         }
 
         public async Task<IEnumerable<JetListing>> GetMyListingsAsync(string userId) =>
-            await _context.JetListings.Where(v => v.OwnerId == userId && !v.IsDeleted)
-                .OrderByDescending(v => v.CreatedAt).AsNoTracking().ToListAsync();
+            await _context.JetListings
+                .Include(j => j.Media)
+                .Where(v => v.OwnerId == userId && !v.IsDeleted)
+                .OrderByDescending(v => v.CreatedAt)
+                .AsNoTracking()
+                .ToListAsync();
     }
 }

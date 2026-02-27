@@ -71,6 +71,18 @@
         public Guid ListingId { get; set; }
         public string Status { get; set; } = string.Empty;
         public int CurrentStep { get; set; }
+        public string State { get; set; } = string.Empty;
+        public string AircraftMake { get; set; } = string.Empty;
+        public string AircraftModel { get; set; } = string.Empty;
+        public string AircraftYear { get; set; } = string.Empty;
+        public string TailNumber { get; set; } = string.Empty;
+        public string AircraftCategory { get; set; } = string.Empty;
+        public int PassengerCapacity { get; set; }
+        public string HomeAirport { get; set; } = string.Empty;
+        public string HangarLocation { get; set; } = string.Empty;
+        public string PrimaryGoal { get; set; } = string.Empty;
+        public string? FirstPhotoUrl { get; set; }
+        public DateTime CreatedAt { get; set; }
         public string Message { get; set; } = string.Empty;
     }
 

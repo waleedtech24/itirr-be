@@ -232,8 +232,10 @@ namespace ITIRR.Services.Services
 
         public async Task<IEnumerable<BoatListing>> GetMyListingsAsync(string userId) =>
             await _context.BoatListings
+                .Include(b => b.Media)
                 .Where(v => v.OwnerId == userId && !v.IsDeleted)
                 .OrderByDescending(v => v.CreatedAt)
-                .AsNoTracking().ToListAsync();
+                .AsNoTracking()
+                .ToListAsync();
     }
 }

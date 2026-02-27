@@ -109,5 +109,41 @@ namespace ITIRR.API.Controllers
             }
             catch (Exception ex) { return StatusCode(500, ApiResponse<BoatFullDataResponse>.ErrorResponse(ex.Message, new List<string> { ex.Message })); }
         }
+
+        [HttpGet("my-listings")]
+        public async Task<ActionResult<ApiResponse<List<BoatListingResponse>>>> GetMyListings()
+        {
+            try
+            {
+                var listings = await _service.GetMyListingsAsync(GetUserId());
+                var result = listings.Select(b => new BoatListingResponse
+                {
+                    ListingId = b.Id,
+                    Status = b.Status,
+                    CurrentStep = b.CurrentStep,
+                    State = b.State,
+                    BoatType = b.BoatType,
+                    BoatMake = b.BoatMake,
+                    BoatModel = b.BoatModel,
+                    BoatYear = b.BoatYear,
+                    BoatLength = b.BoatLength,
+                    PassengerCapacity = b.PassengerCapacity,
+                    RegistrationNumber = b.RegistrationNumber,
+                    PrimaryGoal = b.PrimaryGoal,
+                    FirstPhotoUrl = b.Media != null && b.Media.Any()
+                                        ? b.Media.OrderBy(m => m.DisplayOrder).First().MediaUrl
+                                        : null,
+                    CreatedAt = b.CreatedAt,
+                    Message = "Success"
+                }).ToList();
+
+                return Ok(ApiResponse<List<BoatListingResponse>>.SuccessResponse(result, "Success"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<List<BoatListingResponse>>.ErrorResponse(
+                    ex.Message, new List<string> { ex.Message }));
+            }
+        }
     }
 }

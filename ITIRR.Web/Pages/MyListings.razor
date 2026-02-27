@@ -47,42 +47,75 @@
     }
     else
     {
-        <!-- TABS -->
-        <div class="row">
-            <div class="col-md-12">
+        <!-- TABS ROW: Active/Inactive on LEFT, Category filter on RIGHT -->
+        <div class="row align-items-center mb-0">
+
+            <!-- LEFT: Active / Inactive tabs -->
+            <div class="col-md-6 col-12">
                 <ul class="nav nav-tabs d-flex justify-content-start agency-tabs">
                     <li class="nav-item">
                         <a class="nav-link Basic @(activeTab == "inactive" ? "active" : "")"
                            href="#" @onclick="SetInactiveTab" @onclick:preventDefault="true">
                             In-active Listings
-                            <span class="badge bg-secondary ms-1">@inactiveListings.Count</span>
+                            <span class="badge bg-secondary ms-1">@FilteredInactive.Count</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @(activeTab == "active" ? "active" : "")"
                            href="#" @onclick="SetActiveTab" @onclick:preventDefault="true">
                             Active Listings
-                            <span class="badge bg-success ms-1">@activeListings.Count</span>
+                            <span class="badge bg-success ms-1">@FilteredActive.Count</span>
                         </a>
                     </li>
                 </ul>
             </div>
+
+            <!-- RIGHT: Category filter buttons -->
+            <div class="col-md-6 col-12 d-flex justify-content-md-end justify-content-start gap-2 pb-1">
+                <button type="button"
+                        class="btn @(selectedCategory == "car" ? "vehicle" : "btn-outline-secondary")"
+                        style="border-radius:20px; padding:6px 18px; font-size:13px;"
+                        @onclick="@(() => SetCategory("car"))">
+                    <i class="fa-solid fa-car-rear me-1"></i> Cars
+                    <span class="badge @(selectedCategory == "car" ? "bg-light text-dark" : "bg-secondary") ms-1">
+                        @CarCount
+                    </span>
+                </button>
+                <button type="button"
+                        class="btn @(selectedCategory == "boat" ? "vehicle" : "btn-outline-secondary")"
+                        style="border-radius:20px; padding:6px 18px; font-size:13px;"
+                        @onclick="@(() => SetCategory("boat"))">
+                    <i class="fa-solid fa-sailboat me-1"></i> Boats
+                    <span class="badge @(selectedCategory == "boat" ? "bg-light text-dark" : "bg-secondary") ms-1">
+                        @BoatCount
+                    </span>
+                </button>
+                <button type="button"
+                        class="btn @(selectedCategory == "jet" ? "vehicle" : "btn-outline-secondary")"
+                        style="border-radius:20px; padding:6px 18px; font-size:13px;"
+                        @onclick="@(() => SetCategory("jet"))">
+                    <i class="fa-solid fa-plane me-1"></i> Jets
+                    <span class="badge @(selectedCategory == "jet" ? "bg-light text-dark" : "bg-secondary") ms-1">
+                        @JetCount
+                    </span>
+                </button>
+            </div>
         </div>
 
-        <!-- INACTIVE TAB -->
+        <!-- ========== INACTIVE TAB ========== -->
         @if (activeTab == "inactive")
         {
-            @if (!inactiveListings.Any())
+            @if (!FilteredInactive.Any())
             {
                 <div class="text-center py-5">
-                    <i class="fa-solid fa-car-rear fa-3x text-muted mb-3"></i>
-                    <h5 class="text-muted">No inactive listings</h5>
+                    <i class="fa-solid @GetCategoryIcon(selectedCategory) fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No inactive @GetCategoryLabel(selectedCategory) listings</h5>
                 </div>
             }
             else
             {
                 <div class="row mt-3">
-                    @foreach (var listing in inactiveListings)
+                    @foreach (var listing in FilteredInactive)
                     {
                         var l = listing;
                         <div class="col-12 col-sm-6 col-lg-4 mb-4">
@@ -100,13 +133,19 @@
                                         <i class="fa-solid @GetVehicleIcon(l.VehicleType) fa-3x text-muted"></i>
                                     </div>
                                 }
+                                @* <div style="position:relative;"> *@
+                                @*     <span style="position:absolute; top:-28px; right:10px; *@
+                                @*                  background:#6a0dad; color:#fff; font-size:11px; *@
+                                @*                  padding:2px 10px; border-radius:0 0 8px 8px;"> *@
+                                @*         @GetVehicleTypeLabel(l.VehicleType) *@
+                                @*     </span> *@
+                                @* </div> *@
                                 <div class="car-body">
                                     <h3>@GetVehicleTitle(l)</h3>
                                     <p>@GetVehicleSubtitle(l)</p>
                                     <hr class="my-hr" />
                                 </div>
-                                <!-- ✅ Inactive = Edit button only (full width) -->
-                                <a href="#" class="edit-btn w-100">
+                                <a href="/edit-listing/@l.ListingId" class="edit-btn w-100">
                                     <i class="fa-solid fa-pen-to-square"></i> &nbsp; Edit Detail
                                 </a>
                             </div>
@@ -116,21 +155,21 @@
             }
         }
 
-        <!-- ACTIVE TAB -->
+        <!-- ========== ACTIVE TAB ========== -->
         @if (activeTab == "active")
         {
-            @if (!activeListings.Any())
+            @if (!FilteredActive.Any())
             {
                 <div class="text-center py-5">
-                    <i class="fa-solid fa-car-rear fa-3x text-muted mb-3"></i>
-                    <h5 class="text-muted">No active listings yet</h5>
+                    <i class="fa-solid @GetCategoryIcon(selectedCategory) fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No active @GetCategoryLabel(selectedCategory) listings yet</h5>
                     <a href="/addvehicles" class="btn vehicle mt-3">List Your First Vehicle</a>
                 </div>
             }
             else
             {
                 <div class="row mt-3">
-                    @foreach (var listing in activeListings)
+                    @foreach (var listing in FilteredActive)
                     {
                         var l = listing;
                         <div class="col-12 col-sm-6 col-lg-4 mb-4">
@@ -148,12 +187,18 @@
                                         <i class="fa-solid @GetVehicleIcon(l.VehicleType) fa-3x text-muted"></i>
                                     </div>
                                 }
+                                @* <div style="position:relative;"> *@
+                                @*     <span style="position:absolute; top:-28px; right:10px; *@
+                                @*                  background:#6a0dad; color:#fff; font-size:11px; *@
+                                @*                  padding:2px 10px; border-radius:0 0 8px 8px;"> *@
+                                @*         @GetVehicleTypeLabel(l.VehicleType) *@
+                                @*     </span> *@
+                                @* </div> *@
                                 <div class="car-body">
                                     <h3>@GetVehicleTitle(l)</h3>
                                     <p>@GetVehicleSubtitle(l)</p>
                                     <hr class="my-hr" />
                                 </div>
-                                <!-- ✅ Active = List Vehicle button + Edit square button -->
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-8 col-md-10">
@@ -164,7 +209,7 @@
                                             </a>
                                         </div>
                                         <div class="col-4 col-md-2">
-                                            <a href="#" class="btn edit-list mx-auto h-100">
+                                            <a href="/edit-listing/@l.ListingId" class="btn edit-list mx-auto h-100">
                                                 <i class="fa-regular align-items-center d-flex justify-content-center py-1 text-white fa-pen-to-square"></i>
                                             </a>
                                         </div>
@@ -183,20 +228,30 @@
 @code {
     private bool isLoading = true;
     private string errorMessage = string.Empty;
-    private string activeTab = "inactive"; // default — show inactive first
+    private string activeTab = "inactive";
+    private string selectedCategory = "car";
 
     private List<VehicleCard> allListings = new();
-    private List<VehicleCard> activeListings = new();
-    private List<VehicleCard> inactiveListings = new();
+
+    // ── Filtered by category + status ──
+    private List<VehicleCard> FilteredActive => allListings
+        .Where(l => l.Status == "Active" && l.VehicleType == selectedCategory).ToList();
+
+    private List<VehicleCard> FilteredInactive => allListings
+        .Where(l => l.VehicleType == selectedCategory &&
+                   (l.Status == "Inactive" || l.Status == "Pending" || l.Status == "Draft")).ToList();
+
+    // ── Counts ──
+    private int CarCount => allListings.Count(l => l.VehicleType == "car");
+    private int BoatCount => allListings.Count(l => l.VehicleType == "boat");
+    private int JetCount => allListings.Count(l => l.VehicleType == "jet");
 
     private string GetImageUrl(string? photoUrl)
     {
         if (string.IsNullOrEmpty(photoUrl)) return string.Empty;
-        if (photoUrl.StartsWith("http://") || photoUrl.StartsWith("https://"))
-            return photoUrl;
+        if (photoUrl.StartsWith("http://") || photoUrl.StartsWith("https://")) return photoUrl;
         var apiBase = Http.BaseAddress?.ToString().TrimEnd('/') ?? string.Empty;
-        var cleanPath = "/" + photoUrl.TrimStart('/');
-        return apiBase + cleanPath;
+        return apiBase + "/" + photoUrl.TrimStart('/');
     }
 
     protected override async Task OnInitializedAsync()
@@ -206,13 +261,27 @@
             Http.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-        await LoadListings();
+        await LoadAllListings();
     }
 
-    private async Task LoadListings()
+    private async Task LoadAllListings()
     {
         isLoading = true;
         errorMessage = string.Empty;
+        allListings.Clear();
+
+        await Task.WhenAll(
+            LoadCarListings(),
+            LoadBoatListings(),
+            LoadJetListings()
+        );
+
+        isLoading = false;
+    }
+
+    // ── CARS ──
+    private async Task LoadCarListings()
+    {
         try
         {
             var response = await Http.GetAsync("api/v1/vehicle-listing/my-listings");
@@ -221,51 +290,90 @@
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             if (result?.Success == true && result.Data != null)
-            {
-                allListings = result.Data;
-
-                // Active = only Active status
-                activeListings = allListings
-                    .Where(l => l.Status == "Active")
-                    .ToList();
-
-                // Inactive = Inactive + Pending + Draft
-                inactiveListings = allListings
-                    .Where(l => l.Status == "Inactive" ||
-                                l.Status == "Pending" ||
-                                l.Status == "Draft")
-                    .ToList();
-            }
-            else
-            {
-                errorMessage = result?.Message ?? "Failed to load listings.";
-            }
+                foreach (var item in result.Data)
+                {
+                    item.VehicleType = "car";
+                    allListings.Add(item);
+                }
         }
-        catch (Exception ex)
+        catch { }
+    }
+
+    // ── BOATS ──
+    private async Task LoadBoatListings()
+    {
+        try
         {
-            errorMessage = "Error loading listings: " + ex.Message;
+            var response = await Http.GetAsync("api/v1/boat-listing/my-listings");
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<List<VehicleCard>>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true && result.Data != null)
+                foreach (var item in result.Data)
+                {
+                    item.VehicleType = "boat";
+                    allListings.Add(item);
+                }
         }
-        finally { isLoading = false; }
+        catch { }
+    }
+
+    // ── JETS ──
+    private async Task LoadJetListings()
+    {
+        try
+        {
+            var response = await Http.GetAsync("api/v1/jet-listing/my-listings");
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<ApiResp<List<VehicleCard>>>(json,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (result?.Success == true && result.Data != null)
+                foreach (var item in result.Data)
+                {
+                    item.VehicleType = "jet";
+                    allListings.Add(item);
+                }
+        }
+        catch { }
     }
 
     private void SetActiveTab() => activeTab = "active";
     private void SetInactiveTab() => activeTab = "inactive";
+    private void SetCategory(string cat) => selectedCategory = cat;
 
-    private string GetVehicleTitle(VehicleCard l)
+    // ── TITLE: uses correct field names per entity ──
+    private string GetVehicleTitle(VehicleCard l) => l.VehicleType switch
     {
-        if (!string.IsNullOrEmpty(l.LicencePlateNumber))
-            return $"{GetVehicleTypeLabel(l.VehicleType)} — {l.LicencePlateNumber}";
-        return GetVehicleTypeLabel(l.VehicleType);
-    }
+        "boat" => !string.IsNullOrEmpty(l.BoatMake)
+                  ? $"{l.BoatMake} {l.BoatModel}".Trim()
+                  : "Yacht / Boat",
 
-    private string GetVehicleSubtitle(VehicleCard l)
+        "jet" => !string.IsNullOrEmpty(l.AircraftMake)
+                  ? $"{l.AircraftMake} {l.AircraftModel}".Trim()
+                  : "Private Jet",
+
+        _ => !string.IsNullOrEmpty(l.LicencePlateNumber)
+                  ? $"Car — {l.LicencePlateNumber}"
+                  : "Luxury Car"
+    };
+
+    // ── SUBTITLE: uses correct field names per entity ──
+    private string GetVehicleSubtitle(VehicleCard l) => l.VehicleType switch
     {
-        var parts = new List<string>();
-        if (!string.IsNullOrEmpty(l.State)) parts.Add(l.State);
-        if (!string.IsNullOrEmpty(l.OdometerReading)) parts.Add(l.OdometerReading);
-        if (!string.IsNullOrEmpty(l.PrimaryGoal)) parts.Add(l.PrimaryGoal);
-        return parts.Any() ? string.Join(" · ", parts) : "No details yet.";
-    }
+        "boat" => string.Join(" · ", new[]
+                  { l.State, l.BoatType, l.BoatYear, l.RegistrationNumber }
+                  .Where(s => !string.IsNullOrEmpty(s))!),
+
+        "jet" => string.Join(" · ", new[]
+                  { l.State, l.HomeAirport, l.TailNumber, l.AircraftCategory }
+                  .Where(s => !string.IsNullOrEmpty(s))!),
+
+        _ => string.Join(" · ", new[]
+                  { l.State, l.OdometerReading, l.PrimaryGoal }
+                  .Where(s => !string.IsNullOrEmpty(s))!)
+    };
 
     private string GetVehicleIcon(string? type) => type?.ToLower() switch
     {
@@ -281,6 +389,21 @@
         _ => "Luxury Car"
     };
 
+    private string GetCategoryIcon(string cat) => cat switch
+    {
+        "boat" => "fa-sailboat",
+        "jet" => "fa-plane",
+        _ => "fa-car-rear"
+    };
+
+    private string GetCategoryLabel(string cat) => cat switch
+    {
+        "boat" => "Boat",
+        "jet" => "Jet",
+        _ => "Car"
+    };
+
+    // ── MODELS ──
     class ApiResp<T>
     {
         public bool Success { get; set; }
@@ -294,15 +417,33 @@
         public string VehicleType { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public int CurrentStep { get; set; }
+        public string? FirstPhotoUrl { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        // ── Car fields (VehicleListing entity) ──
         public string? LicencePlateNumber { get; set; }
         public string? VIN { get; set; }
-        public string? StreetAddress { get; set; }
         public string? State { get; set; }
         public string? ZipCode { get; set; }
         public string? OdometerReading { get; set; }
         public string? Transmission { get; set; }
         public string? PrimaryGoal { get; set; }
-        public string? FirstPhotoUrl { get; set; }
-        public DateTime CreatedAt { get; set; }
+
+        // ── Boat fields (BoatListing entity) ──
+        public string? BoatType { get; set; }
+        public string? BoatMake { get; set; }
+        public string? BoatModel { get; set; }
+        public string? BoatYear { get; set; }
+        public string? BoatLength { get; set; }
+        public string? RegistrationNumber { get; set; }
+
+        // ── Jet fields (JetListing entity) ──
+        public string? AircraftMake { get; set; }
+        public string? AircraftModel { get; set; }
+        public string? AircraftYear { get; set; }
+        public string? AircraftCategory { get; set; }
+        public string? TailNumber { get; set; }
+        public string? HomeAirport { get; set; }
+        public string? HangarLocation { get; set; }
     }
 }

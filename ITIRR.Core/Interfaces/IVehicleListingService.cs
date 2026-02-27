@@ -11,6 +11,7 @@ namespace ITIRR.Core.Interfaces
         Task<VehicleListingResponse> SaveStep4Async(Step4HistoryRequest request);
         Task<VehicleListingResponse> SaveStep5Async(Step5GoalsRequest request);
         Task<VehicleListingResponse> SaveStep6Async(Step6AvailabilityRequest request);
+        Task<VehicleListingResponse> SaveEditAsync(Guid id, EditListingRequest request, string userId, bool submit);
 
         Task<VehicleListingResponse> SaveStep7PhotosAsync(
             Guid listingId,

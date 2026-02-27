@@ -288,27 +288,20 @@ namespace ITIRR.API.Controllers
         }
 
         [HttpGet("in-progress")]
-        public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> GetInProgress()
+        public async Task<ActionResult<ApiResponse<ListingFullDataResponse>>> GetInProgress()
         {
             try
             {
                 var listing = await _listingService.GetInProgressListingAsync(GetUserId());
                 if (listing == null)
-                    return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(null!, "No in-progress listing"));
+                    return Ok(ApiResponse<ListingFullDataResponse>.SuccessResponse(null!, "No in-progress listing"));
 
-                var response = new VehicleListingResponse
-                {
-                    ListingId = listing.Id,
-                    VehicleType = listing.VehicleType,
-                    Status = listing.Status,
-                    CurrentStep = listing.CurrentStep,
-                    Message = "In-progress listing found"
-                };
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(response, "Found"));
+                var data = await _listingService.GetListingFullDataAsync(listing.Id);
+                return Ok(ApiResponse<ListingFullDataResponse>.SuccessResponse(data!, "Found"));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
+                return StatusCode(500, ApiResponse<ListingFullDataResponse>.ErrorResponse(
                     ex.Message, new List<string> { ex.Message }));
             }
         }
@@ -328,6 +321,57 @@ namespace ITIRR.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, ApiResponse<ListingFullDataResponse>.ErrorResponse(
+                    ex.Message, new List<string> { ex.Message }));
+            }
+        }
+
+        [HttpGet("{id}/edit-data")]
+        public async Task<ActionResult<ApiResponse<ListingFullDataResponse>>> GetEditData(Guid id)
+        {
+            try
+            {
+                var data = await _listingService.GetListingFullDataAsync(id);
+                if (data == null)
+                    return NotFound(ApiResponse<ListingFullDataResponse>.ErrorResponse(
+                        "Not found", new List<string> { "Not found" }));
+
+                return Ok(ApiResponse<ListingFullDataResponse>.SuccessResponse(data, "Success"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<ListingFullDataResponse>.ErrorResponse(
+                    ex.Message, new List<string> { ex.Message }));
+            }
+        }
+
+        [HttpPut("{id}/save")]
+        public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> SaveEdit(
+            Guid id, [FromBody] EditListingRequest request)
+        {
+            try
+            {
+                var result = await _listingService.SaveEditAsync(id, request, GetUserId(), submit: false);
+                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, "Saved as draft"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
+                    ex.Message, new List<string> { ex.Message }));
+            }
+        }
+
+        [HttpPut("{id}/save-and-submit")]
+        public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> SaveAndSubmit(
+            Guid id, [FromBody] EditListingRequest request)
+        {
+            try
+            {
+                var result = await _listingService.SaveEditAsync(id, request, GetUserId(), submit: true);
+                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, "Submitted for review"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
                     ex.Message, new List<string> { ex.Message }));
             }
         }

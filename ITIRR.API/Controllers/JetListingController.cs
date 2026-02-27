@@ -117,5 +117,42 @@ namespace ITIRR.API.Controllers
             }
             catch (Exception ex) { return StatusCode(500, ApiResponse<JetFullDataResponse>.ErrorResponse(ex.Message, new List<string> { ex.Message })); }
         }
+
+        [HttpGet("my-listings")]
+        public async Task<ActionResult<ApiResponse<List<JetListingResponse>>>> GetMyListings()
+        {
+            try
+            {
+                var listings = await _service.GetMyListingsAsync(GetUserId());
+                var result = listings.Select(j => new JetListingResponse
+                {
+                    ListingId = j.Id,
+                    Status = j.Status,
+                    CurrentStep = j.CurrentStep,
+                    State = j.State,
+                    AircraftMake = j.AircraftMake,
+                    AircraftModel = j.AircraftModel,
+                    AircraftYear = j.AircraftYear,
+                    TailNumber = j.TailNumber,
+                    AircraftCategory = j.AircraftCategory,
+                    PassengerCapacity = j.PassengerCapacity,
+                    HomeAirport = j.HomeAirport,
+                    HangarLocation = j.HangarLocation,
+                    PrimaryGoal = j.PrimaryGoal,
+                    FirstPhotoUrl = j.Media != null && j.Media.Any()
+                                        ? j.Media.OrderBy(m => m.DisplayOrder).First().MediaUrl
+                                        : null,
+                    CreatedAt = j.CreatedAt,
+                    Message = "Success"
+                }).ToList();
+
+                return Ok(ApiResponse<List<JetListingResponse>>.SuccessResponse(result, "Success"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<List<JetListingResponse>>.ErrorResponse(
+                    ex.Message, new List<string> { ex.Message }));
+            }
+        }
     }
 }

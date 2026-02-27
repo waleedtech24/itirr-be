@@ -332,29 +332,106 @@ namespace ITIRR.Services.Services
             return new ListingFullDataResponse
             {
                 ListingId = listing.Id,
-                VehicleType = listing.VehicleType,
+                VehicleType = listing.VehicleType ?? "car",
                 Status = listing.Status,
                 CurrentStep = listing.CurrentStep,
+
+                // Step 1
                 CountryId = listing.CountryId,
                 State = listing.State,
                 CityId = listing.CityId,
                 ZipCode = listing.ZipCode,
                 StreetAddress = listing.StreetAddress,
+
+                // Step 2
                 VIN = listing.VIN,
                 IsOlderThan1981 = listing.IsOlderThan1981,
                 LicencePlateNumber = listing.LicencePlateNumber,
+
+                // Step 3
                 OdometerReading = listing.OdometerReading,
                 Transmission = listing.Transmission,
                 Features = listing.Features,
+
+                // Step 4
                 TaxCertified = listing.TaxCertified,
                 HasSalvageTitle = listing.HasSalvageTitle,
+
+                // Step 5
                 PrimaryGoal = listing.PrimaryGoal,
                 UsageFrequency = listing.UsageFrequency,
                 ShareFrequency = listing.ShareFrequency,
+
+                // Step 6
                 AdvanceNotice = listing.AdvanceNotice,
                 MinTripDuration = listing.MinTripDuration,
                 MaxTripDuration = listing.MaxTripDuration,
-                MinTwoDayWeekend = listing.MinTwoDayWeekend
+                MinTwoDayWeekend = listing.MinTwoDayWeekend,
+
+                // Step 9 
+                VehicleMakeModel = listing.VehicleMakeModel,
+                PlateNumber = listing.PlateNumber,
+                VehicleColor = listing.VehicleColor,
+                YearOfManufacture = listing.YearOfManufacture,
+                PHVLicenceNumber = listing.PHVLicenceNumber,
+                PHVLicenceExpiryDate = listing.PHVLicenceExpiryDate,
+
+                FirstPhotoUrl = listing.Media != null && listing.Media.Any(m => m.MediaType == "Exterior")
+                                ? listing.Media.First(m => m.MediaType == "Exterior").MediaUrl
+                                : listing.Media != null && listing.Media.Any()
+                                ? listing.Media.First().MediaUrl
+                                : null,
+                CreatedAt = listing.CreatedAt
+            };
+        }
+
+        public async Task<VehicleListingResponse> SaveEditAsync(
+    Guid id, EditListingRequest request, string userId, bool submit)
+        {
+            var listing = await _context.VehicleListings
+                .FirstOrDefaultAsync(l => l.Id == id && l.OwnerId == userId)
+                ?? throw new Exception("Listing not found");
+
+            listing.CountryId = request.CountryId;
+            listing.State = request.State;
+            listing.CityId = request.CityId;
+            listing.ZipCode = request.ZipCode;
+            listing.StreetAddress = request.StreetAddress;
+            listing.VIN = request.VIN;
+            listing.IsOlderThan1981 = request.IsOlderThan1981;
+            listing.LicencePlateNumber = request.LicencePlateNumber;
+            listing.OdometerReading = request.OdometerReading;
+            listing.Transmission = request.Transmission;
+            listing.Features = System.Text.Json.JsonSerializer.Serialize(request.Features);
+            listing.TaxCertified = request.TaxCertified;
+            listing.HasSalvageTitle = request.HasSalvageTitle;
+            listing.PrimaryGoal = request.PrimaryGoal;
+            listing.UsageFrequency = request.UsageFrequency;
+            listing.ShareFrequency = request.ShareFrequency;
+            listing.AdvanceNotice = request.AdvanceNotice;
+            listing.MinTripDuration = request.MinTripDuration;
+            listing.MaxTripDuration = request.MaxTripDuration;
+            listing.MinTwoDayWeekend = request.MinTwoDayWeekend;
+            listing.VehicleMakeModel = request.VehicleMakeModel;
+            listing.PlateNumber = request.PlateNumber;
+            listing.VehicleColor = request.VehicleColor;
+            listing.YearOfManufacture = request.YearOfManufacture;
+            listing.PHVLicenceNumber = request.PHVLicenceNumber;
+            listing.PHVLicenceExpiryDate = request.PHVLicenceExpiryDate;
+            listing.UpdatedAt = DateTime.UtcNow;
+
+            if (submit)
+                listing.Status = "Pending";
+
+            await _context.SaveChangesAsync();
+
+            return new VehicleListingResponse
+            {
+                ListingId = listing.Id,
+                VehicleType = listing.VehicleType ?? "car",
+                Status = listing.Status,
+                CurrentStep = listing.CurrentStep,
+                Message = submit ? "Submitted for review" : "Saved as draft"
             };
         }
     }

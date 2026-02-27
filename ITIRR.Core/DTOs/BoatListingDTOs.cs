@@ -57,6 +57,17 @@
         public Guid ListingId { get; set; }
         public string Status { get; set; } = string.Empty;
         public int CurrentStep { get; set; }
+        public string State { get; set; } = string.Empty;
+        public string BoatType { get; set; } = string.Empty;
+        public string BoatMake { get; set; } = string.Empty;
+        public string BoatModel { get; set; } = string.Empty;
+        public string BoatYear { get; set; } = string.Empty;
+        public string BoatLength { get; set; } = string.Empty;
+        public int PassengerCapacity { get; set; }
+        public string RegistrationNumber { get; set; } = string.Empty;
+        public string PrimaryGoal { get; set; } = string.Empty;
+        public string? FirstPhotoUrl { get; set; }
+        public DateTime CreatedAt { get; set; }
         public string Message { get; set; } = string.Empty;
     }
 
