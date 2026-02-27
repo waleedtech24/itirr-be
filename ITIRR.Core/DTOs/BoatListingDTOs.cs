@@ -10,6 +10,37 @@
         public string StreetAddress { get; set; } = string.Empty;
     }
 
+    public class BoatEditRequest
+    {
+        public Guid? CountryId { get; set; }
+        public string State { get; set; } = string.Empty;
+        public Guid? CityId { get; set; }
+        public string ZipCode { get; set; } = string.Empty;
+        public string StreetAddress { get; set; } = string.Empty;
+        public string BoatType { get; set; } = string.Empty;
+        public string BoatMake { get; set; } = string.Empty;
+        public string BoatModel { get; set; } = string.Empty;
+        public string BoatYear { get; set; } = string.Empty;
+        public string BoatLength { get; set; } = string.Empty;
+        public int PassengerCapacity { get; set; }
+        public string RegistrationNumber { get; set; } = string.Empty;
+        public string HullMaterial { get; set; } = string.Empty;
+        public string FuelType { get; set; } = string.Empty;
+        public string PrimaryGoal { get; set; } = string.Empty;
+        public string UsageFrequency { get; set; } = string.Empty;
+        public string ShareFrequency { get; set; } = string.Empty;
+        public string AdvanceNotice { get; set; } = string.Empty;
+        public string MinTripDuration { get; set; } = string.Empty;
+        public string MaxTripDuration { get; set; } = string.Empty;
+        public bool MinTwoDayWeekend { get; set; }
+        public string SkipperFirstName { get; set; } = string.Empty;
+        public string? SkipperMiddleName { get; set; }
+        public string SkipperLastName { get; set; } = string.Empty;
+        public string SkipperLicenceNumber { get; set; } = string.Empty;
+        public string SkipperLicenceType { get; set; } = string.Empty;
+        public DateTime SkipperLicenceExpiry { get; set; }
+    }
+
     public class BoatStep2DetailsRequest
     {
         public Guid ListingId { get; set; }

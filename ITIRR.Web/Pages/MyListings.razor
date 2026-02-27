@@ -145,7 +145,7 @@
                                     <p>@GetVehicleSubtitle(l)</p>
                                     <hr class="my-hr" />
                                 </div>
-                                <a href="/edit-listing/@l.ListingId" class="edit-btn w-100">
+                                <a href="@GetEditUrl(l)" class="edit-btn w-100">
                                     <i class="fa-solid fa-pen-to-square"></i> &nbsp; Edit Detail
                                 </a>
                             </div>
@@ -209,7 +209,7 @@
                                             </a>
                                         </div>
                                         <div class="col-4 col-md-2">
-                                            <a href="/edit-listing/@l.ListingId" class="btn edit-list mx-auto h-100">
+                                            <a href="@GetEditUrl(l)" class="btn edit-list mx-auto h-100">
                                                 <i class="fa-regular align-items-center d-flex justify-content-center py-1 text-white fa-pen-to-square"></i>
                                             </a>
                                         </div>
@@ -410,6 +410,13 @@
         public string Message { get; set; } = string.Empty;
         public T? Data { get; set; }
     }
+
+    private string GetEditUrl(VehicleCard l) => l.VehicleType switch
+    {
+        "boat" => $"/edit-boat/{l.ListingId}",
+        "jet" => $"/edit-jet/{l.ListingId}",
+        _ => $"/edit-listing/{l.ListingId}"
+    };
 
     class VehicleCard
     {

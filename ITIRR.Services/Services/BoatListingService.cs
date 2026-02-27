@@ -189,6 +189,56 @@ namespace ITIRR.Services.Services
                 .FirstOrDefaultAsync();
         }
 
+
+        public async Task<BoatListingResponse> SaveEditAsync(
+    Guid id, BoatEditRequest request, string userId, bool submit)
+        {
+            var listing = await _context.BoatListings
+                .FirstOrDefaultAsync(l => l.Id == id && l.OwnerId == userId)
+                ?? throw new Exception("Listing not found");
+
+            listing.CountryId = request.CountryId ?? listing.CountryId;
+            listing.State = request.State;
+            listing.CityId = request.CityId ?? listing.CityId;
+            listing.ZipCode = request.ZipCode;
+            listing.StreetAddress = request.StreetAddress;
+            listing.BoatType = request.BoatType;
+            listing.BoatMake = request.BoatMake;
+            listing.BoatModel = request.BoatModel;
+            listing.BoatYear = request.BoatYear;
+            listing.BoatLength = request.BoatLength;
+            listing.PassengerCapacity = request.PassengerCapacity;
+            listing.RegistrationNumber = request.RegistrationNumber;
+            listing.HullMaterial = request.HullMaterial;
+            listing.FuelType = request.FuelType;
+            listing.PrimaryGoal = request.PrimaryGoal;
+            listing.UsageFrequency = request.UsageFrequency;
+            listing.ShareFrequency = request.ShareFrequency;
+            listing.AdvanceNotice = request.AdvanceNotice;
+            listing.MinTripDuration = request.MinTripDuration;
+            listing.MaxTripDuration = request.MaxTripDuration;
+            listing.MinTwoDayWeekend = request.MinTwoDayWeekend;
+            listing.SkipperFirstName = request.SkipperFirstName;
+            listing.SkipperMiddleName = request.SkipperMiddleName;
+            listing.SkipperLastName = request.SkipperLastName;
+            listing.SkipperLicenceNumber = request.SkipperLicenceNumber;
+            listing.SkipperLicenceType = request.SkipperLicenceType;
+            listing.SkipperLicenceExpiry = request.SkipperLicenceExpiry;
+            listing.UpdatedAt = DateTime.UtcNow;
+
+            if (submit) listing.Status = "Pending";
+
+            await _context.SaveChangesAsync();
+
+            return new BoatListingResponse
+            {
+                ListingId = listing.Id,
+                Status = listing.Status,
+                CurrentStep = listing.CurrentStep,
+                Message = submit ? "Submitted for review" : "Saved as draft"
+            };
+        }
+
         public async Task<BoatFullDataResponse?> GetListingFullDataAsync(Guid listingId)
         {
             var l = await _context.BoatListings.AsNoTracking()

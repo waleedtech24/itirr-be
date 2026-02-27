@@ -17,5 +17,6 @@ namespace ITIRR.Core.Interfaces
         Task<BoatListing?> GetInProgressListingAsync(string userId);
         Task<BoatFullDataResponse?> GetListingFullDataAsync(Guid listingId);
         Task<IEnumerable<BoatListing>> GetMyListingsAsync(string userId);
+        Task<BoatListingResponse> SaveEditAsync(Guid id, BoatEditRequest request, string userId, bool submit);
     }
 }

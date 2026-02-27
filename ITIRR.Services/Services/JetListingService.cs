@@ -58,6 +58,56 @@ namespace ITIRR.Services.Services
             return new JetListingResponse { ListingId = listing.Id, CurrentStep = 1, Status = "Draft", Message = "Step 1 saved" };
         }
 
+        public async Task<JetListingResponse> SaveEditAsync(
+    Guid id, JetEditRequest request, string userId, bool submit)
+        {
+            var listing = await _context.JetListings
+                .FirstOrDefaultAsync(l => l.Id == id && l.OwnerId == userId)
+                ?? throw new Exception("Listing not found");
+
+            listing.CountryId = request.CountryId ?? listing.CountryId;
+            listing.State = request.State;
+            listing.CityId = request.CityId ?? listing.CityId;
+            listing.ZipCode = request.ZipCode;
+            listing.HangarLocation = request.HangarLocation;
+            listing.HomeAirport = request.HomeAirport;
+            listing.AircraftMake = request.AircraftMake;
+            listing.AircraftModel = request.AircraftModel;
+            listing.AircraftYear = request.AircraftYear;
+            listing.TailNumber = request.TailNumber;
+            listing.AircraftCategory = request.AircraftCategory;
+            listing.PassengerCapacity = request.PassengerCapacity;
+            listing.RangeNauticalMiles = request.RangeNauticalMiles;
+            listing.CruisingSpeed = request.CruisingSpeed;
+            listing.EngineType = request.EngineType;
+            listing.PrimaryGoal = request.PrimaryGoal;
+            listing.UsageFrequency = request.UsageFrequency;
+            listing.ShareFrequency = request.ShareFrequency;
+            listing.AdvanceNotice = request.AdvanceNotice;
+            listing.MinTripDuration = request.MinTripDuration;
+            listing.MaxTripDuration = request.MaxTripDuration;
+            listing.CancellationPolicy = request.CancellationPolicy;
+            listing.PilotFirstName = request.PilotFirstName;
+            listing.PilotLastName = request.PilotLastName;
+            listing.PilotLicenceNumber = request.PilotLicenceNumber;
+            listing.PilotLicenceType = request.PilotLicenceType;
+            listing.PilotLicenceExpiry = request.PilotLicenceExpiry;
+            listing.CrewCount = request.CrewCount;
+            listing.UpdatedAt = DateTime.UtcNow;
+
+            if (submit) listing.Status = "Pending";
+
+            await _context.SaveChangesAsync();
+
+            return new JetListingResponse
+            {
+                ListingId = listing.Id,
+                Status = listing.Status,
+                CurrentStep = listing.CurrentStep,
+                Message = submit ? "Submitted for review" : "Saved as draft"
+            };
+        }
+
         public async Task<JetListingResponse> SaveStep2Async(JetStep2SpecsRequest request)
         {
             var listing = await _context.JetListings.AsNoTracking()

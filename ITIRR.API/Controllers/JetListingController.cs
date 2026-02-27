@@ -154,5 +154,53 @@ namespace ITIRR.API.Controllers
                     ex.Message, new List<string> { ex.Message }));
             }
         }
+
+        [HttpGet("{id}/edit-data")]
+        public async Task<ActionResult<ApiResponse<JetFullDataResponse>>> GetEditData(Guid id)
+        {
+            try
+            {
+                var data = await _service.GetListingFullDataAsync(id);
+                if (data == null) return NotFound();
+                return Ok(ApiResponse<JetFullDataResponse>.SuccessResponse(data, "Success"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<JetFullDataResponse>.ErrorResponse(
+                    ex.Message, new List<string> { ex.Message }));
+            }
+        }
+
+        [HttpPut("{id}/save")]
+        public async Task<ActionResult<ApiResponse<JetListingResponse>>> SaveEdit(
+            Guid id, [FromBody] JetEditRequest request)
+        {
+            try
+            {
+                var result = await _service.SaveEditAsync(id, request, GetUserId(), submit: false);
+                return Ok(ApiResponse<JetListingResponse>.SuccessResponse(result, "Saved as draft"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<JetListingResponse>.ErrorResponse(
+                    ex.Message, new List<string> { ex.Message }));
+            }
+        }
+
+        [HttpPut("{id}/save-and-submit")]
+        public async Task<ActionResult<ApiResponse<JetListingResponse>>> SaveAndSubmit(
+            Guid id, [FromBody] JetEditRequest request)
+        {
+            try
+            {
+                var result = await _service.SaveEditAsync(id, request, GetUserId(), submit: true);
+                return Ok(ApiResponse<JetListingResponse>.SuccessResponse(result, "Submitted for review"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<JetListingResponse>.ErrorResponse(
+                    ex.Message, new List<string> { ex.Message }));
+            }
+        }
     }
 }

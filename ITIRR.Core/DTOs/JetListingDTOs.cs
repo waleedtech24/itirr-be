@@ -86,6 +86,37 @@
         public string Message { get; set; } = string.Empty;
     }
 
+    public class JetEditRequest
+    {
+        public Guid? CountryId { get; set; }
+        public string State { get; set; } = string.Empty;
+        public Guid? CityId { get; set; }
+        public string ZipCode { get; set; } = string.Empty;
+        public string HangarLocation { get; set; } = string.Empty;
+        public string HomeAirport { get; set; } = string.Empty;
+        public string AircraftMake { get; set; } = string.Empty;
+        public string AircraftModel { get; set; } = string.Empty;
+        public string AircraftYear { get; set; } = string.Empty;
+        public string TailNumber { get; set; } = string.Empty;
+        public string AircraftCategory { get; set; } = string.Empty;
+        public int PassengerCapacity { get; set; }
+        public string RangeNauticalMiles { get; set; } = string.Empty;
+        public string CruisingSpeed { get; set; } = string.Empty;
+        public string EngineType { get; set; } = string.Empty;
+        public string PrimaryGoal { get; set; } = string.Empty;
+        public string UsageFrequency { get; set; } = string.Empty;
+        public string ShareFrequency { get; set; } = string.Empty;
+        public string AdvanceNotice { get; set; } = string.Empty;
+        public string MinTripDuration { get; set; } = string.Empty;
+        public string MaxTripDuration { get; set; } = string.Empty;
+        public string CancellationPolicy { get; set; } = string.Empty;
+        public string PilotFirstName { get; set; } = string.Empty;
+        public string PilotLastName { get; set; } = string.Empty;
+        public string PilotLicenceNumber { get; set; } = string.Empty;
+        public string PilotLicenceType { get; set; } = string.Empty;
+        public DateTime PilotLicenceExpiry { get; set; }
+        public int CrewCount { get; set; }
+    }
     public class JetFullDataResponse
     {
         public Guid ListingId { get; set; }

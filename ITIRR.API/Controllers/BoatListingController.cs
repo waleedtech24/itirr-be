@@ -145,5 +145,41 @@ namespace ITIRR.API.Controllers
                     ex.Message, new List<string> { ex.Message }));
             }
         }
+
+        // Add to BoatListingController AND JetListingController
+
+        [HttpGet("{id}/edit-data")]
+        public async Task<ActionResult<ApiResponse<BoatFullDataResponse>>> GetEditData(Guid id)  // use JetFullDataResponse for jet
+        {
+            try
+            {
+                var data = await _service.GetListingFullDataAsync(id);
+                if (data == null) return NotFound();
+                return Ok(ApiResponse<BoatFullDataResponse>.SuccessResponse(data, "Success"));
+            }
+            catch (Exception ex) { return StatusCode(500, ApiResponse<BoatFullDataResponse>.ErrorResponse(ex.Message, new List<string> { ex.Message })); }
+        }
+
+        [HttpPut("{id}/save")]
+        public async Task<ActionResult<ApiResponse<BoatListingResponse>>> SaveEdit(Guid id, [FromBody] BoatEditRequest request)
+        {
+            try
+            {
+                var result = await _service.SaveEditAsync(id, request, GetUserId(), submit: false);
+                return Ok(ApiResponse<BoatListingResponse>.SuccessResponse(result, "Saved as draft"));
+            }
+            catch (Exception ex) { return StatusCode(500, ApiResponse<BoatListingResponse>.ErrorResponse(ex.Message, new List<string> { ex.Message })); }
+        }
+
+        [HttpPut("{id}/save-and-submit")]
+        public async Task<ActionResult<ApiResponse<BoatListingResponse>>> SaveAndSubmit(Guid id, [FromBody] BoatEditRequest request)
+        {
+            try
+            {
+                var result = await _service.SaveEditAsync(id, request, GetUserId(), submit: true);
+                return Ok(ApiResponse<BoatListingResponse>.SuccessResponse(result, "Submitted for review"));
+            }
+            catch (Exception ex) { return StatusCode(500, ApiResponse<BoatListingResponse>.ErrorResponse(ex.Message, new List<string> { ex.Message })); }
+        }
     }
 }
