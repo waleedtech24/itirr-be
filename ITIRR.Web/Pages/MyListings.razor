@@ -133,13 +133,6 @@
                                         <i class="fa-solid @GetVehicleIcon(l.VehicleType) fa-3x text-muted"></i>
                                     </div>
                                 }
-                                @* <div style="position:relative;"> *@
-                                @*     <span style="position:absolute; top:-28px; right:10px; *@
-                                @*                  background:#6a0dad; color:#fff; font-size:11px; *@
-                                @*                  padding:2px 10px; border-radius:0 0 8px 8px;"> *@
-                                @*         @GetVehicleTypeLabel(l.VehicleType) *@
-                                @*     </span> *@
-                                @* </div> *@
                                 <div class="car-body">
                                     <h3>@GetVehicleTitle(l)</h3>
                                     <p>@GetVehicleSubtitle(l)</p>
@@ -187,13 +180,6 @@
                                         <i class="fa-solid @GetVehicleIcon(l.VehicleType) fa-3x text-muted"></i>
                                     </div>
                                 }
-                                @* <div style="position:relative;"> *@
-                                @*     <span style="position:absolute; top:-28px; right:10px; *@
-                                @*                  background:#6a0dad; color:#fff; font-size:11px; *@
-                                @*                  padding:2px 10px; border-radius:0 0 8px 8px;"> *@
-                                @*         @GetVehicleTypeLabel(l.VehicleType) *@
-                                @*     </span> *@
-                                @* </div> *@
                                 <div class="car-body">
                                     <h3>@GetVehicleTitle(l)</h3>
                                     <p>@GetVehicleSubtitle(l)</p>
@@ -343,7 +329,15 @@
     private void SetInactiveTab() => activeTab = "inactive";
     private void SetCategory(string cat) => selectedCategory = cat;
 
-    // ── TITLE: uses correct field names per entity ──
+    // ── EDIT URL: routes to correct edit page per vehicle type ──
+    private string GetEditUrl(VehicleCard l) => l.VehicleType switch
+    {
+        "boat" => $"/edit-boat/{l.ListingId}",
+        "jet" => $"/edit-jet/{l.ListingId}",
+        _ => $"/edit-listing/{l.ListingId}"
+    };
+
+    // ── TITLE ──
     private string GetVehicleTitle(VehicleCard l) => l.VehicleType switch
     {
         "boat" => !string.IsNullOrEmpty(l.BoatMake)
@@ -359,7 +353,7 @@
                   : "Luxury Car"
     };
 
-    // ── SUBTITLE: uses correct field names per entity ──
+    // ── SUBTITLE ──
     private string GetVehicleSubtitle(VehicleCard l) => l.VehicleType switch
     {
         "boat" => string.Join(" · ", new[]
@@ -411,13 +405,6 @@
         public T? Data { get; set; }
     }
 
-    private string GetEditUrl(VehicleCard l) => l.VehicleType switch
-    {
-        "boat" => $"/edit-boat/{l.ListingId}",
-        "jet" => $"/edit-jet/{l.ListingId}",
-        _ => $"/edit-listing/{l.ListingId}"
-    };
-
     class VehicleCard
     {
         public Guid ListingId { get; set; }
@@ -427,7 +414,7 @@
         public string? FirstPhotoUrl { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        // ── Car fields (VehicleListing entity) ──
+        // ── Car fields ──
         public string? LicencePlateNumber { get; set; }
         public string? VIN { get; set; }
         public string? State { get; set; }
@@ -436,7 +423,7 @@
         public string? Transmission { get; set; }
         public string? PrimaryGoal { get; set; }
 
-        // ── Boat fields (BoatListing entity) ──
+        // ── Boat fields ──
         public string? BoatType { get; set; }
         public string? BoatMake { get; set; }
         public string? BoatModel { get; set; }
@@ -444,7 +431,7 @@
         public string? BoatLength { get; set; }
         public string? RegistrationNumber { get; set; }
 
-        // ── Jet fields (JetListing entity) ──
+        // ── Jet fields ──
         public string? AircraftMake { get; set; }
         public string? AircraftModel { get; set; }
         public string? AircraftYear { get; set; }
