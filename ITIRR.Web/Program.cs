@@ -19,6 +19,7 @@ builder.Services.AddScoped(sp => new HttpClient
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<CustomAuthStateProvider>();
+builder.Services.AddScoped<ITIRR.Web.Services.ToastService>();
 builder.Services.AddScoped<AuthenticationStateProvider>(
     provider => provider.GetRequiredService<CustomAuthStateProvider>()
 );
