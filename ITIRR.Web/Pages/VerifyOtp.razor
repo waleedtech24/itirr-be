@@ -2,6 +2,7 @@
 @inject IAuthApiService AuthService
 @inject CustomAuthStateProvider AuthStateProvider
 @inject NavigationManager Navigation
+@inject ToastService Toast
 @using ITIRR.Web.Models.Auth
 @using ITIRR.Web.Services
 @using ITIRR.Web.Auth
@@ -78,31 +79,50 @@
     private async Task HandleVerifyOtp()
     {
         isLoading = true;
-        errorMessage = string.Empty;
 
         try
         {
+            Console.WriteLine("VERIFY OTP: attempting...");
             var result = await AuthService.VerifyOtpAsync(otpModel);
+            Console.WriteLine($"VERIFY OTP: got result - Success={result.Success}, Message={result.Message}");
 
             if (result.Success)
             {
-                successMessage = "OTP verified! Redirecting...";
+                Console.WriteLine("VERIFY OTP: success branch");
+
+                await Toast.ShowSuccess(result.Message ?? "OTP verified successfully!");
+
+                await Task.Delay(1000); 
+
                 await AuthStateProvider.MarkUserAsAuthenticated(
                     result.AccessToken, result.RefreshToken);
+
                 Navigation.NavigateTo("/login");
             }
             else
             {
-                errorMessage = result.Message;
+                var message = result.Errors != null && result.Errors.Any()
+                    ? string.Join(", ", result.Errors)
+                    : result.Message ?? "OTP verification failed.";
+
+                Console.WriteLine($"VERIFY OTP: error branch = {message}");
+
+                await Toast.ShowError(message);
             }
         }
         catch (Exception ex)
         {
-            errorMessage = "An error occurred: " + ex.Message;
+            Console.WriteLine($"VERIFY OTP: EXCEPTION TYPE = {ex.GetType().Name}");
+            Console.WriteLine($"VERIFY OTP: EXCEPTION MESSAGE = {ex.Message}");
+            Console.WriteLine($"VERIFY OTP: INNER = {ex.InnerException?.Message}");
+
+            await Toast.ShowError("An error occurred: " + ex.Message);
         }
         finally
         {
             isLoading = false;
+            Console.WriteLine("VERIFY OTP: finally block done");
         }
     }
+
 }

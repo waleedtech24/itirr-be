@@ -1,6 +1,7 @@
 ﻿@page "/register"
 @inject IAuthApiService AuthService
 @inject NavigationManager Navigation
+@inject ToastService Toast
 @using ITIRR.Web.Models.Auth
 @using ITIRR.Web.Services
 
@@ -112,36 +113,52 @@
         registerModel.ContactType = type;
     }
 
-    private async Task HandleRegister()
+private async Task HandleRegister()
+{
+    isLoading = true;
+    registerModel.ContactType = contactType;
+
+    try
     {
-        isLoading = true;
-        errorMessage = string.Empty;
-        registerModel.ContactType = contactType;
+        Console.WriteLine("REGISTER: attempting...");
+        var result = await AuthService.RegisterAsync(registerModel);
+        Console.WriteLine($"REGISTER: got result - Success={result.Success}, Message={result.Message}");
 
-        try
+        if (result.Success)
         {
-            var result = await AuthService.RegisterAsync(registerModel);
+            Console.WriteLine("REGISTER: success branch");
 
-            if (result.Success)
-            {
-                Navigation.NavigateTo(
-                    $"/verify-otp?email={Uri.EscapeDataString(registerModel.EmailOrPhone)}"
-                );
-            }
-            else
-            {
-                errorMessage = result.Errors.Any()
-                    ? string.Join(", ", result.Errors)
-                    : result.Message;
-            }
+            await Toast.ShowSuccess(result.Message ?? "Registration successful! Please verify OTP.");
+
+            await Task.Delay(1000);
+
+            Navigation.NavigateTo(
+                $"/verify-otp?email={Uri.EscapeDataString(registerModel.EmailOrPhone)}"
+            );
         }
-        catch (Exception ex)
+        else
         {
-            errorMessage = "An error occurred: " + ex.Message;
-        }
-        finally
-        {
-            isLoading = false;
+            var message = result.Errors.Any()
+                ? string.Join(", ", result.Errors)
+                : result.Message ?? "Registration failed. Please try again.";
+
+            Console.WriteLine($"REGISTER: error branch = {message}");
+
+            await Toast.ShowError(message);
         }
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"REGISTER: EXCEPTION TYPE = {ex.GetType().Name}");
+        Console.WriteLine($"REGISTER: EXCEPTION MESSAGE = {ex.Message}");
+        Console.WriteLine($"REGISTER: INNER = {ex.InnerException?.Message}");
+
+        await Toast.ShowError("An error occurred: " + ex.Message);
+    }
+    finally
+    {
+        isLoading = false;
+        Console.WriteLine("REGISTER: finally block done");
+    }
+}
 }
