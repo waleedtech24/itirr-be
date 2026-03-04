@@ -79,6 +79,8 @@ builder.Services.AddScoped<IVehicleModelRepository, VehicleModelRepository>();
 builder.Services.AddScoped<IVehicleListingRepository, VehicleListingRepository>();
 builder.Services.AddScoped<IVehicleListingService, VehicleListingService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+builder.Services.AddScoped<IAppUserAuthService, AppUserAuthService>();
+builder.Services.AddScoped<IAppUserProfileService, AppUserProfileService>();
 builder.Services.AddScoped<IFileUploadService>(provider =>
 {
     var env = provider.GetRequiredService<IWebHostEnvironment>();
