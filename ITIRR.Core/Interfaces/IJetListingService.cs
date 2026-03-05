@@ -21,5 +21,6 @@ namespace ITIRR.Core.Interfaces
         Task<JetListing?> GetInProgressListingAsync(string userId);
         Task<JetFullDataResponse?> GetListingFullDataAsync(Guid listingId);
         Task<IEnumerable<JetListing>> GetMyListingsAsync(string userId);
+        Task<JetListingResponse> SaveEditAsync(Guid id, JetEditRequest request, string userId, bool submit);
     }
 }

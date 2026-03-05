@@ -2,8 +2,8 @@
 @inject IAuthApiService AuthService
 @inject CustomAuthStateProvider AuthStateProvider
 @inject NavigationManager Navigation
+@inject ToastService Toast
 @using ITIRR.Web.Models.Auth
-@using ITIRR.Web.Services
 @using ITIRR.Web.Auth
 
 <nav class="navbar navbar-light">
@@ -25,11 +25,6 @@
     <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8 col-sm-12">
             <div class="partner-box">
-
-                @if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    <div class="alert alert-danger">@errorMessage</div>
-                }
 
                 <!-- Toggle Phone/Email -->
                 <div class="radios-change d-flex flex-wrap gap-3 mb-3">
@@ -84,43 +79,53 @@
     </div>
 </div>
 
+<!-- Toast container for login page (outside dashboard layout) -->
 @code {
     private LoginModel loginModel = new();
     private string contactType = "email";
-    private string errorMessage = string.Empty;
     private bool isLoading = false;
+
     private void SetPhone(ChangeEventArgs e) => contactType = "phone";
     private void SetEmail(ChangeEventArgs e) => contactType = "email";
 
     private async Task HandleLogin()
     {
         isLoading = true;
-        errorMessage = string.Empty;
-
         try
         {
+            Console.WriteLine("LOGIN: attempting...");
             var result = await AuthService.LoginAsync(loginModel);
+            Console.WriteLine($"LOGIN: got result - Success={result.Success}, Message={result.Message}");
 
             if (result.Success)
             {
+                Console.WriteLine("LOGIN: success branch");
+                await Toast.ShowSuccess(result.Message ?? "Welcome back!");
+                await Task.Delay(1000);
                 await AuthStateProvider.MarkUserAsAuthenticated(
                     result.AccessToken, result.RefreshToken);
                 Navigation.NavigateTo("/dashboard");
             }
             else
             {
-                errorMessage = result.Errors.Any()
+                var message = result.Errors.Any()
                     ? string.Join(", ", result.Errors)
-                    : result.Message;
+                    : result.Message ?? "Login failed. Please try again.";
+                Console.WriteLine($"LOGIN: error branch = {message}");
+                await Toast.ShowError(message);
             }
         }
         catch (Exception ex)
         {
-            errorMessage = "An error occurred: " + ex.Message;
+            Console.WriteLine($"LOGIN: EXCEPTION TYPE = {ex.GetType().Name}");
+            Console.WriteLine($"LOGIN: EXCEPTION MESSAGE = {ex.Message}");
+            Console.WriteLine($"LOGIN: INNER = {ex.InnerException?.Message}");
+            await Toast.ShowError("An error occurred: " + ex.Message);
         }
         finally
         {
             isLoading = false;
+            Console.WriteLine("LOGIN: finally block done");
         }
     }
 }

@@ -22,133 +22,167 @@ namespace ITIRR.API.Controllers
         private string GetUserId() =>
             User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
 
-        // GET /api/v1/profile
+        // GET api/v1/profile
         [HttpGet]
         public async Task<ActionResult<ApiResponse<UserProfileResponse>>> GetProfile()
         {
             try
             {
                 var profile = await _profileService.GetProfileAsync(GetUserId());
-                if (profile == null)
-                    return Ok(ApiResponse<UserProfileResponse>.SuccessResponse(
-                        new UserProfileResponse(), "No profile found"));
 
-                return Ok(ApiResponse<UserProfileResponse>.SuccessResponse(profile, "Success"));
+                if (profile == null)
+                    return Ok(ApiResponse<UserProfileResponse>
+                        .NotFound("No profile found."));
+
+                return Ok(ApiResponse<UserProfileResponse>
+                    .Success(profile));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<UserProfileResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<UserProfileResponse>
+                    .ServerError(ex.Message));
             }
         }
 
-        // PUT /api/v1/profile/basic
+        // PUT api/v1/profile/basic
         [HttpPut("basic")]
         public async Task<ActionResult<ApiResponse<UserProfileResponse>>> UpdateBasic(
             [FromBody] UpdateBasicInfoRequest request)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<UserProfileResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
                 var result = await _profileService.UpdateBasicInfoAsync(request, GetUserId());
-                return Ok(ApiResponse<UserProfileResponse>.SuccessResponse(result, "Basic info updated"));
+
+                return Ok(ApiResponse<UserProfileResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<UserProfileResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<UserProfileResponse>
+                    .ServerError(ex.Message));
             }
         }
 
-        // PUT /api/v1/profile/contact
+        // PUT api/v1/profile/contact
         [HttpPut("contact")]
         public async Task<ActionResult<ApiResponse<UserProfileResponse>>> UpdateContact(
             [FromBody] UpdateContactRequest request)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<UserProfileResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
                 var result = await _profileService.UpdateContactAsync(request, GetUserId());
-                return Ok(ApiResponse<UserProfileResponse>.SuccessResponse(result, "Contact info updated"));
+
+                return Ok(ApiResponse<UserProfileResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<UserProfileResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<UserProfileResponse>
+                    .ServerError(ex.Message));
             }
         }
 
-        // POST /api/v1/profile/photo
+        // POST api/v1/profile/photo
         [HttpPost("photo")]
-        public async Task<ActionResult<ApiResponse<UserProfileResponse>>> UploadPhoto(IFormFile photo)
+        public async Task<ActionResult<ApiResponse<UserProfileResponse>>> UploadPhoto(
+            IFormFile photo)
         {
             try
             {
                 if (photo == null || photo.Length == 0)
-                    return BadRequest(ApiResponse<UserProfileResponse>.ErrorResponse(
-                        "No file", new List<string> { "No file uploaded" }));
+                    return BadRequest(ApiResponse<UserProfileResponse>
+                        .ValidationFailed("No photo provided."));
 
                 var result = await _profileService.UpdateProfilePhotoAsync(
                     photo.OpenReadStream(), photo.FileName, GetUserId());
 
-                return Ok(ApiResponse<UserProfileResponse>.SuccessResponse(result, "Photo updated"));
+                return Ok(ApiResponse<UserProfileResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<UserProfileResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<UserProfileResponse>
+                    .ServerError(ex.Message));
             }
         }
 
-        // GET /api/v1/profile/documents
+        // GET api/v1/profile/documents
         [HttpGet("documents")]
         public async Task<ActionResult<ApiResponse<IEnumerable<UserDocumentResponse>>>> GetDocuments()
         {
             try
             {
                 var docs = await _profileService.GetDocumentsAsync(GetUserId());
-                return Ok(ApiResponse<IEnumerable<UserDocumentResponse>>.SuccessResponse(docs, "Success"));
+
+                if (docs == null || !docs.Any())
+                    return Ok(ApiResponse<IEnumerable<UserDocumentResponse>>
+                        .NotFound("No documents found."));
+
+                return Ok(ApiResponse<IEnumerable<UserDocumentResponse>>
+                    .Success(docs));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<IEnumerable<UserDocumentResponse>>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<IEnumerable<UserDocumentResponse>>
+                    .ServerError(ex.Message));
             }
         }
 
-        // POST /api/v1/profile/documents
+        // POST api/v1/profile/documents
         [HttpPost("documents")]
-        public async Task<ActionResult<ApiResponse<UserDocumentResponse>>> UploadDocument(IFormFile file)
+        public async Task<ActionResult<ApiResponse<UserDocumentResponse>>> UploadDocument(
+            IFormFile file)
         {
             try
             {
                 if (file == null || file.Length == 0)
-                    return BadRequest(ApiResponse<UserDocumentResponse>.ErrorResponse(
-                        "No file", new List<string> { "No file uploaded" }));
+                    return BadRequest(ApiResponse<UserDocumentResponse>
+                        .ValidationFailed("No file provided."));
 
                 var result = await _profileService.UploadDocumentAsync(
                     file.OpenReadStream(), file.FileName, file.Length, GetUserId());
 
-                return Ok(ApiResponse<UserDocumentResponse>.SuccessResponse(result, "Document uploaded"));
+                return Ok(ApiResponse<UserDocumentResponse>
+                    .Created(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<UserDocumentResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<UserDocumentResponse>
+                    .ServerError(ex.Message));
             }
         }
 
-        // DELETE /api/v1/profile/documents/{id}
+        // DELETE api/v1/profile/documents/{id}
         [HttpDelete("documents/{id}")]
         public async Task<ActionResult<ApiResponse<bool>>> DeleteDocument(Guid id)
         {
             try
             {
+                if (id == Guid.Empty)
+                    return BadRequest(ApiResponse<bool>
+                        .ValidationFailed("Document ID is required."));
+
                 await _profileService.DeleteDocumentAsync(id, GetUserId());
-                return Ok(ApiResponse<bool>.SuccessResponse(true, "Document deleted"));
+
+                return Ok(ApiResponse<bool>
+                    .Deleted());
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<bool>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<bool>
+                    .ServerError(ex.Message));
             }
         }
     }

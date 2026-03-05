@@ -44,5 +44,15 @@ namespace ITIRR.Core.DTOs.VehicleListing
         public string? MinTripDuration { get; set; }
         public string? MaxTripDuration { get; set; }
         public bool MinTwoDayWeekend { get; set; }
+
+        public string? VehicleMakeModel { get; set; }
+        public string? PlateNumber { get; set; }
+        public string? VehicleColor { get; set; }
+        public string? YearOfManufacture { get; set; }
+        public string? PHVLicenceNumber { get; set; }
+        public string? PHVLicenceExpiryDate { get; set; }
+
+        public string? FirstPhotoUrl { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

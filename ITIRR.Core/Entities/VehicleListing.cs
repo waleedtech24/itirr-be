@@ -41,6 +41,13 @@ namespace ITIRR.Core.Entities
         public string? MaxTripDuration { get; set; }
         public bool MinTwoDayWeekend { get; set; } = false;
 
+        public string? VehicleMakeModel { get; set; }
+        public string? PlateNumber { get; set; }
+        public string? VehicleColor { get; set; }
+        public string? YearOfManufacture { get; set; }
+        public string? PHVLicenceNumber { get; set; }
+        public string? PHVLicenceExpiryDate { get; set; }
+
         // Navigation
         public virtual ApplicationUser Owner { get; set; } = null!;
         public virtual Country? Country { get; set; }

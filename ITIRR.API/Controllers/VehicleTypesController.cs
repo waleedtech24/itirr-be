@@ -18,6 +18,7 @@ namespace ITIRR.API.Controllers
             _vehicleTypeService = vehicleTypeService;
         }
 
+        // GET api/v1/vehicletypes
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<ApiResponse<List<VehicleTypeDto>>>> GetAllVehicleTypes()
@@ -25,20 +26,20 @@ namespace ITIRR.API.Controllers
             try
             {
                 var vehicleTypes = await _vehicleTypeService.GetActiveVehicleTypesAsync();
+
+                if (vehicleTypes == null || !vehicleTypes.Any())
+                    return Ok(ApiResponse<List<VehicleTypeDto>>
+                        .NotFound("No vehicle types found."));
+
                 var vehicleTypeDtos = vehicleTypes.ToDtoList();
 
-
-                return Ok(ApiResponse<List<VehicleTypeDto>>.SuccessResponse(
-                    vehicleTypeDtos,
-                    "Vehicle type retrieved successfully"
-                ));
+                return Ok(ApiResponse<List<VehicleTypeDto>>
+                    .Success(vehicleTypeDtos));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<List<VehicleTypeDto>>.ErrorResponse(
-                    "An error occurred while retrieving vehicle types",
-                    new List<string> { ex.Message }
-                ));
+                return StatusCode(500, ApiResponse<List<VehicleTypeDto>>
+                    .ServerError(ex.Message));
             }
         }
     }

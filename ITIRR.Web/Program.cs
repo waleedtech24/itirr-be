@@ -12,13 +12,14 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient
 {
-    BaseAddress = new Uri("https://itirr-be-production.up.railway.app/")
-    //BaseAddress = new Uri("https://localhost:7013/")
+   // BaseAddress = new Uri("https://itirr-be-production.up.railway.app/")
+    BaseAddress = new Uri("https://localhost:7013/")
 });
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<CustomAuthStateProvider>();
+builder.Services.AddScoped<ITIRR.Web.Services.ToastService>();
 builder.Services.AddScoped<AuthenticationStateProvider>(
     provider => provider.GetRequiredService<CustomAuthStateProvider>()
 );

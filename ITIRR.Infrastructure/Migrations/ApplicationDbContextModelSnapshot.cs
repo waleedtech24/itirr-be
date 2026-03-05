@@ -22,6 +22,49 @@ namespace ITIRR.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ITIRR.Core.Entities.AppUserDocument", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CustomerDocuments");
+                });
+
             modelBuilder.Entity("ITIRR.Core.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -1198,6 +1241,84 @@ namespace ITIRR.Infrastructure.Migrations
                     b.ToTable("SystemSettings");
                 });
 
+            modelBuilder.Entity("ITIRR.Core.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("About")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AgencyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Facebook")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Languages")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OtpCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("OtpExpiry")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePhotoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Twitter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerUsers");
+                });
+
             modelBuilder.Entity("ITIRR.Core.Entities.UserDocument", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1762,6 +1883,15 @@ namespace ITIRR.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("PHVLicenceExpiryDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PHVLicenceNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlateNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PrimaryGoal")
                         .HasColumnType("nvarchar(max)");
 
@@ -1793,8 +1923,17 @@ namespace ITIRR.Infrastructure.Migrations
                     b.Property<string>("VIN")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("VehicleColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleMakeModel")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("VehicleType")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("YearOfManufacture")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZipCode")
@@ -2172,6 +2311,17 @@ namespace ITIRR.Infrastructure.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.AppUserDocument", b =>
+                {
+                    b.HasOne("ITIRR.Core.Entities.User", "User")
+                        .WithMany("Documents")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ITIRR.Core.Entities.AuditLog", b =>
@@ -2649,6 +2799,11 @@ namespace ITIRR.Infrastructure.Migrations
             modelBuilder.Entity("ITIRR.Core.Entities.State", b =>
                 {
                     b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("ITIRR.Core.Entities.User", b =>
+                {
+                    b.Navigation("Documents");
                 });
 
             modelBuilder.Entity("ITIRR.Core.Entities.Vehicle", b =>

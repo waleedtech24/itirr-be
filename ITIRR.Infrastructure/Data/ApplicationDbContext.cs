@@ -52,6 +52,9 @@ namespace ITIRR.Infrastructure.Data
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<UserDocument> UserDocuments { get; set; }
 
+        public DbSet<User> CustomerUsers { get; set; }
+        public DbSet<AppUserDocument> CustomerDocuments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
