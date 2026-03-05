@@ -17,6 +17,7 @@ namespace ITIRR.API.Controllers
             _authService = authService;
         }
 
+        // POST api/v1/auth/register-partner
         [HttpPost("register-partner")]
         public async Task<ActionResult<ApiResponse<RegisterResponse>>> RegisterPartner(
             [FromBody] RegisterPartnerRequest request)
@@ -24,34 +25,29 @@ namespace ITIRR.API.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ApiResponse<RegisterResponse>.ErrorResponse(
-                        "Validation failed",
-                        ModelState.Values.SelectMany(v => v.Errors)
-                            .Select(e => e.ErrorMessage).ToList()
-                    ));
+                    return BadRequest(ApiResponse<RegisterResponse>
+                        .ValidationFailed(
+                            string.Join(", ", ModelState.Values
+                                .SelectMany(v => v.Errors)
+                                .Select(e => e.ErrorMessage))));
 
                 var result = await _authService.RegisterPartnerAsync(request);
 
                 if (!result.OtpSent)
-                    return BadRequest(ApiResponse<RegisterResponse>.ErrorResponse(
-                        "Registration failed",
-                        new List<string> { "Could not send OTP" }
-                    ));
+                    return BadRequest(ApiResponse<RegisterResponse>
+                        .Fail("Registration failed. Could not send OTP."));
 
-                return Ok(ApiResponse<RegisterResponse>.SuccessResponse(
-                    result,
-                    "Registration successful. OTP sent to your email/phone."
-                ));
+                return Ok(ApiResponse<RegisterResponse>
+                    .Created(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<RegisterResponse>.ErrorResponse(
-                    "An error occurred during registration",
-                    new List<string> { ex.Message }
-                ));
+                return StatusCode(500, ApiResponse<RegisterResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // POST api/v1/auth/send-otp
         [HttpPost("send-otp")]
         public async Task<ActionResult<ApiResponse<OtpResponse>>> SendOtp(
             [FromBody] SendOtpRequest request)
@@ -59,34 +55,29 @@ namespace ITIRR.API.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ApiResponse<OtpResponse>.ErrorResponse(
-                        "Validation failed",
-                        ModelState.Values.SelectMany(v => v.Errors)
-                            .Select(e => e.ErrorMessage).ToList()
-                    ));
+                    return BadRequest(ApiResponse<OtpResponse>
+                        .ValidationFailed(
+                            string.Join(", ", ModelState.Values
+                                .SelectMany(v => v.Errors)
+                                .Select(e => e.ErrorMessage))));
 
                 var result = await _authService.SendOtpAsync(request);
 
                 if (!result.OtpSent)
-                    return BadRequest(ApiResponse<OtpResponse>.ErrorResponse(
-                        result.Message,
-                        new List<string> { result.Message }
-                    ));
+                    return BadRequest(ApiResponse<OtpResponse>
+                        .Fail(result.Message));
 
-                return Ok(ApiResponse<OtpResponse>.SuccessResponse(
-                    result,
-                    result.Message
-                ));
+                return Ok(ApiResponse<OtpResponse>
+                    .Success(result, "OTP sent successfully."));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<OtpResponse>.ErrorResponse(
-                    "An error occurred while sending OTP",
-                    new List<string> { ex.Message }
-                ));
+                return StatusCode(500, ApiResponse<OtpResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // POST api/v1/auth/verify-otp
         [HttpPost("verify-otp")]
         public async Task<ActionResult<ApiResponse<AuthResponse>>> VerifyOtp(
             [FromBody] VerifyOtpRequest request)
@@ -94,34 +85,29 @@ namespace ITIRR.API.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ApiResponse<AuthResponse>.ErrorResponse(
-                        "Validation failed",
-                        ModelState.Values.SelectMany(v => v.Errors)
-                            .Select(e => e.ErrorMessage).ToList()
-                    ));
+                    return BadRequest(ApiResponse<AuthResponse>
+                        .ValidationFailed(
+                            string.Join(", ", ModelState.Values
+                                .SelectMany(v => v.Errors)
+                                .Select(e => e.ErrorMessage))));
 
                 var result = await _authService.VerifyOtpAsync(request);
 
                 if (string.IsNullOrEmpty(result.AccessToken))
-                    return BadRequest(ApiResponse<AuthResponse>.ErrorResponse(
-                        "OTP verification failed",
-                        new List<string> { "Invalid or expired OTP" }
-                    ));
+                    return BadRequest(ApiResponse<AuthResponse>
+                        .Fail("Invalid or expired OTP."));
 
-                return Ok(ApiResponse<AuthResponse>.SuccessResponse(
-                    result,
-                    "OTP verified successfully"
-                ));
+                return Ok(ApiResponse<AuthResponse>
+                    .Success(result, "OTP verified successfully."));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<AuthResponse>.ErrorResponse(
-                    "An error occurred during OTP verification",
-                    new List<string> { ex.Message }
-                ));
+                return StatusCode(500, ApiResponse<AuthResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // POST api/v1/auth/login
         [HttpPost("login")]
         public async Task<ActionResult<ApiResponse<AuthResponse>>> Login(
             [FromBody] LoginRequest request)
@@ -129,26 +115,25 @@ namespace ITIRR.API.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ApiResponse<AuthResponse>.ErrorResponse(
-                        "Validation failed",
-                        ModelState.Values.SelectMany(v => v.Errors)
-                            .Select(e => e.ErrorMessage).ToList()
-                    ));
+                    return BadRequest(ApiResponse<AuthResponse>
+                        .ValidationFailed(
+                            string.Join(", ", ModelState.Values
+                                .SelectMany(v => v.Errors)
+                                .Select(e => e.ErrorMessage))));
 
                 var result = await _authService.LoginAsync(request);
 
                 if (string.IsNullOrEmpty(result.AccessToken))
-                    return BadRequest(ApiResponse<AuthResponse>.ErrorResponse(
-                        "Login failed", new List<string> { "Invalid credentials" }
-                    ));
+                    return BadRequest(ApiResponse<AuthResponse>
+                        .Fail("Invalid credentials."));
 
-                return Ok(ApiResponse<AuthResponse>.SuccessResponse(result, "Login successful"));
+                return Ok(ApiResponse<AuthResponse>
+                    .Success(result, "Login successful."));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<AuthResponse>.ErrorResponse(
-                    "Login failed", new List<string> { ex.Message }
-                ));
+                return StatusCode(500, ApiResponse<AuthResponse>
+                    .ServerError(ex.Message));
             }
         }
     }

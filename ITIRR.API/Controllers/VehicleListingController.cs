@@ -38,102 +38,151 @@ namespace ITIRR.API.Controllers
         private string GetUserId() =>
             User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
 
+        // POST api/v1/vehicle-listing/step1
         [HttpPost("step1")]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> Step1(
             [FromBody] Step1LocationRequest request)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<VehicleListingResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
                 var result = await _listingService.SaveStep1Async(request, GetUserId());
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, result.Message));
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Created(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // POST api/v1/vehicle-listing/step2
         [HttpPost("step2")]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> Step2(
             [FromBody] Step2VINRequest request)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<VehicleListingResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
                 var result = await _listingService.SaveStep2Async(request);
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, result.Message));
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // POST api/v1/vehicle-listing/step3
         [HttpPost("step3")]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> Step3(
             [FromBody] Step3OdometerRequest request)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<VehicleListingResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
                 var result = await _listingService.SaveStep3Async(request);
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, result.Message));
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // POST api/v1/vehicle-listing/step4
         [HttpPost("step4")]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> Step4(
             [FromBody] Step4HistoryRequest request)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<VehicleListingResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
                 var result = await _listingService.SaveStep4Async(request);
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, result.Message));
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // POST api/v1/vehicle-listing/step5
         [HttpPost("step5")]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> Step5(
             [FromBody] Step5GoalsRequest request)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<VehicleListingResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
                 var result = await _listingService.SaveStep5Async(request);
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, result.Message));
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // POST api/v1/vehicle-listing/step6
         [HttpPost("step6")]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> Step6(
             [FromBody] Step6AvailabilityRequest request)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<VehicleListingResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
                 var result = await _listingService.SaveStep6Async(request);
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, result.Message));
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // POST api/v1/vehicle-listing/step7
         [HttpPost("step7")]
         [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> Step7(
@@ -143,42 +192,53 @@ namespace ITIRR.API.Controllers
         {
             try
             {
-                var interior = (interiorPhotos ?? new FormFileCollection())
-                    .Select(f => (f.OpenReadStream(), f.FileName))
-                    .ToList();
+                if (listingId == Guid.Empty)
+                    return BadRequest(ApiResponse<VehicleListingResponse>
+                        .ValidationFailed("Listing ID is required."));
 
+                var interior = (interiorPhotos ?? new FormFileCollection())
+                    .Select(f => (f.OpenReadStream(), f.FileName)).ToList();
                 var exterior = (exteriorPhotos ?? new FormFileCollection())
-                    .Select(f => (f.OpenReadStream(), f.FileName))
-                    .ToList();
+                    .Select(f => (f.OpenReadStream(), f.FileName)).ToList();
 
                 var result = await _listingService.SaveStep7PhotosAsync(
                     listingId, interior, exterior);
 
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, result.Message));
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // POST api/v1/vehicle-listing/step8
         [HttpPost("step8")]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> Step8(
             [FromBody] Step8DriverLicenceRequest request)
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<VehicleListingResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
                 var result = await _listingService.SaveStep8Async(request, GetUserId());
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, result.Message));
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // POST api/v1/vehicle-listing/step9
         [HttpPost("step9")]
         [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> Step9(
@@ -190,6 +250,12 @@ namespace ITIRR.API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<VehicleListingResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
                 var pcoRequest = new Step9PCORequest
                 {
                     ListingId = request.ListingId,
@@ -209,15 +275,17 @@ namespace ITIRR.API.Controllers
                     logbook != null ? (logbook.OpenReadStream(), logbook.FileName) : null,
                     GetUserId());
 
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, result.Message));
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // GET api/v1/vehicle-listing/my-listings
         [HttpGet("my-listings")]
         public async Task<ActionResult<ApiResponse<IEnumerable<VehicleListingResponse>>>> GetMyListings()
         {
@@ -225,13 +293,17 @@ namespace ITIRR.API.Controllers
             {
                 var listings = await _listingService.GetMyListingsAsync(GetUserId());
 
+                if (listings == null || !listings.Any())
+                    return Ok(ApiResponse<IEnumerable<VehicleListingResponse>>
+                        .NotFound("No listings found."));
+
                 var response = listings.Select(l => new VehicleListingResponse
                 {
                     ListingId = l.Id,
                     VehicleType = l.VehicleType ?? "car",
                     Status = l.Status,
                     CurrentStep = l.CurrentStep,
-                    Message = "Success.",
+                    Message = "Success",
                     LicencePlateNumber = l.LicencePlateNumber,
                     VIN = l.VIN,
                     StreetAddress = l.StreetAddress,
@@ -241,32 +313,34 @@ namespace ITIRR.API.Controllers
                     Transmission = l.Transmission,
                     PrimaryGoal = l.PrimaryGoal,
                     FirstPhotoUrl = l.Media != null && l.Media.Any(m => m.MediaType == "Exterior")
-                                        ? l.Media.First(m => m.MediaType == "Exterior").MediaUrl
-                                        : l.Media != null && l.Media.Any()
-                                        ? l.Media.First().MediaUrl
-                                        : null,
+                                            ? l.Media.First(m => m.MediaType == "Exterior").MediaUrl
+                                            : l.Media != null && l.Media.Any()
+                                            ? l.Media.First().MediaUrl
+                                            : null,
                     CreatedAt = l.CreatedAt
                 });
 
-                return Ok(ApiResponse<IEnumerable<VehicleListingResponse>>.SuccessResponse(
-                    response, "Listings retrieved successfully"));
+                return Ok(ApiResponse<IEnumerable<VehicleListingResponse>>
+                    .Success(response));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<IEnumerable<VehicleListingResponse>>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<IEnumerable<VehicleListingResponse>>
+                    .ServerError(ex.Message));
             }
         }
 
+        // GET api/v1/vehicle-listing/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> GetById(Guid id)
         {
             try
             {
                 var listing = await _listingService.GetListingByIdAsync(id);
+
                 if (listing == null)
-                    return NotFound(ApiResponse<VehicleListingResponse>.ErrorResponse(
-                        "Listing not found", new List<string> { "Not found" }));
+                    return NotFound(ApiResponse<VehicleListingResponse>
+                        .NotFound("Listing not found."));
 
                 var response = new VehicleListingResponse
                 {
@@ -277,102 +351,137 @@ namespace ITIRR.API.Controllers
                     Message = "Success"
                 };
 
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(
-                    response, "Listing retrieved successfully"));
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Success(response));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // GET api/v1/vehicle-listing/in-progress
         [HttpGet("in-progress")]
         public async Task<ActionResult<ApiResponse<ListingFullDataResponse>>> GetInProgress()
         {
             try
             {
                 var listing = await _listingService.GetInProgressListingAsync(GetUserId());
+
                 if (listing == null)
-                    return Ok(ApiResponse<ListingFullDataResponse>.SuccessResponse(null!, "No in-progress listing"));
+                    return Ok(ApiResponse<ListingFullDataResponse>
+                        .NotFound("No in-progress listing found."));
 
                 var data = await _listingService.GetListingFullDataAsync(listing.Id);
-                return Ok(ApiResponse<ListingFullDataResponse>.SuccessResponse(data!, "Found"));
+
+                if (data == null)
+                    return Ok(ApiResponse<ListingFullDataResponse>
+                        .NotFound("Listing data not found."));
+
+                return Ok(ApiResponse<ListingFullDataResponse>
+                    .Success(data));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<ListingFullDataResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<ListingFullDataResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // GET api/v1/vehicle-listing/{id}/full-data
         [HttpGet("{id}/full-data")]
         public async Task<ActionResult<ApiResponse<ListingFullDataResponse>>> GetFullData(Guid id)
         {
             try
             {
                 var data = await _listingService.GetListingFullDataAsync(id);
-                if (data == null)
-                    return NotFound(ApiResponse<ListingFullDataResponse>.ErrorResponse(
-                        "Not found", new List<string> { "Not found" }));
 
-                return Ok(ApiResponse<ListingFullDataResponse>.SuccessResponse(data, "Success"));
+                if (data == null)
+                    return NotFound(ApiResponse<ListingFullDataResponse>
+                        .NotFound("Listing not found."));
+
+                return Ok(ApiResponse<ListingFullDataResponse>
+                    .Success(data));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<ListingFullDataResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<ListingFullDataResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // GET api/v1/vehicle-listing/{id}/edit-data
         [HttpGet("{id}/edit-data")]
         public async Task<ActionResult<ApiResponse<ListingFullDataResponse>>> GetEditData(Guid id)
         {
             try
             {
                 var data = await _listingService.GetListingFullDataAsync(id);
-                if (data == null)
-                    return NotFound(ApiResponse<ListingFullDataResponse>.ErrorResponse(
-                        "Not found", new List<string> { "Not found" }));
 
-                return Ok(ApiResponse<ListingFullDataResponse>.SuccessResponse(data, "Success"));
+                if (data == null)
+                    return NotFound(ApiResponse<ListingFullDataResponse>
+                        .NotFound("Listing not found."));
+
+                return Ok(ApiResponse<ListingFullDataResponse>
+                    .Success(data));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<ListingFullDataResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<ListingFullDataResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // PUT api/v1/vehicle-listing/{id}/save
         [HttpPut("{id}/save")]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> SaveEdit(
             Guid id, [FromBody] EditListingRequest request)
         {
             try
             {
-                var result = await _listingService.SaveEditAsync(id, request, GetUserId(), submit: false);
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, "Saved as draft"));
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<VehicleListingResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
+                var result = await _listingService.SaveEditAsync(
+                    id, request, GetUserId(), submit: false);
+
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
 
+        // PUT api/v1/vehicle-listing/{id}/save-and-submit
         [HttpPut("{id}/save-and-submit")]
         public async Task<ActionResult<ApiResponse<VehicleListingResponse>>> SaveAndSubmit(
             Guid id, [FromBody] EditListingRequest request)
         {
             try
             {
-                var result = await _listingService.SaveEditAsync(id, request, GetUserId(), submit: true);
-                return Ok(ApiResponse<VehicleListingResponse>.SuccessResponse(result, "Submitted for review"));
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<VehicleListingResponse>
+                        .ValidationFailed(string.Join(", ", ModelState.Values
+                            .SelectMany(v => v.Errors)
+                            .Select(e => e.ErrorMessage))));
+
+                var result = await _listingService.SaveEditAsync(
+                    id, request, GetUserId(), submit: true);
+
+                return Ok(ApiResponse<VehicleListingResponse>
+                    .Updated(result));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ApiResponse<VehicleListingResponse>.ErrorResponse(
-                    ex.Message, new List<string> { ex.Message }));
+                return StatusCode(500, ApiResponse<VehicleListingResponse>
+                    .ServerError(ex.Message));
             }
         }
     }

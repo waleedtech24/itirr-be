@@ -20,80 +20,166 @@ namespace ITIRR.API.Controllers
         private string GetUserId() =>
             User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
 
+        // GET api/v1/user/profile
         [HttpGet]
         public async Task<ActionResult<ApiResponse<AppUserProfileResponse>>> GetProfile()
         {
-            var result = await _service.GetProfileAsync(GetUserId());
-            if (result == null)
-                return NotFound(ApiResponse<AppUserProfileResponse>
-                    .ErrorResponse("User not found."));
-            return Ok(ApiResponse<AppUserProfileResponse>
-                .SuccessResponse(result, "Profile loaded."));
+            try
+            {
+                var result = await _service.GetProfileAsync(GetUserId());
+
+                if (result == null)
+                    return NotFound(ApiResponse<AppUserProfileResponse>
+                        .NotFound("No Record Found"));
+
+                return Ok(ApiResponse<AppUserProfileResponse>
+                    .Success(result));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<AppUserProfileResponse>
+                    .ServerError(ex.Message));
+            }
         }
 
+        // PUT api/v1/user/profile/basic
         [HttpPut("basic")]
         public async Task<ActionResult<ApiResponse<AppUserProfileResponse>>> UpdateBasic(
             [FromBody] AppUserUpdateBasicRequest request)
         {
-            var result = await _service.UpdateBasicInfoAsync(GetUserId(), request);
-            return Ok(ApiResponse<AppUserProfileResponse>
-                .SuccessResponse(result, "Basic info updated."));
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<AppUserProfileResponse>
+                        .ValidationFailed("Invalid request data."));
+
+                var result = await _service.UpdateBasicInfoAsync(GetUserId(), request);
+
+                return Ok(ApiResponse<AppUserProfileResponse>
+                    .Updated(result));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<AppUserProfileResponse>
+                    .ServerError(ex.Message));
+            }
         }
 
+        // PUT api/v1/user/profile/contact
         [HttpPut("contact")]
         public async Task<ActionResult<ApiResponse<AppUserProfileResponse>>> UpdateContact(
             [FromBody] AppUserUpdateContactRequest request)
         {
-            var result = await _service.UpdateContactAsync(GetUserId(), request);
-            return Ok(ApiResponse<AppUserProfileResponse>
-                .SuccessResponse(result, "Contact info updated."));
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<AppUserProfileResponse>
+                        .ValidationFailed("Invalid request data."));
+
+                var result = await _service.UpdateContactAsync(GetUserId(), request);
+
+                return Ok(ApiResponse<AppUserProfileResponse>
+                    .Updated(result));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<AppUserProfileResponse>
+                    .ServerError(ex.Message));
+            }
         }
 
+        // POST api/v1/user/profile/photo
         [HttpPost("photo")]
         public async Task<ActionResult<ApiResponse<AppUserProfileResponse>>> UploadPhoto(
             IFormFile photo)
         {
-            if (photo == null || photo.Length == 0)
-                return BadRequest(ApiResponse<AppUserProfileResponse>
-                    .ErrorResponse("No photo provided."));
+            try
+            {
+                if (photo == null || photo.Length == 0)
+                    return BadRequest(ApiResponse<AppUserProfileResponse>
+                        .ValidationFailed("No photo provided."));
 
-            using var stream = photo.OpenReadStream();
-            var result = await _service.UploadPhotoAsync(
-                GetUserId(), stream, photo.FileName);
-            return Ok(ApiResponse<AppUserProfileResponse>
-                .SuccessResponse(result, "Photo uploaded."));
+                using var stream = photo.OpenReadStream();
+                var result = await _service.UploadPhotoAsync(
+                    GetUserId(), stream, photo.FileName);
+
+                return Ok(ApiResponse<AppUserProfileResponse>
+                    .Updated(result));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<AppUserProfileResponse>
+                    .ServerError(ex.Message));
+            }
         }
 
+        // POST api/v1/user/profile/documents
         [HttpPost("documents")]
         public async Task<ActionResult<ApiResponse<AppUserDocumentResponse>>> UploadDocument(
             IFormFile file)
         {
-            if (file == null || file.Length == 0)
-                return BadRequest(ApiResponse<AppUserDocumentResponse>
-                    .ErrorResponse("No file provided."));
+            try
+            {
+                if (file == null || file.Length == 0)
+                    return BadRequest(ApiResponse<AppUserDocumentResponse>
+                        .ValidationFailed("No file provided."));
 
-            using var stream = file.OpenReadStream();
-            var result = await _service.UploadDocumentAsync(
-                GetUserId(), stream, file.FileName, file.Length);
-            return Ok(ApiResponse<AppUserDocumentResponse>
-                .SuccessResponse(result, "Document uploaded."));
+                using var stream = file.OpenReadStream();
+                var result = await _service.UploadDocumentAsync(
+                    GetUserId(), stream, file.FileName, file.Length);
+
+                return Ok(ApiResponse<AppUserDocumentResponse>
+                    .Created(result));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<AppUserDocumentResponse>
+                    .ServerError(ex.Message));
+            }
         }
 
+        // GET api/v1/user/profile/documents
         [HttpGet("documents")]
         public async Task<ActionResult<ApiResponse<List<AppUserDocumentResponse>>>> GetDocuments()
         {
-            var result = await _service.GetDocumentsAsync(GetUserId());
-            return Ok(ApiResponse<List<AppUserDocumentResponse>>
-                .SuccessResponse(result, "Documents loaded."));
+            try
+            {
+                var result = await _service.GetDocumentsAsync(GetUserId());
+
+                if (result == null || !result.Any())
+                    return Ok(ApiResponse<List<AppUserDocumentResponse>>
+                        .NotFound("No documents found."));
+
+                return Ok(ApiResponse<List<AppUserDocumentResponse>>
+                    .Success(result));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<List<AppUserDocumentResponse>>
+                    .ServerError(ex.Message));
+            }
         }
 
+        // DELETE api/v1/user/profile/documents/{id}
         [HttpDelete("documents/{id}")]
         public async Task<ActionResult<ApiResponse<bool>>> DeleteDocument(Guid id)
         {
-            var result = await _service.DeleteDocumentAsync(GetUserId(), id);
-            if (!result)
-                return NotFound(ApiResponse<bool>.ErrorResponse("Document not found."));
-            return Ok(ApiResponse<bool>.SuccessResponse(true, "Document deleted."));
+            try
+            {
+                var result = await _service.DeleteDocumentAsync(GetUserId(), id);
+
+                if (!result)
+                    return NotFound(ApiResponse<bool>
+                        .NotFound("Document not found."));
+
+                return Ok(ApiResponse<bool>
+                    .Deleted());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ApiResponse<bool>
+                    .ServerError(ex.Message));
+            }
         }
     }
 }

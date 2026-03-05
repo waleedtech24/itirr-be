@@ -21,17 +21,23 @@ namespace ITIRR.API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<AppUserAuthResponse>
+                        .ValidationFailed("Invalid request data."));
+
                 var result = await _service.RegisterAsync(request);
+
                 if (!result.Success)
                     return BadRequest(ApiResponse<AppUserAuthResponse>
-                        .ErrorResponse(result.Message, result.Errors));
+                        .Fail(result.Message));
+
                 return Ok(ApiResponse<AppUserAuthResponse>
-                    .SuccessResponse(result, result.Message));
+                    .Created(result));
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ApiResponse<AppUserAuthResponse>
-                    .ErrorResponse(ex.Message, new List<string> { ex.Message }));
+                    .ServerError(ex.Message));
             }
         }
 
@@ -42,17 +48,23 @@ namespace ITIRR.API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<AppUserAuthResponse>
+                        .ValidationFailed("Invalid request data."));
+
                 var result = await _service.VerifyOtpAsync(request);
+
                 if (!result.Success)
                     return BadRequest(ApiResponse<AppUserAuthResponse>
-                        .ErrorResponse(result.Message, result.Errors));
+                        .Fail(result.Message));
+
                 return Ok(ApiResponse<AppUserAuthResponse>
-                    .SuccessResponse(result, result.Message));
+                    .Success(result, "OTP verified successfully."));
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ApiResponse<AppUserAuthResponse>
-                    .ErrorResponse(ex.Message, new List<string> { ex.Message }));
+                    .ServerError(ex.Message));
             }
         }
 
@@ -63,17 +75,23 @@ namespace ITIRR.API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<AppUserAuthResponse>
+                        .ValidationFailed("Invalid request data."));
+
                 var result = await _service.LoginAsync(request);
+
                 if (!result.Success)
                     return BadRequest(ApiResponse<AppUserAuthResponse>
-                        .ErrorResponse(result.Message, result.Errors));
+                        .Fail(result.Message));
+
                 return Ok(ApiResponse<AppUserAuthResponse>
-                    .SuccessResponse(result, result.Message));
+                    .Success(result, "Login successful."));
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ApiResponse<AppUserAuthResponse>
-                    .ErrorResponse(ex.Message, new List<string> { ex.Message }));
+                    .ServerError(ex.Message));
             }
         }
 
@@ -84,22 +102,27 @@ namespace ITIRR.API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                    return BadRequest(ApiResponse<AppUserAuthResponse>
+                        .ValidationFailed("Invalid request data."));
+
                 var result = await _service.ResendOtpAsync(request.EmailOrPhone);
+
                 if (!result.Success)
                     return BadRequest(ApiResponse<AppUserAuthResponse>
-                        .ErrorResponse(result.Message, result.Errors));
+                        .Fail(result.Message));
+
                 return Ok(ApiResponse<AppUserAuthResponse>
-                    .SuccessResponse(result, result.Message));
+                    .Success(result, "OTP resent successfully."));
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ApiResponse<AppUserAuthResponse>
-                    .ErrorResponse(ex.Message, new List<string> { ex.Message }));
+                    .ServerError(ex.Message));
             }
         }
     }
 
-    // Simple request DTO for resend
     public class AppUserResendOtpRequest
     {
         public string EmailOrPhone { get; set; } = string.Empty;
