@@ -2,6 +2,7 @@
 using ITIRR.Core.Interfaces;
 using ITIRR.Infrastructure.Data;
 using ITIRR.Infrastructure.Repositories;
+using ITIRR.Services;
 using ITIRR.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -81,12 +82,12 @@ builder.Services.AddScoped<IVehicleListingService, VehicleListingService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddScoped<IAppUserAuthService, AppUserAuthService>();
 builder.Services.AddScoped<IAppUserProfileService, AppUserProfileService>();
+builder.Services.AddScoped<IAppUserListingService, AppUserListingService>();
 builder.Services.AddScoped<IFileUploadService>(provider =>
 {
     var env = provider.GetRequiredService<IWebHostEnvironment>();
     return new FileUploadService(env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"));
 });
-
 // Register Services
 builder.Services.AddScoped<IOtpService, OtpService>();
 builder.Services.AddScoped<ITokenService, TokenService>();

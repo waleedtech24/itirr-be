@@ -6,5 +6,6 @@
         public string EmailOrPhone { get; set; }
         public bool OtpSent { get; set; }
         public DateTime ExpiresAt { get; set; }
+        public string? OtpCode { get; set; }  
     }
 }

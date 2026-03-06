@@ -48,6 +48,7 @@ namespace ITIRR.Core.Entities
         public string OwnerId { get; set; } = string.Empty;
         public string Status { get; set; } = "Draft";
         public int CurrentStep { get; set; } = 1;
+        public virtual ApplicationUser Owner { get; set; } = null!;
 
         public ICollection<JetListingMedia> Media { get; set; } = new List<JetListingMedia>();
     }
