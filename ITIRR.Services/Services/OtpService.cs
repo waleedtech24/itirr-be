@@ -22,16 +22,11 @@ namespace ITIRR.Services.Services
 
         public async Task<bool> SendOtpAsync(string emailOrPhone, string otpCode, string contactType)
         {
-            // TODO: Integrate actual email/SMS service
-            // For now, just log it (in production, use SendGrid/Twilio)
 
-            Console.WriteLine($"==========================================");
             Console.WriteLine($"OTP SENT");
             Console.WriteLine($"To: {emailOrPhone}");
             Console.WriteLine($"Type: {contactType}");
             Console.WriteLine($"Code: {otpCode}");
-            Console.WriteLine($"==========================================");
-
             await Task.CompletedTask;
             return true;
         }

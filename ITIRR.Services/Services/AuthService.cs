@@ -61,7 +61,8 @@ namespace ITIRR.Services.Services
                 UserId = user.Id,
                 EmailOrPhone = request.EmailOrPhone,
                 OtpSent = true,
-                ExpiresAt = DateTime.UtcNow.AddMinutes(10)
+                ExpiresAt = DateTime.UtcNow.AddMinutes(10),
+                OtpCode = otpCode
             };
         }
 
